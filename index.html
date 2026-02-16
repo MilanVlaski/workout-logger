@@ -17,20 +17,63 @@
     </header>
 
     <main>
-        <article class="container">
+
+        <article class="container workout">
+
             <p>February 16, 2026</p>
-            <section>
+
+            <section class="current-workout">
                 <label for="start-exercise">Start New Exercise</label>
                 <div class="button-group">  
                     <input type="text" name="new-exercise">
                     <button class="primary">Start</button>
                 </div>
             </section>
-            <section>
+
+            <section class="current-exercise">
+
+                <h2>Stiff Legged Deadlifts</h2>
+
+                <div class="exercise-input">
+
+
+                    <label>Reps</label>
+                    <div class="all-reps">  
+                        <input type="text" name="reps" class="reps">
+                        <input type="text" name="reps" class="reps">
+                        <input type="text" name="reps" class="reps">
+                        <input type="text" name="reps" class="reps">
+                        <input type="text" name="reps" class="reps">
+                    </div>
+
+                    <div class="half-screen-buttons">
+                        <button class="danger">Remove Reps</button>
+                        <button class="primary">Add Reps</button>
+                    </div>
+
+
+                    <label for="weight">Weight</label>
+                    <div class=half-screen-buttons>
+                        <input  type="text" id="weight">
+                        <button style="vertical-align: baseline;" class="primary">New Weight</button>
+                    </div>
+
+                    <label for="comment">Comment</label>
+                    <input type="text" id="comment">
+
+                    <div class="separate-buttons">
+                        <button class="danger">Clear</button>
+                        <button class="primary">Finish</button>
+                    </div>
+                </div>
+            </section>
+            <!-- <section class="separate-buttons">
                 <button class="danger">Clear</button>
                 <button class="primary">Finish</button>
-            </footer>
+            </section> -->
         </article>
+
     </main>
 </body>
 </html>
+
