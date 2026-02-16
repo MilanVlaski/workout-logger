@@ -11,14 +11,12 @@
     width: 100%;
 }
 
-article > p {
-    margin-block: 1rem;
-    text-decoration: underline;
-    text-underline-offset: 0.5rem;
+h1 {
+    font-size: 1.44rem;
 }
 
 h2 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 
 

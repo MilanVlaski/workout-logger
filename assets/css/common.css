@@ -19,7 +19,8 @@ h6,
 p,
 dl,
 dt,
-dd {
+dd ,
+pre {
     margin: 0;
     padding: 0;
 }
@@ -53,9 +54,13 @@ summary {
 
 /* Typography - Spacing*/
 
-p, ul, ol {
+p, ul, ol, pre {
     line-height: 1.5;
     margin-block-end: var(--input-spacing);
+}
+
+code, kbd, samp, pre {
+    font-family: Consolas, 'Liberation Mono', Menlo, monospace;
 }
 
 h1,

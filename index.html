@@ -20,7 +20,7 @@
 
         <article class="container workout">
 
-            <p>February 16, 2026</p>
+            <h1>February 16, 2026</h2>
 
             <section class="current-workout">
                 <label for="start-exercise">Start New Exercise</label>
@@ -57,17 +57,28 @@
                         <input  type="text" id="weight">
                         <button style="vertical-align: baseline;" class="primary outline">New Weight</button>
                     </div>
-
-                    <label for="comment">Comment</label>
-                    <input type="text" id="comment">
-
-                    <button type="submit" style="width: 100%;" class="primary ">Finish</button>
+                    
                 </div>
+
+                <label for="comment">Comment</label>
+
+                <input type="text" id="comment">
+                <button type="submit" style="width: 100%;" class="primary ">Finish</button>
+
             </section>
             <!-- <section class="separate-buttons">
                 <button class="danger">Clear</button>
                 <button class="primary outline">Finish</button>
             </section> -->
+            <section>
+                <h2>Temporary Log</h2>
+                <pre class="exercise-log" contenteditable style="text-wrap: wrap;">
+Pullups: 12, 11, 10, 9, 8 | 120kg
+         10, 10           | 100kg
+                    <!-- Formatted content editable text might be the most beautiful, and most versatile...-->
+                    </span>
+                </div>
+            </section>
         </article>
 
     </main>
