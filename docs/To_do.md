@@ -1,0 +1,3 @@
+- [ ] Add x to exercise, as well as workout, which removes the component
+- [ ] Add icons
+- [ ] Middle section needs to have min-height, to prevent layout shift when the exercises finishes
