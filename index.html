@@ -5,14 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/workout.css">
     <title>Workout Logger</title>
 </head>
 <body>
-    <header>
+    <header class="container">
         <nav class="button-group">
             <button>Workout</button>
             <button>Log</button>
         </nav>
     </header>
+
+    <main>
+        <article class="container">
+            <p style="margin-top: 1rem;">February 16, 2026</p>
+            <label for="start-exercise">Start New Exercise</label>
+            <div class="button-group">  
+                <input type="text" name="new-exercise">
+                <button class="primary">Start</button>
+            </div>
+            <!-- <footer>
+                <button class="danger">Clear</button>
+                <button class="primary">Finish</button>
+            </footer> -->
+        </article>
+    </main>
 </body>
 </html>

@@ -1,0 +1,12 @@
+.container {
+    max-width: 50ch;
+}
+
+footer {
+   display: flex;
+   justify-content: space-between; 
+}
+
+[name='new-exercise']  {
+    width: 100%;
+}
