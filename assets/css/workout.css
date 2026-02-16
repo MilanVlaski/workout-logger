@@ -1,3 +1,7 @@
+:root {
+    --inline-gap: 6px;
+}
+
 .container {
     max-width: 50ch;
 }
@@ -5,10 +9,6 @@
 .separate-buttons {
    display: flex;
    justify-content: space-between; 
-}
-
-[name='new-exercise']  {
-    width: 100%;
 }
 
 h1 {
@@ -20,7 +20,7 @@ h2 {
 }
 
 
-.reps {
+.all-reps > * {
     padding-inline: 0.5rem;
     width: 3rem;
 }
@@ -32,13 +32,13 @@ h2 {
 .all-reps {
     display: flex;
     flex-wrap: wrap;
-    column-gap: 4px;
+    column-gap: var(--inline-gap);
 }
 
 .half-screen-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 4px;
+    column-gap: var(--inline-gap);
 }
 
 input {
