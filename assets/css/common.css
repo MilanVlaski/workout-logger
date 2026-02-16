@@ -182,6 +182,12 @@ body {
     --transition-fast: 50ms;
 }
 
+svg {
+    fill: currentColor;
+    width: 1rem;
+    margin-inline-end: 0.2rem;
+}
+
 a {
     color: var(--color-primary-600);
 }
