@@ -10,3 +10,9 @@ footer {
 [name='new-exercise']  {
     width: 100%;
 }
+
+article > p {
+    margin-block: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 0.5rem;
+}

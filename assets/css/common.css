@@ -77,7 +77,7 @@ h6 { font-size: 1rem; }
 
 p { font-size: 1rem; }
 
-section {
+main > section {
     padding-inline: 1rem;
 }
 
