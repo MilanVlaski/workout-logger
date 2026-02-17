@@ -9,6 +9,9 @@
 
     <script defer src="/assets/js/workout.js"></script>
     <script type="module" src="/assets/js/components/all-reps.js"></script>
+    <script type="module" src="/assets/js/components/exercise-input.js"></script>
+    <script type="module" src="/assets/js/components/the-exercise.js"></script>
+
     <title>Workout Logger</title>
 </head>
 <body>
@@ -47,83 +50,13 @@
         
         <article class="container workout">
             
-            <h1>February 16, 2026</h2>
-                <hr>
-                <!-- <section class="current-workout">
-                    <label for="exercise-input">Start New Exercise</label>
-                    <form action="start-exercise" class="button-group">  
-                        <input type="text" name="exercise-name" id="exercise-input">
-                        <button class="primary">Start</button>
-                    </form>
-                </section> -->
-                
-                <section class="current-exercise" style="margin-top: 1rem;">
-                    <label for="exercise-input">Exercise Name</label>
-                    <input type="text" name="exercise-name" id="exercise-input">
-                    <!-- <h2 contenteditable="true">New Exercise</h2> -->
-                    
-                <div class="exercise-input">
-                    <all-reps>
-                        <label>Reps</label>
-                        <div class="all-reps">
-                            <input type="text" inputmode="numeric" name="reps">
-                        </div>
-                    </all-reps>
-                        
-                    <label>Reps</label>
-                    <div class="all-reps">  
-                        <input type="text" inputmode="numeric" name="reps">
-                        <input type="text" inputmode="numeric" name="reps">
-                        <input type="text" inputmode="numeric" name="reps">
-                        <input type="text" inputmode="numeric" name="reps">
-                        <input type="text" inputmode="numeric" name="reps">
-                        <input type="text" inputmode="numeric" name="reps">
-                    </div>
+            <h1>February 16, 2026</h1>
+            <hr>
 
-                    <div class="half-screen-buttons">
-                        <button class="danger outline">
-                            <svg><use href="#remove"></use></svg>
-                            Remove Reps
-                        </button>
-                        <button class="primary outline">
-                            <svg><use href="#add"></use></svg>
-                            Add Reps
-                        </button>
-                    </div>
-
-
-                    <label for="weight">Weight</label>
-                    <div class=half-screen-buttons>
-                        <input  type="text" id="weight">
-                        <button class="primary outline">
-                            <svg><use href="#weight"></use></svg>
-                            New Weight
-                        </button>
-                    </div>
-                    
-                </div>
-
-                <label for="comment">Comment</label>
-
-                <input type="text" id="comment" name="comment">
-                <div style="display: flex; column-gap: var(--inline-gap);">
-                    <button class="primary outline">
-                        <svg><use href="#dumbbell"></use></svg>
-                        New Exercise
-                    </button>
-                    <button style="flex-grow: 1;"  class="primary ">
-                        <svg><use href="#finish"></use></svg>
-                        Finish
-                    </button>
-                </div>
-
-            </section>
+            <the-exercise></the-exercise>
             <section class="temporary-log">
                 <h2>Temporary Log</h2>
-                <textarea class="exercise-log" contenteditable style="text-wrap: wrap;">
-Pullups: 12, 11, 10, 9, 8 | 120kg
-         10, 10           | 100kg
-                </textarea>
+                <textarea class="temporary-log" style="text-wrap: wrap;"></textarea>
                 <button class="primary" style="width: 100%;">
                     <svg><use href="#sync"></use></svg>
                     Sync

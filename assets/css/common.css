@@ -185,6 +185,7 @@ body {
 svg {
     fill: currentColor;
     width: 1rem;
+    height: 1rem;
     margin-inline-end: 0.2rem;
 }
 
@@ -623,7 +624,7 @@ select {
 /* button */
 
 /* form */
-form input:not([type="checkbox"]):not([type="radio"]), 
+form input:not([type="checkbox"], [type="radio"]), 
 form select, 
 form textarea,
 form button[type="submit"] {

@@ -20,7 +20,7 @@ h2 {
 }
 
 
-.all-reps > * {
+.all-reps > input[name="reps"] {
     padding-inline: 0.5rem;
     width: 3rem;
 }
@@ -43,4 +43,13 @@ h2 {
 
 input {
     width: 100%;
+}
+
+.exercise-actions {
+    display: flex; 
+    column-gap: var(--inline-gap);
+}
+
+.exercise-actions > :last-child {
+    flex: 1;
 }
