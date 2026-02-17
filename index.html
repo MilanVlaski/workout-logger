@@ -19,6 +19,12 @@
         <symbol id="weight" viewBox="0 -960 960 960">
             <path d="M240-200h480l-57-400H297l-57 400Zm240-480q17 0 28.5-11.5T520-720q0-17-11.5-28.5T480-760q-17 0-28.5 11.5T440-720q0 17 11.5 28.5T480-680Zm113 0h70q30 0 52 20t27 49l57 400q5 36-18.5 63.5T720-120H240q-37 0-60.5-27.5T161-211l57-400q5-29 27-49t52-20h70q-3-10-5-19.5t-2-20.5q0-50 35-85t85-35q50 0 85 35t35 85q0 11-2 20.5t-5 19.5ZM240-200h480-480Z"/>
         </symbol>
+        <symbol id="finish" viewBox="0 -960 960 960">
+            <path d="M268-240 42-466l57-56 170 170 56 56-57 56Zm226 0L268-466l56-57 170 170 368-368 56 57-424 424Zm0-226-57-56 198-198 57 56-198 198Z"/>
+        </symbol>
+        <symbol id="sync" viewBox="0 -960 960 960">
+            <path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/>
+        </symbol>
     </svg>
  
 
@@ -86,21 +92,22 @@
                 <label for="comment">Comment</label>
 
                 <input type="text" id="comment" name="comment">
-                <button style="width: 100%;" class="primary ">Finish</button>
+                <button style="width: 100%;" class="primary ">
+                    <svg><use href="#finish"></use></svg>
+                    Finish
+                </button>
 
             </section>
-            <!-- <section class="separate-buttons">
-                <button class="danger">Clear</button>
-                <button class="primary outline">Finish</button>
-            </section> -->
             <section>
                 <h2>Temporary Log</h2>
-                <!-- Formatted content editable text might be the most beautiful, and most versatile...-->
                 <pre class="exercise-log" contenteditable style="text-wrap: wrap;">
 Pullups: 12, 11, 10, 9, 8 | 120kg
          10, 10           | 100kg
                 </pre>
-                </div>
+                <button class="primary" style="width: 100%;">
+                    <svg><use href="#sync"></use></svg>
+                    Sync
+                </button>
             </section>
         </article>
 
