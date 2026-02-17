@@ -19,7 +19,7 @@ h6,
 p,
 dl,
 dt,
-dd ,
+dd,
 pre {
     margin: 0;
     padding: 0;
@@ -186,6 +186,15 @@ svg {
     fill: currentColor;
     width: 1rem;
     margin-inline-end: 0.2rem;
+}
+
+hr {
+    border-color: var(--input-border-color);
+}
+
+:is(h1, h2, h3, h4, h5, h6) + hr {
+    margin-block-start: 0;
+    margin-block-end: 1rem;
 }
 
 a {

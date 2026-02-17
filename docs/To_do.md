@@ -1,3 +1,2 @@
-- [ ] Add x to exercise, as well as workout, which removes the component
-- [ ] Add icons
-- [ ] Middle section needs to have min-height, to prevent layout shift when the exercises finishes
+- [ ] Add reset icon to the right of buttons, instead of clearing the entire form.
+- [ ] Make textarea look the same as the input?

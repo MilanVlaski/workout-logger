@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/workout.css">
+
+    <script defer src="/assets/js/workout.js"></script>
+    <script type="module" src="/assets/js/components/all-reps.js"></script>
     <title>Workout Logger</title>
 </head>
 <body>
@@ -25,6 +28,9 @@
         <symbol id="sync" viewBox="0 -960 960 960">
             <path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/>
         </symbol>
+        <symbol id="dumbbell" viewBox="0 -960 960 960">
+            <path d="m532.41-79.93-61.5-61.5 142-142-329.48-329.48-142 142-61.5-61.5 56-57.52-56-56 84.48-84.48-56-57.52 63.66-63.66 57.52 56 84.48-84.48 56 56 57.52-56 61.5 61.5-142 142 329.48 329.48 142-142 61.5 61.5-56 57.52 56 56-84.48 84.48 56 57.52-63.66 63.66-57.52-56-84.48 84.48-56-56-57.52 56Z"/>
+        </symbol>
     </svg>
  
 
@@ -36,26 +42,34 @@
         </nav>
     </header>
 
+    
     <main>
-
+        
         <article class="container workout">
-
+            
             <h1>February 16, 2026</h2>
-
-            <section class="current-workout">
-                <label for="start-exercise">Start New Exercise</label>
-                <div class="button-group">  
-                    <input type="text" name="start-exercise" id="start-exercise">
-                    <button class="primary">Start</button>
-                </div>
-            </section>
-
-            <section class="current-exercise">
-
-                <h2>Stiff Legged Deadlifts</h2>
-
+                <hr>
+                <!-- <section class="current-workout">
+                    <label for="exercise-input">Start New Exercise</label>
+                    <form action="start-exercise" class="button-group">  
+                        <input type="text" name="exercise-name" id="exercise-input">
+                        <button class="primary">Start</button>
+                    </form>
+                </section> -->
+                
+                <section class="current-exercise" style="margin-top: 1rem;">
+                    <label for="exercise-input">Exercise Name</label>
+                    <input type="text" name="exercise-name" id="exercise-input">
+                    <!-- <h2 contenteditable="true">New Exercise</h2> -->
+                    
                 <div class="exercise-input">
-
+                    <all-reps>
+                        <label>Reps</label>
+                        <div class="all-reps">
+                            <input type="text" inputmode="numeric" name="reps">
+                        </div>
+                    </all-reps>
+                        
                     <label>Reps</label>
                     <div class="all-reps">  
                         <input type="text" inputmode="numeric" name="reps">
@@ -92,18 +106,24 @@
                 <label for="comment">Comment</label>
 
                 <input type="text" id="comment" name="comment">
-                <button style="width: 100%;" class="primary ">
-                    <svg><use href="#finish"></use></svg>
-                    Finish
-                </button>
+                <div style="display: flex; column-gap: var(--inline-gap);">
+                    <button class="primary outline">
+                        <svg><use href="#dumbbell"></use></svg>
+                        New Exercise
+                    </button>
+                    <button style="flex-grow: 1;"  class="primary ">
+                        <svg><use href="#finish"></use></svg>
+                        Finish
+                    </button>
+                </div>
 
             </section>
-            <section>
+            <section class="temporary-log">
                 <h2>Temporary Log</h2>
-                <pre class="exercise-log" contenteditable style="text-wrap: wrap;">
+                <textarea class="exercise-log" contenteditable style="text-wrap: wrap;">
 Pullups: 12, 11, 10, 9, 8 | 120kg
          10, 10           | 100kg
-                </pre>
+                </textarea>
                 <button class="primary" style="width: 100%;">
                     <svg><use href="#sync"></use></svg>
                     Sync
@@ -112,6 +132,10 @@ Pullups: 12, 11, 10, 9, 8 | 120kg
         </article>
 
     </main>
+
+    <template id="reps">
+        <input type="text" inputmode="numeric" name="reps">
+    </template>
 </body>
 </html>
 
