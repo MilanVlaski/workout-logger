@@ -17,7 +17,7 @@ class ExerciseInput extends HTMLElement {
         return /*html*/`
         <div class="exercise-input">
             <all-reps></all-reps>
-            <label for="weight">Weight</label>
+            <label>Weight
             <div class=half-screen-buttons>
                 <input type="text" id="weight" name="weight">
                 <button type="button" class="primary outline" id="new-weight-btn">
@@ -25,6 +25,7 @@ class ExerciseInput extends HTMLElement {
                     New Weight
                 </button>
             </div>
+            </label>
         </div>
         `
     }

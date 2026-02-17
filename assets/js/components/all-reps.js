@@ -4,10 +4,11 @@ class AllReps extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = /*html*/`
-        <label>Reps</label>
+        <label>Reps
         <div class="all-reps">
             <input type="text" inputmode="numeric" name="reps">
         </div>
+        </label>
         <div class="half-screen-buttons">
             <button class="danger outline">
                 <svg><use href="#remove"></use></svg>

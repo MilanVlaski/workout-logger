@@ -24,14 +24,16 @@ class Exercise extends HTMLElement {
     render() {
         return /*html*/`
         <form action="finish-exercise" class="current-exercise">
-            <label for="exercise-input">Exercise Name</label>
-            <input type="text" name="exercise-name" id="exercise-input">
+            <label>Exercise Name
+                <input type="text" name="exercise-name" id="exercise-input">
+            </label>
             
             <exercise-input></exercise-input>
         
-            <label for="comment">Comment</label>
+            <label>Comment
+                <input type="text" id="comment" name="comment">
+            </label>
 
-            <input type="text" id="comment" name="comment">
             <div class="exercise-actions">
                 <button type="button" class="primary outline" id="new-exercise-btn">
                     <svg><use href="#dumbbell"></use></svg>

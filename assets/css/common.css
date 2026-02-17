@@ -632,9 +632,18 @@ form button[type="submit"] {
 }
 
 label {
+    --label-block-spacing: 0.3rem;
     display: block;
-    margin-block-end: 0.3rem;
 }
+
+label > * {
+    margin-block-start: var(--label-block-spacing);
+}
+
+label:not(:has(*)) {
+    margin-block-end: var(--label-block-spacing);
+}
+
 /* form */
 
 /* card */
