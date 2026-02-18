@@ -3,6 +3,14 @@ const $repsTemplate = document.getElementById('reps').content.cloneNode(true).fi
 class AllReps extends HTMLElement {
 
     connectedCallback() {
+        this.render()
+
+        this.querySelector('button.primary').addEventListener('click', () => this.addReps())
+        this.querySelector('button.danger').addEventListener('click', () => this.removeReps())
+        this.addEventListener('reset', () => { this.render() })
+    }
+
+    render() {
         this.innerHTML = /*html*/`
         <label>Reps
         <div class="all-reps">
@@ -10,19 +18,16 @@ class AllReps extends HTMLElement {
         </div>
         </label>
         <div class="half-screen-buttons">
-            <button class="danger outline">
+            <button type="button" class="danger outline">
                 <svg><use href="#remove"></use></svg>
                 Remove Reps
             </button>
-            <button class="primary outline">
+            <button type="button" class="primary outline">
                 <svg><use href="#add"></use></svg>
                 Add Reps
             </button>
         </div>
         `
-
-        this.querySelector('button.primary').addEventListener('click', () => this.addReps());
-        this.querySelector('button.danger').addEventListener('click', () => this.removeReps());
     }
 
     addReps() {
@@ -31,7 +36,7 @@ class AllReps extends HTMLElement {
             .append($reps)
 
         requestAnimationFrame(() => {
-            if($reps) {
+            if ($reps) {
                 $reps.focus()
                 $reps.select()
             }
@@ -40,7 +45,7 @@ class AllReps extends HTMLElement {
 
     removeReps() {
         const container = this.querySelector('.all-reps');
-        
+
         if (container.childElementCount > 1) {
             container.lastElementChild.remove();
         } else {

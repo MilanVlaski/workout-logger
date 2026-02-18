@@ -1,4 +1,7 @@
 - [ ] Add reset icon to the right of buttons, instead of clearing the entire form.
 - [ ] Make textarea look the same as the input?
 - [ ] Date must come from today
-- [ ] Unique ids...
+- [ ] Switch to fragment cloning
+- [ ] Disable "Remove reps" while there is only one reps input
+  - [ ] Make disabled look good in my-css
+- [ ] Make the "focus event" on the all-reps, hit the LAST input

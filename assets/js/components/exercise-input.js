@@ -5,12 +5,6 @@ class ExerciseInput extends HTMLElement {
         
         this.querySelector('#new-weight-btn')
             .addEventListener('click', (e) => this.newWeight())
-
-        // TODO respond to formdata event, gather the inputs into an array, and pass it along, to exercise-input
-        // { 
-        //   weight: "120kg",
-        //   reps: [1, 2, 3, 4]
-        // }
     }
 
     render() {
@@ -18,7 +12,7 @@ class ExerciseInput extends HTMLElement {
         <div class="exercise-input">
             <all-reps></all-reps>
             <label>Weight
-            <div class=half-screen-buttons>
+            <div class="half-screen-buttons">
                 <input type="text" id="weight" name="weight">
                 <button type="button" class="primary outline" id="new-weight-btn">
                     <svg><use href="#weight"></use></svg>

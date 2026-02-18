@@ -3,23 +3,44 @@ class Exercise extends HTMLElement {
     connectedCallback() {
         this.innerHTML = this.render()
 
-        this.addEventListener('submit', (e) => {
-            e.preventDefault()
-            console.log(e.target.getAttribute('action'))
+            this.addEventListener('submit', (e) => {
+                e.preventDefault()
 
-            if(e.target.getAttribute('action') === 'finish-exercise') {
-                const formData = new FormData(e.target)
-                console.log('mariska')
-                console.log(Object.fromEntries(formData))
-            }
-        })
+                if (e.target.getAttribute('action') === 'finish-exercise') {
+                    const formData = new FormData(e.target)
+
+                    const data = {}
+                    const setsWithWeight = []
+
+                    this.querySelectorAll('.exercise-input').forEach(item => {
+                        const weightInput = item.querySelector('input[name="weight"]')
+                        const repInputs = item.querySelectorAll('input[name="reps"]')
+
+                        setsWithWeight.push({
+                            weight: weightInput.value,
+                            reps: Array.from(repInputs)
+                                .map(rep => rep.value)
+                                .filter(Boolean)
+                        })
+                    })
+
+                    data.exerciseName = formData.get('exercise-name')
+                    data.comment = formData.get('comment')
+                    data.setsWithWeight = setsWithWeight
+                    console.log(data)
+                    e.target.reset()
+                    const $el = document.querySelector('all-reps')
+                    $el.render()
+                }
+
+            })
 
         this.querySelector('#new-exercise-btn')
             .addEventListener('click', () => {
                 this.newExercise()
             })
     }
-    
+
 
     render() {
         return /*html*/`
