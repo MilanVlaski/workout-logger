@@ -4,10 +4,6 @@ class AllReps extends HTMLElement {
 
     connectedCallback() {
         this.render()
-
-        this.querySelector('button.primary').addEventListener('click', () => this.addReps())
-        this.querySelector('button.danger').addEventListener('click', () => this.removeReps())
-        this.addEventListener('reset', () => { this.render() })
     }
 
     render() {
@@ -28,6 +24,10 @@ class AllReps extends HTMLElement {
             </button>
         </div>
         `
+
+        this.querySelector('button.primary').addEventListener('click', () => this.addReps())
+        this.querySelector('button.danger').addEventListener('click', () => this.removeReps())
+        this.addEventListener('reset', () => { this.render() })
     }
 
     addReps() {
@@ -36,10 +36,7 @@ class AllReps extends HTMLElement {
             .append($reps)
 
         requestAnimationFrame(() => {
-            if ($reps) {
-                $reps.focus()
-                $reps.select()
-            }
+            $reps.focus()
         })
     }
 

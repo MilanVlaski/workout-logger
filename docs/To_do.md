@@ -1,5 +1,6 @@
+- [ ] Use oat.ink to restyle everything ~~Make textarea look the same as the input?~~
 - [ ] Add reset icon to the right of buttons, instead of clearing the entire form.
-- [ ] Make textarea look the same as the input?
+- [ ] Add x buttons to the top-right of the thingys. Consider styling
 - [ ] Date must come from today
 - [ ] Switch to fragment cloning
 - [ ] Disable "Remove reps" while there is only one reps input
