@@ -25,7 +25,6 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
     
-    flex-wrap: wrap;
     gap: var(--inline-gap);
 }
 
