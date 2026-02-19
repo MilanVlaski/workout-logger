@@ -1,5 +1,5 @@
 const repsTemplate = document.getElementById('reps-input')
-const $repsTemplate  = repsTemplate.content.cloneNode(true).firstElementChild
+const $repsTemplate = repsTemplate.content.cloneNode(true).firstElementChild
 
 class AllReps extends HTMLElement {
 

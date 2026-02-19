@@ -17,8 +17,9 @@
     </script>
     <!-- dev -->
     <script defer src="/assets/js/test.js"></script>
-    <script defer src="/assets/js/workout.js"></script>
+    
     <script defer src="/assets/js/oat.min.js"></script>
+    <script defer src="/assets/js/workout.js"></script>
 
     <script type="module" src="/assets/js/components/all-reps.js"></script>
     <script type="module" src="/assets/js/components/exercise-input.js"></script>
@@ -82,9 +83,59 @@
 
     </main>
     
+    <!-- TEMPLATES -->
     <template id="reps-input">
         <input type="text" inputmode="numeric" name="reps">
     </template>
+
+    <template id="exercise-input">
+        <div class="exercise-input">
+            <all-reps></all-reps>
+            <label data-field>Weight
+                <div class="half-screen-buttons">
+                    <input type="text" id="weight" name="weight">
+                    <button type="button" class="outline" id="new-weight-btn">
+                        <svg>
+                            <use href="#weight"></use>
+                        </svg>
+                        New Weight
+                    </button>
+                </div>
+            </label>
+        </div>
+    </template>
+
+    <template id="the-exercise">
+        <form action="finish-exercise" class="current-exercise">
+            <h2>Exercise</h2>
+            <label data-field>Exercise Name
+                <input type="text" name="exercise-name" id="exercise-input" required>
+            </label>
+        
+            <exercise-input></exercise-input>
+        
+            <label data-field>Comment
+                <input type="text" id="comment" name="comment">
+            </label>
+        
+            <div class="exercise-actions">
+                <button type="button" class="outline" id="new-exercise-btn">
+                    <svg>
+                        <use href="#dumbbell"></use>
+                    </svg>
+                    New Exercise
+                </button>
+                <button type="submit" id="finish-btn">
+                    <svg>
+                        <use href="#check"></use>
+                    </svg>
+                    Finish Exercise
+                </button>
+            </div>
+    
+        </form>
+    </template>
+
 </body>
 </html>
 
