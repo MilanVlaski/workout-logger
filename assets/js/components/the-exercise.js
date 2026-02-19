@@ -49,22 +49,23 @@ class Exercise extends HTMLElement {
     render() {
         return /*html*/`
         <form action="finish-exercise" class="current-exercise">
-            <label>Exercise Name
+            <h2>Exercise</h2>
+            <label data-field>Exercise Name
                 <input type="text" name="exercise-name" id="exercise-input" required>
             </label>
-            
+
             <exercise-input></exercise-input>
-        
-            <label>Comment
+
+            <label data-field>Comment
                 <input type="text" id="comment" name="comment">
             </label>
 
             <div class="exercise-actions">
-                <button type="button" class="primary outline" id="new-exercise-btn">
+                <button type="button" class="outline" id="new-exercise-btn">
                     <svg><use href="#dumbbell"></use></svg>
                     New Exercise
                 </button>
-                <button type="submit" class="primary" id="finish-btn">
+                <button type="submit" id="finish-btn">
                     <svg><use href="#finish"></use></svg>
                     Finish
                 </button>
@@ -75,7 +76,7 @@ class Exercise extends HTMLElement {
     }
 
     newExercise() {
-        this.after(document.createElement('hr'), document.createElement('the-exercise'))
+        this.after(document.createElement('the-exercise'))
     }
 }
 

@@ -1,8 +1,8 @@
-- [ ] Use oat.ink to restyle everything ~~Make textarea look the same as the input?~~
-- [ ] Add reset icon to the right of buttons, instead of clearing the entire form.
-- [ ] Add x buttons to the top-right of the thingys. Consider styling
-- [ ] Date must come from today
-- [ ] Switch to fragment cloning
+- [x] Use oat.ink to restyle everything ~~Make textarea look the same as the input?~~
+- [ ] Currently, the code either clones <template>s, in the very .html file, or it uses innerHTML as a string.Use webc from 11ty, to create <template> to clone in the component itself, and instead of innerHTML, also use a cloneable template, invoked in the render() method. ~~Switch to fragment cloning~~
+- [ ] Add reset icon to the right of buttons, in case users mistype
+- [ ] Add x buttons to the top-right of the current exercise "elements", when they're appended.
+- [ ] Date must come from today.
 - [ ] Disable "Remove reps" while there is only one reps input
-  - [ ] Make disabled look good in my-css
+  - [ ] ~~Make disabled look good in my-css~~
 - [ ] Make the "focus event" on the all-reps, hit the LAST input

@@ -17,7 +17,7 @@ function asLog() {
 }
 
 document.addEventListener('exercise:finish', (e) => {
-    const $temporaryLog = document.querySelector('.temporary-log')
+    const $temporaryLog = document.querySelector('.temporary-log-input')
 
     // e.detail.asLog = asLog
     // $temporaryLog.textContent = e.detail.asLog()

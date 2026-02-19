@@ -8,25 +8,25 @@ class AllReps extends HTMLElement {
 
     render() {
         this.innerHTML = /*html*/`
-        <label>Reps
+        <label data-field>Reps
         <div class="all-reps">
             <input type="text" inputmode="numeric" name="reps">
         </div>
         </label>
         <div class="half-screen-buttons">
-            <button type="button" class="danger outline">
+            <button type="button" data-variant="danger" class="outline">
                 <svg><use href="#remove"></use></svg>
                 Remove Reps
             </button>
-            <button type="button" class="primary outline">
+            <button type="button" class="outline" id="add-reps">
                 <svg><use href="#add"></use></svg>
                 Add Reps
             </button>
         </div>
         `
 
-        this.querySelector('button.primary').addEventListener('click', () => this.addReps())
-        this.querySelector('button.danger').addEventListener('click', () => this.removeReps())
+        this.querySelector('#add-reps').addEventListener('click', () => this.addReps())
+        this.querySelector('button[data-variant="danger"]').addEventListener('click', () => this.removeReps())
         this.addEventListener('reset', () => { this.render() })
     }
 

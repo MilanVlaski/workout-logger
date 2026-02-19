@@ -6,11 +6,6 @@
     max-width: 50ch;
 }
 
-.separate-buttons {
-   display: flex;
-   justify-content: space-between; 
-}
-
 h1 {
     font-size: 1.44rem;
 }
@@ -19,17 +14,14 @@ h2 {
     font-size: 1.25rem;
 }
 
-
 .all-reps > input[name="reps"] {
     padding-inline: 0.5rem;
     width: 3rem;
 }
 
-.weight {
-    width: 6rem;
-}
-
 .all-reps {
+    --inline-gap: 0.8rem;
+
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--inline-gap);
@@ -41,15 +33,27 @@ h2 {
     column-gap: var(--inline-gap);
 }
 
-input {
-    width: 100%;
+all-reps > .half-screen-buttons{
+    margin-block-end: var(--space-4);
 }
+
 
 .exercise-actions {
     display: flex; 
     column-gap: var(--inline-gap);
 }
 
+.current-exercise {
+    margin-block-end: var(--space-4);
+}
 .exercise-actions > :last-child {
     flex: 1;
+}
+
+.workout {
+    padding-block: var(--space-4);
+}
+
+.workout h1 {
+    margin-block-start: var(--space-6 );
 }

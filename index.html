@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- <link rel="stylesheet" href="/assets/css/common.css"> -->
+    <link rel="stylesheet" href="/assets/css/oat.min.css">
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/workout.css">
 
+    <script>
+        // Prevent FOUC - apply theme before rendering.
+        (function () {
+            var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     <!-- dev -->
     <script defer src="/assets/js/test.js"></script>
     <script defer src="/assets/js/workout.js"></script>
+    <script defer src="/assets/js/oat.min.js"></script>
+
     <script type="module" src="/assets/js/components/all-reps.js"></script>
     <script type="module" src="/assets/js/components/exercise-input.js"></script>
     <script type="module" src="/assets/js/components/the-exercise.js"></script>
@@ -53,12 +63,13 @@
         <article class="container workout">
             
             <h1>February 16, 2026</h1>
-            <hr>
 
             <the-exercise></the-exercise>
-            <section>
-                <h2>Temporary Log</h2>
-                <textarea class="temporary-log" style="text-wrap: wrap;"></textarea>
+            <form class="temporary-log-input" action="sync-log">
+                <label data-field>
+                    <h2>Temporary Log</h2>
+                    <textarea class="temporary-log-input"></textarea>
+                </label>
                 <button class="primary" style="width: 100%;">
                     <svg><use href="#sync"></use></svg>
                     Sync
