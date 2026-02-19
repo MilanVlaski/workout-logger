@@ -22,9 +22,11 @@ h2 {
 .all-reps {
     --inline-gap: 0.8rem;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+    
     flex-wrap: wrap;
-    column-gap: var(--inline-gap);
+    gap: var(--inline-gap);
 }
 
 .half-screen-buttons {
