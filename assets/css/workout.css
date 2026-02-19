@@ -57,3 +57,11 @@ all-reps > .half-screen-buttons{
 .workout h1 {
     margin-block-start: var(--space-6 );
 }
+
+hr {
+    margin-block: 1rem;
+}
+
+label button {
+    margin-block-start: var(--space-1);
+}

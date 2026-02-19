@@ -66,8 +66,8 @@ class Exercise extends HTMLElement {
                     New Exercise
                 </button>
                 <button type="submit" id="finish-btn">
-                    <svg><use href="#finish"></use></svg>
-                    Finish
+                    <svg><use href="#check"></use></svg>
+                    Finish Exercise
                 </button>
             </div>
 

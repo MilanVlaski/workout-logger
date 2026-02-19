@@ -1,4 +1,7 @@
-const $repsTemplate = document.getElementById('reps').content.cloneNode(true).firstElementChild
+const template = document.createElement('template')
+template.innerHTML = /*html*/`<input type="text" inputmode="numeric" name="reps">`
+
+const $repsTemplate  = template.content.cloneNode(true).firstElementChild
 
 class AllReps extends HTMLElement {
 
