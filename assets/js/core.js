@@ -9,7 +9,7 @@
  * * @returns {string} A formatted string, e.g., "Bench Press: 10, 10 - 225. 8, 8 - 225 - Felt strong"
  */
 export function asLog() {
-    const sets = this.setsWithWeight.map(set => {
+    const sets = this.setsWithWeight?.map(set => {
         return `${set.reps.join(', ')}${opt` - ${set.weight}`}`
     }).join('. ');
 

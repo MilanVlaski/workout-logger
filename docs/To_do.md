@@ -7,7 +7,11 @@
 - [x] Add x buttons to the top-right of the current exercise "elements", when they're appended.
 - [x] Date must come from today.
 - [x] Disable "Remove reps" while there is only one reps input
-- [ ] Use Deno to make unit tests for the regex functionsf
+- [ ] Use Deno to make unit tests for the regex functions
+  - [ ] Install deno
+  - [ ] Add test (runs unit tests by default) with Deno
+  - [ ] Move app to src folder
+  - [ ] 
 - [ ] Make a more complex test case for the entire GUI, on the index page. Also make it console log "test success".
 - [ ] Then make a "failing test case" that spans both pages. Console log "test fail".
 - [ ] Make the "focus event" on the all-reps, hit the LAST input
