@@ -38,6 +38,14 @@ class Exercise extends HTMLElement {
                 this.dispatchEvent(new CustomEvent('exercise:finish', {
                     detail: data, bubbles: true
                 }))
+
+                this.querySelectorAll('exercise-input[closeable]').forEach(it => {
+                    it.remove()
+                })
+
+                if(this.hasAttribute('closeable')) {
+                    this.remove()
+                }
             }
 
         })
@@ -46,15 +54,24 @@ class Exercise extends HTMLElement {
             .addEventListener('click', () => {
                 this.newExercise()
             })
+
     }
 
 
     render() {
-        this.replaceChildren($theExerciseTemplate.cloneNode(true))
+        const $element = $theExerciseTemplate.cloneNode(true)
+        if (this.hasAttribute('closeable')) {
+            const $closeBtn = document.createElement('close-btn')
+            $closeBtn.addEventListener('click', () => { this.remove() })
+            $element.prepend($closeBtn)
+        }
+        this.replaceChildren($element)
     }
 
     newExercise() {
-        this.after(document.createElement('the-exercise'))
+        const $theExercise = document.createElement('the-exercise')
+        $theExercise.setAttribute('closeable', '')
+        this.after($theExercise)
     }
 }
 

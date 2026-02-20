@@ -15,7 +15,6 @@ class AllReps extends HTMLElement {
 
         this.querySelector('#add-reps').addEventListener('click', () => this.addReps())
         this.querySelector('button[data-variant="danger"]').addEventListener('click', () => this.removeReps())
-        this.addEventListener('reset', () => { this.render() })
     }
 
     addReps() {

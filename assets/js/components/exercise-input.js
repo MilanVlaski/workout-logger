@@ -10,12 +10,21 @@ class ExerciseInput extends HTMLElement {
     }
 
     render() {
-        this.replaceChildren($exerciseInputTemplate.cloneNode(true));
+        const $element = $exerciseInputTemplate.cloneNode(true)
+        if(this.hasAttribute('closeable')) {
+            const $closeBtn = document.createElement('close-btn')
+            $closeBtn.addEventListener('click', () => { this.remove() })
+            $element.prepend($closeBtn)
+        }
+        this.replaceChildren($element);
     }
 
     newWeight() {
-        this.after(document.createElement('hr'), document.createElement('exercise-input'));
+        const $exerciseInput = document.createElement('exercise-input')
+        $exerciseInput.setAttribute('closeable', '')
+        this.after($exerciseInput);
     }
+
 }
 
 customElements.define('exercise-input', ExerciseInput);
