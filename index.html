@@ -24,6 +24,7 @@
     <script type="module" src="/assets/js/components/exercise-input.js"></script>
     <script type="module" src="/assets/js/components/the-exercise.js"></script>
     <script type="module" src="/assets/js/components/close-btn.js"></script>
+    <script type="module" src="/assets/js/components/workout-start-time.js"></script>
 
     <script defer src="/assets/js/workout.js"></script>
     <title>Workout Logger</title>
@@ -70,7 +71,9 @@
         
         <article class="container workout">
             
-            <h1>February 16, 2026</h1>
+            <h1>
+                <workout-start-time></workout-start-time>
+            </h1>
 
             <the-exercise></the-exercise>
             <form class="temporary-log" action="finish-workout">
@@ -90,11 +93,6 @@
     <!-- TEMPLATES -->
     <template id="the-exercise">
         <form action="finish-exercise" class="current-exercise">
-            <!-- <button style="float: right; padding: var(--space-1);" type="button" class="ghost small" aria-label="Close">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <use href="#x"></use>
-                </svg>
-            </button> -->
             <h2>Exercise</h2>
             <label data-field>Exercise Name
                 <input type="search" name="exercise-name" id="exercise-input" required>
