@@ -5,9 +5,8 @@
 - [x] Currently, the code either clones <template>s, in the very .html file, or it uses innerHTML as a string.Use webc from 11ty, to create <template> to clone in the component itself, and instead of innerHTML, also use a cloneable template, invoked in the render() method. ~~Switch to fragment cloning~~
 - [x] Add reset icon to the right of buttons, in case users mistype
 - [x] Add x buttons to the top-right of the current exercise "elements", when they're appended.
-- [ ] Date must come from today.
-- [ ] Disable "Remove reps" while there is only one reps input
-  - [ ] ~~Make disabled look good in my-css~~
+- [x] Date must come from today.
+- [x] Disable "Remove reps" while there is only one reps input
 - [ ] Make the "focus event" on the all-reps, hit the LAST input
 - [ ] Make my own theme.css
 - [ ] Save to IndexedDB, and read on "workout log" page. (Read the last 7 workouts).
