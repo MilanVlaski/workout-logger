@@ -1,5 +1,5 @@
 const theExerciseTemplate = document.getElementById('the-exercise')
-const $theExerciseTemplate  = theExerciseTemplate.content.cloneNode(true).firstElementChild
+const $theExerciseTemplate  = theExerciseTemplate.content.cloneNode(true)
 
 class Exercise extends HTMLElement {
 

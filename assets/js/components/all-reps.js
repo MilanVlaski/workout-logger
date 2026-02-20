@@ -1,5 +1,8 @@
 const repsTemplate = document.getElementById('reps-input')
-const $repsTemplate = repsTemplate.content.cloneNode(true).firstElementChild
+const $repsTemplate = repsTemplate.content.cloneNode(true)
+
+const allReps = document.getElementById('all-reps')
+const $allReps  = allReps.content.cloneNode(true)
 
 class AllReps extends HTMLElement {
 
@@ -8,23 +11,7 @@ class AllReps extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = /*html*/`
-        <label data-field>Reps
-        <div class="all-reps">
-            <input type="text" inputmode="numeric" name="reps">
-        </div>
-        </label>
-        <div class="half-screen-buttons">
-            <button type="button" data-variant="danger" class="outline">
-                <svg><use href="#remove"></use></svg>
-                Remove Reps
-            </button>
-            <button type="button" class="outline" id="add-reps">
-                <svg><use href="#add"></use></svg>
-                Add Reps
-            </button>
-        </div>
-        `
+        this.replaceChildren($allReps)
 
         this.querySelector('#add-reps').addEventListener('click', () => this.addReps())
         this.querySelector('button[data-variant="danger"]').addEventListener('click', () => this.removeReps())

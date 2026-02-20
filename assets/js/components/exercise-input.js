@@ -10,8 +10,7 @@ class ExerciseInput extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = '';
-        this.appendChild($exerciseInputTemplate.cloneNode(true));
+        this.replaceChildren($exerciseInputTemplate.cloneNode(true));
     }
 
     newWeight() {

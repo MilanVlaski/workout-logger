@@ -50,6 +50,9 @@
         <symbol id="dumbbell" viewBox="0 -960 960 960">
             <path d="m532.41-79.93-61.5-61.5 142-142-329.48-329.48-142 142-61.5-61.5 56-57.52-56-56 84.48-84.48-56-57.52 63.66-63.66 57.52 56 84.48-84.48 56 56 57.52-56 61.5 61.5-142 142 329.48 329.48 142-142 61.5 61.5-56 57.52 56 56-84.48 84.48 56 57.52-63.66 63.66-57.52-56-84.48 84.48-56-56-57.52 56Z"/>
         </symbol>
+        <symbol id="x" viewBox="0 -960 960 960" fill="#e3e3e3">
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+        </symbol>
     </svg>
  
 
@@ -84,38 +87,17 @@
     </main>
     
     <!-- TEMPLATES -->
-    <template id="reps-input">
-        <input type="text" inputmode="numeric" name="reps">
-    </template>
-
-    <template id="exercise-input">
-        <div class="exercise-input">
-            <all-reps></all-reps>
-            <label data-field>Weight
-                <div class="half-screen-buttons">
-                    <input type="text" id="weight" name="weight">
-                    <button type="button" class="outline" id="new-weight-btn">
-                        <svg>
-                            <use href="#weight"></use>
-                        </svg>
-                        New Weight
-                    </button>
-                </div>
-            </label>
-        </div>
-    </template>
-
     <template id="the-exercise">
         <form action="finish-exercise" class="current-exercise">
             <h2>Exercise</h2>
             <label data-field>Exercise Name
-                <input type="text" name="exercise-name" id="exercise-input" required>
+                <input type="search" name="exercise-name" id="exercise-input" required>
             </label>
         
             <exercise-input></exercise-input>
         
             <label data-field>Comment
-                <input type="text" id="comment" name="comment">
+                <input type="search" id="comment" name="comment">
             </label>
         
             <div class="exercise-actions">
@@ -135,6 +117,50 @@
     
         </form>
     </template>
+
+    <template id="exercise-input">
+        <div class="exercise-input">
+            <all-reps></all-reps>
+            <label data-field>Weight
+                <div class="half-screen-buttons">
+                    <input type="search" id="weight" name="weight">
+                    <button type="button" class="outline" id="new-weight-btn">
+                        <svg>
+                            <use href="#weight"></use>
+                        </svg>
+                        New Weight
+                    </button>
+                </div>
+            </label>
+        </div>
+    </template>
+
+    <template id="all-reps">
+        <label data-field>Reps
+            <div class="all-reps">
+                <input type="text" inputmode="numeric" name="reps">
+            </div>
+        </label>
+        <div class="half-screen-buttons">
+            <button type="button" data-variant="danger" class="outline">
+                <svg>
+                    <use href="#remove"></use>
+                </svg>
+                Remove Reps
+            </button>
+            <button type="button" class="outline" id="add-reps">
+                <svg>
+                    <use href="#add"></use>
+                </svg>
+                Add Reps
+            </button>
+        </div>
+    </template>
+
+    <template id="reps-input">
+        <input type="text" inputmode="numeric" name="reps">
+    </template>
+
 
 </body>
 </html>
