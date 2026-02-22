@@ -8,8 +8,9 @@
 - [x] Date must come from today.
 - [x] Disable "Remove reps" while there is only one reps input
 - [ ] Use Deno to make unit tests for the regex functions
-  - [ ] Install deno
-  - [ ] Add test (runs unit tests by default) with Deno
+  - [x] Install deno
+  - [x] Add test (runs unit tests by default) with Deno
+  - [ ] The functions to test are just "formatting" json to text. No need for parsing.
   - [ ] Move app to src folder
   - [ ] 
 - [ ] Make a more complex test case for the entire GUI, on the index page. Also make it console log "test success".

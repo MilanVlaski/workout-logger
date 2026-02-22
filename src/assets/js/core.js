@@ -24,10 +24,11 @@ export function asLog() {
     const sets = this.setsWithWeight?.map(set => {
         return `${set.reps.join(', ')}${opt` - ${set.weight}`}`
     }).join('. ');
-    
+
     return `${this.exerciseName}${opt`: ${sets}.`}${opt` ${this.comment}`}`
 }
 
 const opt = (strings, ...values) =>
     values.every(Boolean) ? strings.reduce((acc, str, i) => acc + str + (values[i] || ""), "") : ""
+
 
