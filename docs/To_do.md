@@ -10,6 +10,10 @@
 - [ ] Use Deno to make unit tests for the regex functions
   - [x] Install deno
   - [x] Add test (runs unit tests by default) with Deno
+- [ ] **Prompt for indexeddb**: ❯ I need IndexedDB to track the current workout. In workout.js you may notice i'm just       
+  writing the log of the exercise. That's not right. We gotta keep the object in memory,     
+  and then write to the db, and then to the textarea.    
+  
   - [ ] The functions to test are just "formatting" json to text. No need for parsing.
   - [ ] Move app to src folder
   - [ ] 

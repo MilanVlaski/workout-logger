@@ -1,4 +1,5 @@
-## Workflow
+## Human workflow
+
 1. Create HTML, add CSS classless stylesheet, all on the index.html file.
 2. Prototype the UI for a bit, statically.
 3. Optionally, add some extra CSS, if the components need a special layout.
@@ -10,9 +11,16 @@
 
 7. Repeat, until the entire HTML is cleaned up appropriately.
 
-## Note
+## LLM Workflow
 
-1. These web components are light dom focused, as we are not concerned with CSS encapsulation. For now.
+Since LLMs can't see CSS, they won't write any CSS. Since they don't need to iterate, as much, we let them one shot the feature.
+
+1. Come up with a list of UI components, and the functions that they should have. Coming up with the list can be aided by manually prototyping the UI, as described in the first steps of [human workflow](#human-workflow).
+2. Create a <template> of the UI using standard semantic HTML, and use the examples from [oat.ink](https://oat.ink/components/).
+3. 
+
+### Note
+1. These web components are light dom focused, as we are not concerned with CSS encapsulation. Until we really are.
 
 ## Snippets For Javascript
 

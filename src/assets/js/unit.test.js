@@ -18,17 +18,17 @@ Deno.test('One exercise with just name produces text with just name', () => {
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Name' }] }
-    assertEquals(json.exerciseName, workoutToText.call(json))
+    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }] }
-    assertEquals(`${json.exerciseName}: 1, 2, 3.`, workoutToText.call(json))
+    assertEquals(`${json.exercises[0].exerciseName}: 1, 2, 3.`, workoutToText.call(json))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{}], comment: '' }] }
-    assertEquals(json.exerciseName, workoutToText.call(json))
+    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json))
 })
 
 Deno.test('Single line workout serialization', () => {
