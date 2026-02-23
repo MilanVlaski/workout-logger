@@ -1,5 +1,5 @@
 import { assertEquals } from 'jsr:@std/assert'
-import { exerciseToText, workoutToText } from './core.js'
+import { exerciseToText, workoutToText } from '../../src/assets/js/core.js'
 
 Deno.test('One exercise with just name produces text with just name', () => {
     const json = { exerciseName: 'Name' }
