@@ -67,3 +67,4 @@ function finishExercise() {
     const $finishBtn = document.querySelector('#finish-btn')
     $finishBtn.click()
 }
+

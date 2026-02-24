@@ -45,6 +45,7 @@ export function exerciseToText(format = 'single') {
  * @returns {string} Formatted workout string.
  */
 export function workoutToText(format = 'single') {
+    console.log(this)
     const exercises = this.exercises || []
     const formatted = exercises.map(ex => exerciseToText.call(ex, format))
     return formatted.join(format === 'multiline' ? '\n\n' : '\n')
