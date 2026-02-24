@@ -51,19 +51,19 @@ all-reps > .half-screen-buttons{
     flex: 1;
 }
 
-.workout {
-    padding-block: var(--space-4);
-}
-
-.workout h1 {
+h1 {
     margin-block-start: var(--space-6 );
-}
-
-hr {
-    margin-block: 1rem;
 }
 
 label button {
     margin-block-start: var(--space-1);
 }
 
+nav[role='tablist'] {
+    display: flex;
+    background-color: var(--background);
+}
+
+ot-tabs:not(:defined) { 
+    display: none;
+}

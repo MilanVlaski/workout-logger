@@ -24,7 +24,7 @@ $useCase.addEventListener('click', (e) => {
 // Setup
 const demoData = {
     "exercise-name": "Pullups",
-    reps: "12",
+    reps: '12',
     comment: "Was a good workout!",
     weight: "1200lbs"
 };
@@ -33,7 +33,7 @@ const $demoBtn = document.createElement('button')
 $demoBtn.textContent = 'Data'
 $demoBtn.classList.add('warning')
 
-document.querySelector('header>nav')
+document.querySelector('nav')
     .append($demoBtn)
 
 $demoBtn.addEventListener('click', (e) => { fillForm() })
@@ -41,7 +41,7 @@ $demoBtn.addEventListener('click', (e) => { fillForm() })
 const $useCase = document.createElement('button')
 $useCase.classList.add('primary')
 $useCase.textContent = 'To Temp Log'
-document.querySelector('header>nav')
+document.querySelector('nav')
     .append($useCase)
 // Setup
 

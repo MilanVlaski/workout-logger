@@ -13,6 +13,6 @@ document.addEventListener('exercise:finish', (e) => {
 document.addEventListener('db:ready', (e) => {
     readCurrentWorkout()
         .then((workout) => {
-            $temporaryLog.value = workoutToText.call(workout)
+            $temporaryLog.value = workoutToText.call(workout) + '\n'
         })
 })

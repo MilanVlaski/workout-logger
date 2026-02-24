@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+    // Prevent FOUC - apply theme before rendering.
+    (function () {
+        var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+    })();
+</script>
+
+<link rel="stylesheet" href="/assets/css/oat.min.css">
+<link rel="stylesheet" href="/assets/css/common.css">
+
+<!-- dev -->
+<script defer src="/assets/js/test_fixture.js"></script>
+
+<script defer src="/assets/js/oat.min.js"></script>
+<title>Workout Log</title>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="remove" viewBox="0 -960 960 960">
+            <path d="M200-440v-80h560v80H200Z" />
+        </symbol>
+        <symbol id="sync" viewBox="0 -960 960 960">
+            <path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z" />
+        </symbol>
+    </svg>
+
+
+    <ot-tabs>
+        <header class="container">
+            <nav class="button-group" role="tablist">
+                <button role="tab">Workout</button>
+                <button role="tab">Log</button>
+            </nav>
+        </header>
+        <main role="tabpanel">
+    
+            <article class="container workout">
+    
+                <h1>
+                    <workout-start-time></workout-start-time>
+                </h1>
+    
+                <the-exercise></the-exercise>
+                <form class="temporary-log" action="finish-workout">
+                    <label data-field>
+                        <h2>Temporary Log</h2>
+                        <textarea class="temporary-log-input"></textarea>
+                    </label>
+                    <button class="primary" style="width: 100%;">
+                        <svg>
+                            <use href="#two-check"></use>
+                        </svg>
+                        Finish Workout
+                    </button>
+                    </section>
+            </article>
+    
+        </main>
+    </ot-tabs>
+
+
+
+    <!-- TEMPLATES -->
+    <template id="the-exercise">
+        <form action="finish-exercise" class="current-exercise">
+            <h2>Exercise</h2>
+            <label data-field>Exercise Name
+                <input type="search" name="exercise-name" id="exercise-input" required>
+            </label>
+
+            <exercise-input></exercise-input>
+
+            <label data-field>Comment
+                <input type="search" id="comment" name="comment">
+            </label>
+
+            <div class="exercise-actions">
+                <button type="button" class="outline" id="new-exercise-btn">
+                    <svg>
+                        <use href="#dumbbell"></use>
+                    </svg>
+                    New Exercise
+                </button>
+                <button type="submit" id="finish-btn">
+                    <svg>
+                        <use href="#check"></use>
+                    </svg>
+                    Finish Exercise
+                </button>
+            </div>
+
+        </form>
+    </template>
+
+    <template id="exercise-input">
+        <div class="exercise-input">
+            <all-reps></all-reps>
+            <label data-field>Weight
+                <div class="half-screen-buttons">
+                    <input type="search" id="weight" name="weight">
+                    <button type="button" class="outline" id="new-weight-btn">
+                        <svg>
+                            <use href="#weight"></use>
+                        </svg>
+                        New Weight
+                    </button>
+                </div>
+            </label>
+        </div>
+    </template>
+
+    <template id="all-reps">
+        <label data-field>Reps
+            <div class="all-reps">
+                <input type="text" inputmode="numeric" name="reps">
+            </div>
+        </label>
+        <div class="half-screen-buttons">
+            <button type="button" data-variant="danger" class="outline">
+                <svg>
+                    <use href="#remove"></use>
+                </svg>
+                Remove Reps
+            </button>
+            <button type="button" class="outline" id="add-reps">
+                <svg>
+                    <use href="#add"></use>
+                </svg>
+                Add Reps
+            </button>
+        </div>
+    </template>
+
+    <template id="reps-input">
+        <input type="text" inputmode="numeric" name="reps">
+    </template>
+
+</body>
+
+</html>

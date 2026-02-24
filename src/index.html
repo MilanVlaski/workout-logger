@@ -59,37 +59,39 @@
     </svg>
  
 
+    <ot-tabs>
+            <nav class="button-group container" role="tablist">
+                <button role="tab">Workout</button>
+                <button role="tab">Log</button>
+            </nav>
 
-    <header class="container">
-        <nav class="button-group">
-            <button>Workout</button>
-            <button>Log</button>
-        </nav>
-    </header>
+            
+            <article class="container workout" role="tabpanel">
+                
+                <h1>
+                    <workout-start-time></workout-start-time>
+                </h1>
+    
+                <the-exercise></the-exercise>
+                <form class="temporary-log" action="finish-workout">
+                    <label data-field>
+                        <h2>Temporary Log</h2>
+                        <textarea class="temporary-log-input"></textarea>
+                    </label>
+                    <button class="primary" style="width: 100%;">
+                        <svg><use href="#two-check"></use></svg>
+                        Finish Workout
+                    </button>
+                </section>
+            </article>
+    
+        <section class="container" role="tabpanel">
+            <h1>Workout Log</h1>
+            <p></p>
+        </div>
+    </ot-tabs>
 
     
-    <main>
-        
-        <article class="container workout">
-            
-            <h1>
-                <workout-start-time></workout-start-time>
-            </h1>
-
-            <the-exercise></the-exercise>
-            <form class="temporary-log" action="finish-workout">
-                <label data-field>
-                    <h2>Temporary Log</h2>
-                    <textarea class="temporary-log-input"></textarea>
-                </label>
-                <button class="primary" style="width: 100%;">
-                    <svg><use href="#two-check"></use></svg>
-                    Finish Workout
-                </button>
-            </section>
-        </article>
-
-    </main>
     
     <!-- TEMPLATES -->
     <template id="the-exercise">

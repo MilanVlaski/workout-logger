@@ -23,7 +23,6 @@ async function withPage(testFn) {
     try {
         await testFn(page)
     } finally {
-        // Closes the tab and wipes the session, but leaves the "Engine" running
         await context.close()
     }
 }
@@ -47,18 +46,39 @@ Deno.test("Complete Exercise Flow", () => withPage(async (page) => {
         "weight": "1200lbs"
     }
 
-    // 1. Fill the inputs
     for (const [name, value] of Object.entries(demoData)) {
         await page.locator(`[name="${name}"]`).fill(value)
     }
 
-    // 2. Trigger the submission
     await page.locator('#finish-btn').click()
 
-    // 3. Assert on the Textarea
-    // Use .inputValue() for <textarea> elements
     const logValue = await page.locator('.temporary-log-input').inputValue()
 
-    // Check if the log contains our data
     assertEquals(logValue.includes("Pullups: 1200lbs: 12. Was a good workout!"), true)
+}))
+
+Deno.test("Full Exercise Flow with Add Reps Button", () => withPage(async (page) => {
+    await page.goto(URL)
+
+    const exerciseName = "Bench Press"
+    const repsSequence = ["10", "12", "8"]
+
+    await page.locator('[name="exercise-name"]').fill(exerciseName)
+
+    await page.locator('[name="reps"]').click()
+    for (let i = 0; i < repsSequence.length; i++) {
+        await page.keyboard.type(repsSequence[i])
+
+        if (i < repsSequence.length - 1) {
+            await page.locator('#add-reps').click()
+
+            await new Promise(r => setTimeout(r, 50))
+        }
+    }
+
+    await page.locator('#finish-btn').click()
+
+    const logValue = await page.locator('.temporary-log-input').inputValue()
+
+    assertEquals(logValue.includes("Bench Press: 10, 12, 8"), true)
 }))
