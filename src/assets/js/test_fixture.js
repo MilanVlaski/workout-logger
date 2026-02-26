@@ -1,26 +1,3 @@
-/*
-If the script must keep working after navigation, this is how it's done.
-We have to put this same script in the next page, and leave a "flag" for it to
-read on 'load', and then it can execute the rest of the scenario.
-
-// 1. Check if we have a pending task on page load
-window.addEventListener('load', () => {
-    if (localStorage.getItem('pendingFinish') === 'true') {
-        localStorage.removeItem('pendingFinish');
-        finishExercise();
-    }
-});
-
-// 2. Set the flag before the action that causes navigation
-$useCase.addEventListener('click', (e) => {
-    fillForm();
-    localStorage.setItem('pendingFinish', 'true');
-    finishExercise(); // If this navigates, the 'load' listener above catches it on the next page.
-});
-
-*/
-
-
 // Setup
 const demoData = {
     "exercise-name": "Pullups",

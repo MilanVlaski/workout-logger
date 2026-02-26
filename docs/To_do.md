@@ -7,23 +7,41 @@
 - [x] Add x buttons to the top-right of the current exercise "elements", when they're appended.
 - [x] Date must come from today.
 - [x] Disable "Remove reps" while there is only one reps input
-- [ ] Use Deno to make unit tests for the regex functions
   - [x] Install deno
   - [x] Add test (runs unit tests by default) with Deno
   - [x] The functions to test are just "formatting" json to text. No need for parsing.
   - [x] Move app to src folder
-- [ ] Then make a "failing test case" that spans both pages. Console log "test fail".
+- [x] Export workout log as CSV
+- [x] Then make a "failing test case" that spans both pages. Console log "test fail".
+- [ ] Test Data generator function:
+  - [ ] For each date, from now, going back X days each, at random times of the day, given an array of exercise names, for X exercises, each exercise having 0-1 changes of weight, 1-4 sets, 5-30 reps, and an optional comment between 1 and 5 words.
+- [ ] Limit testing on mobile.
+- [ ] Edit exercise - When the user clicks on an exercise (pre), then a dialog opens up. The text is properly replaced, or deleted, and the corresponding datastore is updated.
+  - [ ] Specifically, when the user clicks BELOW a workout's date, or on it, it counts as a click on the workout.
+  - [ ] Current workout is edited in full. That way, the component for editing a workout is reused.
 - [ ] \[Optional](friendly LABEL) - that STICKS to the top as we scroll. An event gets sent once each thingy scrolls into view. That is, when the top element shows X, we do that. 
+- [ ] Add build and [profiles](#profiles)
+- [ ] PWA
+- [ ] Settings with light/dark switcher
+- [ ] Internationalization (read from data file)
+- [ ] Preferences for singleline, multiline
 
 ---
 
-- [ ] Export workout log as CSV
-- [ ] Settings with light/dark switcher
-- [ ] Internationalization (read from data file)
-- [ ] PWA
-- [ ] Make my own theme.css
-- [ ] Syntax highlighting on the textarea
-- [ ] Edit temporary log (rerender the damn text). But that loses scroll position. I mean, we don't even wanna scroll, tbh....
+
+## Profiles
+- dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled.
+- demo - Dev, but forbids export.
+- local - Adds PWA install and Export. Remove demo buttons (test_fixture.js). Uses localdb (db.js).
+- cloud - Adds PWA install and Export. Removes demo buttons. Uses cloud db. (Not sure if clouddb is used additionally, or instead of local db)
+
+### Logical steps
+- demo_controls -> import test_fixture.js
+- localdb -> import indexeddb.js
+- clouddb -> import clouddb.js
+- export -> import export.js, and button somewhere
+- pwa -> adds manifest.json and service_worker.js
+- 
 
 ### New Lines
 ```

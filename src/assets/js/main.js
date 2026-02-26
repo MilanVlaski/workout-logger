@@ -37,6 +37,7 @@ document.addEventListener('db:ready', (e) => {
         })
 })
 
+// TODO feature limited 
 document.querySelector('#csv-export-btn').addEventListener('click', async () => {
     try {
         const workoutLog = await readWorkoutLog();

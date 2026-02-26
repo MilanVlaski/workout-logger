@@ -1,3 +1,4 @@
+// TODO hardcoded localization
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     month: 'short',
@@ -76,17 +77,17 @@ export function workoutLogToText(format = 'single') {
 }
 
 export function workoutLogToCsv() {
-    const header = "Timestamp,Exercise,Weight,Reps,Comment";
+    const header = "Timestamp,Exercise,Weight,Reps,Comment"
 
     const rows = this.flatMap(entry => {
         // Format timestamp: '2026-02-26T14:30:00Z' -> '2026-02-26 14:30:00'
-        const formattedDate = entry.timestamp.replace('T', ' ').replace('Z', '');
+        const formattedDate = entry.timestamp.replace('T', ' ').replace('Z', '')
 
         return entry.exercises.flatMap(ex => {
             return ex.setsWithWeight.map(set => {
                 // Handle Reps: if more than 1 rep, wrap in quotes
-                const repsStr = set.reps.join(',');
-                const finalReps = set.reps.length > 1 ? `"${repsStr}"` : repsStr;
+                const repsStr = set.reps.join(',')
+                const finalReps = set.reps.length > 1 ? `"${repsStr}"` : repsStr
 
                 return [
                     formattedDate,
@@ -94,10 +95,10 @@ export function workoutLogToCsv() {
                     set.weight,
                     finalReps,
                     ex.comment
-                ].join(',');
-            });
-        });
-    });
+                ].join(',')
+            })
+        })
+    })
 
-    return [header, ...rows].join('\n');
-};
+    return [header, ...rows].join('\n')
+}
