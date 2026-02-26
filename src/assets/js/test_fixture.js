@@ -75,7 +75,7 @@ function fillForm() {
 }
 
 function finishExercise() {
-    const $finishBtn = document.querySelector('#finish-btn')
+    const $finishBtn = document.querySelector('#finish-exercise-btn')
     $finishBtn.click()
 }
 

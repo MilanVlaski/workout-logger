@@ -48,7 +48,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     }
 
     // Submit to Temp Log
-    const finishBtn = page.locator('#finish-btn')
+    const finishBtn = page.locator('#finish-exercise-btn')
     await finishBtn.click()
 
     // Verify Temp Log
