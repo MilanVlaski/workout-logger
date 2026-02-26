@@ -1,4 +1,4 @@
-import { exerciseToText, workoutLogToText, workoutToText } from "./core.js"
+import { exerciseToText, workoutLogToText, workoutToText, workoutDelimiter } from "./core.js"
 import { addExercise, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog } from "./db.js"
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
@@ -7,7 +7,7 @@ const $temporaryLog = document.querySelector('.temporary-log-input')
 // rather than just one. Based on that, we can also remove the elements
 document.addEventListener('exercise:finish', (e) => {
     addExercise(e.detail)
-        .then(() => { $temporaryLog.value += `${exerciseToText.call(e.detail)}\n` })
+        .then(() => { $temporaryLog.value += `${exerciseToText.call(e.detail)}${workoutDelimiter}` })
 })
 
 document.addEventListener('submit', (e) => {
@@ -16,7 +16,7 @@ document.addEventListener('submit', (e) => {
     if(e.target.getAttribute('action') == 'finish-workout') {
         saveCurrentWorkoutToLog()
             .then((workout) => {document.querySelector('#workout-log').prepend(
-                workoutToText.call(workout) + '\n')})
+                workoutToText.call(workout) + workoutDelimiter)})
             .catch((err) => console.error("Couldn't write workout.", err))
 
         e.target.reset()

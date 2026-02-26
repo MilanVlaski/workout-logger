@@ -43,7 +43,6 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
             await addBtn.click()
 
             // Wait for DOM stability
-            // await page.waitForTimeout(200)
             await page.waitForSelector(`input[name="reps"]:nth-of-type(${i + 2})`, { state: 'attached' })
         }
     }

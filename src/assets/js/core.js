@@ -8,6 +8,8 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'UTC'
 })
 
+export const workoutDelimiter = '\n\n\n'
+
 /**
  * Formats workout data into a readable log string.
  * Supports both single-line and multiline formats.
@@ -70,5 +72,5 @@ export function workoutToText(format = 'single') {
 export function workoutLogToText(format = 'single') {
     return this
         .map((workout) => { return workoutToText.call(workout, format) })
-        .join('\n\n\n')
+        .join(workoutDelimiter)
 }
