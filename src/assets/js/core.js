@@ -74,3 +74,30 @@ export function workoutLogToText(format = 'single') {
         .map((workout) => { return workoutToText.call(workout, format) })
         .join(workoutDelimiter)
 }
+
+export function workoutLogToCsv() {
+    const header = "Timestamp,Exercise,Weight,Reps,Comment";
+
+    const rows = this.flatMap(entry => {
+        // Format timestamp: '2026-02-26T14:30:00Z' -> '2026-02-26 14:30:00'
+        const formattedDate = entry.timestamp.replace('T', ' ').replace('Z', '');
+
+        return entry.exercises.flatMap(ex => {
+            return ex.setsWithWeight.map(set => {
+                // Handle Reps: if more than 1 rep, wrap in quotes
+                const repsStr = set.reps.join(',');
+                const finalReps = set.reps.length > 1 ? `"${repsStr}"` : repsStr;
+
+                return [
+                    formattedDate,
+                    ex.exerciseName,
+                    set.weight,
+                    finalReps,
+                    ex.comment
+                ].join(',');
+            });
+        });
+    });
+
+    return [header, ...rows].join('\n');
+};

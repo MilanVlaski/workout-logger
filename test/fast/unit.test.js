@@ -1,5 +1,5 @@
 import { assertEquals } from 'jsr:@std/assert'
-import { exerciseToText, workoutToText, workoutLogToText } from '../../src/assets/js/core.js'
+import { exerciseToText, workoutToText, workoutLogToText, workoutLogToCsv } from '../../src/assets/js/core.js'
 
 Deno.test('One exercise with just name produces text with just name', () => {
     const json = { exerciseName: 'Name' }
@@ -171,4 +171,65 @@ Pushups
 Felt weaker`
         , workoutLogToText.call(json, 'multiline'))
 
+})
+
+Deno.test('CSV export', () => {
+    const json = [{
+        timestamp: '2026-02-26T14:30:00Z',
+        exercises: [{
+            exerciseName: 'Pullups',
+            setsWithWeight: [
+                { weight: "120kg", reps: [1, 2, 3] },
+                { weight: "150", reps: [1] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "What a great workout!",
+        }, {
+            exerciseName: 'Pushups',
+            setsWithWeight: [
+                { weight: "89g", reps: [15, 16, 30] },
+                { weight: "150", reps: [1, 2, 4] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "Felt weaker",
+        }
+        ]
+    },
+    {
+        timestamp: '2026-02-25T14:30:00Z',
+        exercises: [{
+            exerciseName: 'Pullups',
+            setsWithWeight: [
+                { weight: "120kg", reps: [1, 2, 3] },
+                { weight: "150", reps: [1] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "What a great workout!",
+        }, {
+            exerciseName: 'Pushups',
+            setsWithWeight: [
+                { weight: "89g", reps: [15, 16, 30] },
+                { weight: "150", reps: [1, 2, 4] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "Felt weaker",
+        }
+        ]
+    }]
+
+    assertEquals(
+`Timestamp,Exercise,Weight,Reps,Comment
+2026-02-26 14:30:00,Pullups,120kg,"1,2,3",What a great workout!
+2026-02-26 14:30:00,Pullups,150,1,What a great workout!
+2026-02-26 14:30:00,Pullups,99lb,"1,2,3",What a great workout!
+2026-02-26 14:30:00,Pushups,89g,"15,16,30",Felt weaker
+2026-02-26 14:30:00,Pushups,150,"1,2,4",Felt weaker
+2026-02-26 14:30:00,Pushups,99lb,"1,2,3",Felt weaker
+2026-02-25 14:30:00,Pullups,120kg,"1,2,3",What a great workout!
+2026-02-25 14:30:00,Pullups,150,1,What a great workout!
+2026-02-25 14:30:00,Pullups,99lb,"1,2,3",What a great workout!
+2026-02-25 14:30:00,Pushups,89g,"15,16,30",Felt weaker
+2026-02-25 14:30:00,Pushups,150,"1,2,4",Felt weaker
+2026-02-25 14:30:00,Pushups,99lb,"1,2,3",Felt weaker`
+    , workoutLogToCsv.call(json))
 })
