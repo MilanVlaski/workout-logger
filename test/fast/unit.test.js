@@ -100,7 +100,7 @@ Felt weaker`
 
 Deno.test('Serialize two workouts', () => {
     const json = [{
-        date: '2026-02-26T14:30:00Z',
+        timestamp: '2026-02-26T14:30:00Z',
         exercises: [{
             exerciseName: 'Pullups',
             setsWithWeight: [
@@ -121,7 +121,7 @@ Deno.test('Serialize two workouts', () => {
         ]
     },
     {
-        date: '2026-02-25T14:30:00Z',
+        timestamp: '2026-02-25T14:30:00Z',
         exercises: [{
             exerciseName: 'Pullups',
             setsWithWeight: [

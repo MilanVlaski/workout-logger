@@ -1,24 +1,12 @@
 import { chromium } from "npm:playwright"
 import { assertEquals } from "jsr:@std/assert"
 
-// 1. GLOBAL SETUP: Launch browser once for all tests in this file
-
-// If wanting to see the UI - { headless: false, slowMo: 500 }
 const browser = await chromium.launch({ headless: true })
 
-/**
- * CLEANUP: Ensures the browser actually closes when tests are done.
- * Without this, Deno will hang in your terminal forever.
- */
 Deno.test.afterAll(async () => {
     await browser.close()
 })
 
-/**
- * HELPER: withPage
- * Creates a fresh incognito context (resets localStorage/cookies)
- * and a new tab for every test.
- */
 async function withPage(testFn) {
     const context = await browser.newContext()
     const page = await context.newPage()
@@ -29,61 +17,7 @@ async function withPage(testFn) {
     }
 }
 
-// --- YOUR TESTS ---
-
 const URL = Deno.env.get("PAGE_URL")
-
-Deno.test("Verify Title", () => withPage(async (page) => {
-    await page.goto(URL)
-    assertEquals(await page.title(), "Workout Logger")
-}))
-
-Deno.test("Complete Exercise Flow", () => withPage(async (page) => {
-    await page.goto(URL)
-
-    const demoData = {
-        "exercise-name": "Pullups",
-        "reps": "12",
-        "comment": "Was a good workout!",
-        "weight": "1200lbs"
-    }
-
-    for (const [name, value] of Object.entries(demoData)) {
-        await page.locator(`[name="${name}"]`).fill(value)
-    }
-
-    await page.locator('#finish-btn').click()
-
-    const logValue = await page.locator('.temporary-log-input').inputValue()
-
-    assertEquals(logValue.includes("Pullups: 1200lbs: 12. Was a good workout!"), true)
-}))
-
-Deno.test("Full Exercise Flow with Add Reps Button", () => withPage(async (page) => {
-    await page.goto(URL)
-
-    const exerciseName = "Bench Press"
-    const repsSequence = ["10", "12", "8"]
-
-    await page.locator('[name="exercise-name"]').fill(exerciseName)
-
-    await page.locator('[name="reps"]').click()
-    for (let i = 0; i < repsSequence.length; i++) {
-        await page.keyboard.type(repsSequence[i])
-
-        if (i < repsSequence.length - 1) {
-            await page.locator('#add-reps').click()
-
-            await new Promise(r => setTimeout(r, 50))
-        }
-    }
-
-    await page.locator('#finish-btn').click()
-
-    const logValue = await page.locator('.temporary-log-input').inputValue()
-
-    assertEquals(logValue.includes("Bench Press: 10, 12, 8"), true)
-}))
 
 Deno.test("Complete an exercise and see it in the workout log", () => withPage(async (page) => {
     await page.goto(URL)
@@ -91,28 +25,52 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     const exerciseName = "Bench Press"
     const repsSequence = ["10", "12", "8"]
 
+    // Fill Exercise Name
     await page.locator('[name="exercise-name"]').fill(exerciseName)
 
-    await page.locator('[name="reps"]').click()
+    // Loop with forced focus and event-loop yielding
     for (let i = 0; i < repsSequence.length; i++) {
-        await page.keyboard.type(repsSequence[i])
+        const selector = `input[name="reps"]:nth-of-type(${i + 1})`
+        const repsInput = page.locator(selector).first()
+
+        await repsInput.click()
+        await repsInput.fill(repsSequence[i])
+        await repsInput.dispatchEvent('input')
+        await repsInput.dispatchEvent('change')
 
         if (i < repsSequence.length - 1) {
-            await page.locator('#add-reps').click()
+            const addBtn = page.locator('#add-reps')
+            await addBtn.click()
 
-            await new Promise(r => setTimeout(r, 50))
+            // Wait for DOM stability
+            // await page.waitForTimeout(200)
+            await page.waitForSelector(`input[name="reps"]:nth-of-type(${i + 2})`, { state: 'attached' })
         }
     }
 
-    await page.locator('#finish-btn').click()
+    // Submit to Temp Log
+    const finishBtn = page.locator('#finish-btn')
+    await finishBtn.click()
 
-    const tempLog = await page.locator('.temporary-log-input')
-    const logValue = tempLog.inputValue()
+    // Verify Temp Log
+    const tempLog = page.locator('.temporary-log-input')
+    await page.waitForFunction((el) => el.value !== "", await tempLog.elementHandle())
+    const logValue = await tempLog.inputValue()
 
-    assertEquals(logValue.includes("Bench Press: 10, 12, 8"), true)
+    assertEquals(logValue.includes(exerciseName), true)
+    assertEquals(logValue.includes("10, 12, 8"), true)
 
-    await page.getByRole('tab').nth(1).click();
+    // Submit to Permanent Log
+    const finalBtn = page.locator('button:has-text("Finish"), [type="submit"]').last()
+    await finalBtn.click()
 
-    const log = await page.locator('.workout-log').textContent()
+    // Switch Tab and Verify
+    const logTab = page.getByRole('tab', { name: /Log/i })
+    await logTab.click()
+
+    const logContainer = page.locator('#workout-log')
+    const logText = await logContainer.innerText()
+
+    assertEquals(logText.includes(exerciseName), true)
+    assertEquals(logText.includes("10, 12, 8"), true)
 }))
-

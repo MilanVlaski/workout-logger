@@ -55,7 +55,7 @@ export function exerciseToText(format = 'single') {
  * @returns {string} Formatted workout string.
  */
 export function workoutToText(format = 'single') {
-    const dateStr = this.date ? dateFormatter.format(new Date(this?.date)) : ''
+    const dateStr = this.timestamp ? dateFormatter.format(new Date(this.timestamp)) : ''
     const exercises = this.exercises || []
     const formatted = exercises.map(ex => exerciseToText.call(ex, format))
 

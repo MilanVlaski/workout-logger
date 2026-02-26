@@ -1,12 +1,16 @@
 let db
 
 const dbReadyPromise = new Promise((resolve, reject) => {
-    const request = indexedDB.open('WorkoutDB', 1)
+    const request = indexedDB.open('WorkoutDB', 2)
 
     request.onupgradeneeded = (e) => {
         const database = e.target.result
         if (!database.objectStoreNames.contains('current-workout')) {
             database.createObjectStore('current-workout')
+        }
+
+        if (!database.objectStoreNames.contains('workouts')) {
+            database.createObjectStore('workouts', { keyPath: 'id', autoIncrement: true })
         }
     }
 
@@ -49,7 +53,54 @@ export async function readCurrentWorkout() {
         const store = transaction.objectStore('current-workout')
         const request = store.get(WORKOUT_KEY)
 
-        request.onsuccess = () => resolve(request.result || { exercises: [] })
+        request.onsuccess = () => resolve(request.result)
         request.onerror = () => reject(request.error)
+    })
+}
+
+/**
+ * Retrieves all saved workouts from the history log.
+ * @returns {Promise<Array>} A list of all completed workouts.
+ */
+export async function readWorkoutLog() {
+    await dbReadyPromise
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('workouts', 'readonly')
+        const store = transaction.objectStore('workouts')
+
+        // getAll() is the most efficient way to retrieve the entire log
+        const request = store.getAll()
+
+        request.onsuccess = () => {
+            console.log(request.result)
+            // Returns an array of workout objects, or an empty array if none exist
+            resolve(request.result || [])
+        }
+
+        request.onerror = () => reject(request.error)
+    })
+}
+
+export async function saveCurrentWorkoutToLog() {
+    const current = await readCurrentWorkout()
+    if (current.exercises.length === 0) return
+    
+    await dbReadyPromise
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['workouts', 'current-workout'], 'readwrite')
+
+        let finishedWorkout = {
+            ...current,
+            timestamp: new Date().toISOString()
+        }
+        // 1. Add to log
+        transaction.objectStore('workouts').add(finishedWorkout)
+
+        // 2. Clear current workout
+        transaction.objectStore('current-workout').delete(WORKOUT_KEY)
+
+        transaction.oncomplete = () => resolve(finishedWorkout)
+        transaction.onerror = () => reject(transaction.error)
     })
 }
