@@ -1,3 +1,13 @@
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'UTC'
+})
+
 /**
  * Formats workout data into a readable log string.
  * Supports both single-line and multiline formats.
@@ -45,8 +55,20 @@ export function exerciseToText(format = 'single') {
  * @returns {string} Formatted workout string.
  */
 export function workoutToText(format = 'single') {
-    console.log(this)
+    const dateStr = this.date ? dateFormatter.format(new Date(this?.date)) : ''
     const exercises = this.exercises || []
     const formatted = exercises.map(ex => exerciseToText.call(ex, format))
-    return formatted.join(format === 'multiline' ? '\n\n' : '\n')
+
+    return `${opt`${dateStr}\n`}${formatted.join(format === 'multiline' ? '\n\n' : '\n')}`
+}
+
+/**
+ * Formats an array of workout log entries into a multiline string.
+ * @param {Array} logs - Array of workout objects.
+ * @returns {string} Formatted workout log string.
+ */
+export function workoutLogToText(format = 'single') {
+    return this
+        .map((workout) => { return workoutToText.call(workout, format) })
+        .join('\n\n\n')
 }

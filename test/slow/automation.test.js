@@ -2,7 +2,9 @@ import { chromium } from "npm:playwright"
 import { assertEquals } from "jsr:@std/assert"
 
 // 1. GLOBAL SETUP: Launch browser once for all tests in this file
-const browser = await chromium.launch({ headless: false })
+
+// If wanting to see the UI - { headless: false, slowMo: 500 }
+const browser = await chromium.launch({ headless: true })
 
 /**
  * CLEANUP: Ensures the browser actually closes when tests are done.
@@ -82,3 +84,35 @@ Deno.test("Full Exercise Flow with Add Reps Button", () => withPage(async (page)
 
     assertEquals(logValue.includes("Bench Press: 10, 12, 8"), true)
 }))
+
+Deno.test("Complete an exercise and see it in the workout log", () => withPage(async (page) => {
+    await page.goto(URL)
+
+    const exerciseName = "Bench Press"
+    const repsSequence = ["10", "12", "8"]
+
+    await page.locator('[name="exercise-name"]').fill(exerciseName)
+
+    await page.locator('[name="reps"]').click()
+    for (let i = 0; i < repsSequence.length; i++) {
+        await page.keyboard.type(repsSequence[i])
+
+        if (i < repsSequence.length - 1) {
+            await page.locator('#add-reps').click()
+
+            await new Promise(r => setTimeout(r, 50))
+        }
+    }
+
+    await page.locator('#finish-btn').click()
+
+    const tempLog = await page.locator('.temporary-log-input')
+    const logValue = tempLog.inputValue()
+
+    assertEquals(logValue.includes("Bench Press: 10, 12, 8"), true)
+
+    await page.getByRole('tab').nth(1).click();
+
+    const log = await page.locator('.workout-log').textContent()
+}))
+

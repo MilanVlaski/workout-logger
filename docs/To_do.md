@@ -12,32 +12,18 @@
   - [x] Add test (runs unit tests by default) with Deno
   - [x] The functions to test are just "formatting" json to text. No need for parsing.
   - [x] Move app to src folder
-- [ ] Make a more complex test case for the entire GUI, on the index page. Also make it console log "test success".
 - [ ] Then make a "failing test case" that spans both pages. Console log "test fail".
-- [ ] Make the "focus event" on the all-reps, hit the LAST input
-- [ ] Test the regexes (automated tests?)
-  - [ ] Make regex injectable into the asLog() function
-  - [ ] Make the textarea revert text, if there is a mistake when editing
-- [ ] Save to IndexedDB, and read on "workout log" page. (Read the last 7 workouts).
-- [ ] Write a test for the entire flow, from data entry, from the temporary log, to the permanent log (IndexedDB).
+- [ ] \[Optional](friendly LABEL) - that STICKS to the top as we scroll. An event gets sent once each thingy scrolls into view. That is, when the top element shows X, we do that. 
+
+---
+
 - [ ] Export workout log as CSV
 - [ ] Settings with light/dark switcher
 - [ ] Internationalization (read from data file)
 - [ ] PWA
 - [ ] Make my own theme.css
 - [ ] Syntax highlighting on the textarea
-- [ ] 
-
-# Textarea Input
-
-It's all based on a nice and robust regex.
-Mistakes are prevented because the element is prevented from being invalid by a "blur" rollback to previous value, thingy.
-The regex doesn't care whether it's one or multiple lines.
-
-## Regexes
-```
-^([A-Za-z0-9 ]+?)(?:\. |\n|$)\s*((?:(?=.*\d)[A-Za-z0-9]+: \d+(?:, \d+)*(?:\. |\n|$)\s*)*)(\(.*\))?
-```
+- [ ] Edit temporary log (rerender the damn text). But that loses scroll position. I mean, we don't even wanna scroll, tbh....
 
 ### New Lines
 ```
@@ -57,56 +43,10 @@ Squats,100kg,"5, 5",Knee felt okay
 Squats,120kg,3,Knee felt okay
 ```
 
-Sample javascript object:
-```json
-{
-    "exerciseName": "Pullups",
-    "comment": "Was a good workout!",
-    "setsWithWeight": [
-        {
-            "weight": "1200lbs",
-            "reps": [
-                "12",
-                "12",
-                "12"
-            ]
-        },
-        {
-            "weight": "50lb",
-            "reps": [
-                "12",
-                "12",
-                "12"
-            ]
-        }
-    ]
-}
-```
-
-```html
-<!-- VALIDATING TEXT AREA -->
- <textarea 
-  id="log" 
-  onfocus="this.dataset.backup = this.value"
-  onblur="validateAndSnap(this)">
-Squats: 100kg. 5, 5, 5
-</textarea>
-
-<script>
-function validateAndSnap(el) {
-    const pattern = /.+:(\s*[\d\w]+\.\s*[\d\s,]+)+/g;
-    
-    // Test if the WHOLE text still makes sense
-    if (pattern.test(el.value)) {
-        // Success: Update the backup to the new valid version
-        el.dataset.backup = el.value;
-        el.classList.remove('error');
-    } else {
-        // Failure: Force the previous version back in
-        el.value = el.dataset.backup;
-        el.classList.add('flash-red'); // Visual feedback of rejection
-        setTimeout(() => el.classList.remove('flash-red'), 500);
-    }
-}
-</script>
-```
+## Old windowing, unnecessary, since we just load ALL of the text, in the background, but a cool idea ~~Show workout log~~
+1. Write to IndexedDB...
+2. The entire workout log container has a kind of state. Which is:
+   1. In the background, fetch the first two weeks of exercises. Add them to the DOM. Remember the timestamp of the latest workout that was fetched. Put a "sentinel" div at the bottom, which will tell us when to fetch more; based on `rootMargin`.
+   2. When the sentinel is reached, we respond by fetching two weeks more of workouts, and remembering the latest date, again.
+3. The first two weeks of exercises get fetched immediatelly, even if we're not on the page.
+4. When we click on log, we just see the result :P

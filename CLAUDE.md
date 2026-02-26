@@ -78,7 +78,7 @@ src/
       core.js          # Pure serialization logic (exerciseToText, workoutToText)
       db.js            # IndexedDB persistence layer
       oat.min.js       # Third-party OAT library
-      workout.js       # UI event handling, connects components
+      main.js       # UI event handling, connects components
   index.html          # Main entry point with templates
 
 test/
@@ -104,7 +104,7 @@ Makefile              # Development command wrappers
 
 3. **Separation of concerns**:
    - `core.js` - Pure functions, no DOM access, handles text serialization
-   - `workout.js` - Glue layer, listens for events and updates UI
+   - `main.js` - Glue layer, listens for events and updates UI
    - `db.js` - IndexedDB operations, listens for `exercise:finish` events
 
 4. **Template-based rendering**: HTML `<template>` elements in `index.html` are cloned for component initialization.
@@ -113,7 +113,7 @@ Makefile              # Development command wrappers
 
 1. User fills exercise form (name, weight, reps, comment)
 2. On form submission, `the-exercise` component creates data object and dispatches `exercise:finish` event
-3. `workout.js` listens and appends formatted text to temporary log textarea via `exerciseToText()`
+3. `main.js` listens and appends formatted text to temporary log textarea via `exerciseToText()`
 4. `db.js` listens and saves exercise data to IndexedDB "exercises" object store
 5. On "Finish Workout", the full workout is serialized via `workoutToText()`
 
@@ -123,7 +123,7 @@ Makefile              # Development command wrappers
 - `exerciseToText(this, format)` - Formats an exercise object into string (single-line or multiline)
 - `workoutToText(this, format)` - Formats a workout (array of exercises) into string
 
-**`workout.js`**:
+**`main.js`**:
 - Listens for `exercise:finish` events
 - Updates temporary log textarea
 

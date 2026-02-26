@@ -1,4 +1,4 @@
-import { exerciseToText, workoutToText } from "./core.js"
+import { exerciseToText, workoutLogToText, workoutToText } from "./core.js"
 import { addExercise, readCurrentWorkout } from "./db.js"
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
@@ -14,5 +14,10 @@ document.addEventListener('db:ready', (e) => {
     readCurrentWorkout()
         .then((workout) => {
             $temporaryLog.value = workoutToText.call(workout) + '\n'
+        })
+
+    readWorkoutLog()
+        .then(workouts => {
+            document.querySelector('#workout-log').textContent = workoutLogToText.call(workouts)
         })
 })
