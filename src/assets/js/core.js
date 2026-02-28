@@ -26,7 +26,7 @@ const opt = (strings, ...values) =>
  * @param {'single'|'multiline'} [format='single'] The output format.
  * @returns {string} Formatted exercise string.
  */
-export function exerciseToText(format = 'single') {
+export function exerciseToText(format = 'multi') {
     // Filter out sets with no reps
     const sets = (this.setsWithWeight || [])
         .filter(set => set.reps && set.reps.length > 0)
@@ -35,7 +35,7 @@ export function exerciseToText(format = 'single') {
             return set.weight ? `${set.weight}: ${repStr}` : repStr
         })
 
-    if (format === 'multiline') {
+    if (format === 'multi') {
         let result = this.exerciseName
         if (sets.length > 0) {
             result += '\n' + sets.join('\n')
@@ -57,12 +57,12 @@ export function exerciseToText(format = 'single') {
  * @param {'single'|'multiline'} [format='single'] The output format.
  * @returns {string} Formatted workout string.
  */
-export function workoutToText(format = 'single') {
+export function workoutToText(format = 'multi') {
     const dateStr = this.timestamp ? dateFormatter.format(new Date(this.timestamp)) : ''
     const exercises = this.exercises || []
     const formatted = exercises.map(ex => exerciseToText.call(ex, format))
 
-    return `${opt`${dateStr}\n`}${formatted.join(format === 'multiline' ? '\n\n' : '\n')}`
+    return `${opt`${dateStr}\n`}${formatted.join(format === 'multi' ? '\n\n' : '\n')}`
 }
 
 /**
@@ -70,7 +70,7 @@ export function workoutToText(format = 'single') {
  * @param {Array} logs - Array of workout objects.
  * @returns {string} Formatted workout log string.
  */
-export function workoutLogToText(format = 'single') {
+export function workoutLogToText(format = 'multi') {
     return this
         .map((workout) => { return workoutToText.call(workout, format) })
         .join(workoutDelimiter)

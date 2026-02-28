@@ -3,11 +3,23 @@ import { addExercise, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLo
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 
+if(localStorage.getItem('exerciseFormat')) {
+    localStorage.setItem('exerciseFormat', 'multi')
+}
+
+document.querySelector('#exercise-format').addEventListener('change', (e) => {
+    localStorage.setItem('exerciseFormat', e.target.value)
+    writeCurrentWorkoutToScreen()
+    writeWorkoutLogToScreen()
+})
+
+
+
 // This actually has to be for each exercise element currently on the screen,
 // rather than just one. Based on that, we can also remove the elements
 document.addEventListener('exercise:finish', (e) => {
     addExercise(e.detail)
-        .then(() => { $temporaryLog.value += `${exerciseToText.call(e.detail)}\n` })
+        .then(() => { $temporaryLog.value += `${exerciseToText.call(e.detail, localStorage.getItem('exerciseFormat'))}\n` })
 })
 
 document.addEventListener('submit', (e) => {
@@ -17,7 +29,7 @@ document.addEventListener('submit', (e) => {
         saveCurrentWorkoutToLog()
             .then((workout) => {
                 document.querySelector('#workout-log').prepend(
-                    workoutToText.call(workout) + workoutDelimiter)
+                    workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + workoutDelimiter)
             })
             .catch((err) => console.error("Couldn't write workout.", err))
 
@@ -26,16 +38,23 @@ document.addEventListener('submit', (e) => {
 })
 
 document.addEventListener('db:ready', (e) => {
+    writeCurrentWorkoutToScreen()
+    writeWorkoutLogToScreen()
+})
+
+function writeCurrentWorkoutToScreen() {
     readCurrentWorkout()
         .then((workout) => {
-            if (workout) $temporaryLog.value = workoutToText.call(workout) + '\n'
+            if (workout) $temporaryLog.value = workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + '\n'
         })
+}
 
+function writeWorkoutLogToScreen() {
     readWorkoutLog()
         .then(workouts => {
-            document.querySelector('#workout-log').textContent = workoutLogToText.call(workouts)
+            document.querySelector('#workout-log').textContent = workoutLogToText.call(workouts, localStorage.getItem('exerciseFormat'))
         })
-})
+}
 
 // TODO feature limited 
 document.querySelector('#csv-export-btn').addEventListener('click', async () => {
