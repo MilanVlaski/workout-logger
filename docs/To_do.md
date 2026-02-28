@@ -23,7 +23,26 @@
 - [ ] Add build and [profiles](#profiles)
 - [ ] PWA
 - [ ] Settings with light/dark switcher
-- [ ] Internationalization (read from data file)
+- [ ] I18N (read from data file)
+```javascript
+window.I18N = {
+  en: { welcome: "Welcome", login: "Login" },
+  es: { welcome: "Bienvenido", login: "Iniciar sesión" }
+}
+```
+
+```html
+<head>
+  <script src="strings.js"></script>
+  
+  <script>
+    const savedLang = localStorage.getItem('user_lang') || 'en';
+    window.strings = window.I18N[savedLang] || window.I18N.en;
+    document.documentElement.lang = savedLang;
+  </script>
+</head>
+```
+
 - [ ] Preferences for singleline, multiline
 
 ---

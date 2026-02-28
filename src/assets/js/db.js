@@ -1,4 +1,4 @@
-let db
+export let db
 
 const dbReadyPromise = new Promise((resolve, reject) => {
     const request = indexedDB.open('WorkoutDB', 2)
@@ -16,7 +16,6 @@ const dbReadyPromise = new Promise((resolve, reject) => {
 
     request.onsuccess = (e) => {
         db = e.target.result
-        console.log('Database connection established')
         resolve(db)
         document.dispatchEvent(new CustomEvent('db:ready'))
     }
@@ -73,7 +72,6 @@ export async function readWorkoutLog() {
         const request = store.getAll()
 
         request.onsuccess = () => {
-            console.log(request.result)
             // Returns an array of workout objects, or an empty array if none exist
             resolve(request.result || [])
         }
@@ -85,6 +83,7 @@ export async function readWorkoutLog() {
 export async function saveCurrentWorkoutToLog() {
     const current = await readCurrentWorkout()
     if (current.exercises.length === 0) return
+    console.log(JSON.stringify(current))
     
     await dbReadyPromise
     return new Promise((resolve, reject) => {
