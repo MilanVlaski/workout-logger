@@ -1,7 +1,7 @@
 export let db
 
 const dbReadyPromise = new Promise((resolve, reject) => {
-    const request = indexedDB.open('WorkoutDB', 2)
+    const request = indexedDB.open('WorkoutDB', 3)
 
     request.onupgradeneeded = (e) => {
         const database = e.target.result
@@ -10,7 +10,8 @@ const dbReadyPromise = new Promise((resolve, reject) => {
         }
 
         if (!database.objectStoreNames.contains('workouts')) {
-            database.createObjectStore('workouts', { keyPath: 'id', autoIncrement: true })
+            const workouts = database.createObjectStore('workouts', { keyPath: 'id', autoIncrement: true})
+            workouts.createIndex('timestamp', 'timestamp', { unique: true });
         }
     }
 
@@ -83,7 +84,6 @@ export async function readWorkoutLog() {
 export async function saveCurrentWorkoutToLog() {
     const current = await readCurrentWorkout()
     if (current.exercises.length === 0) return
-    console.log(JSON.stringify(current))
     
     await dbReadyPromise
     return new Promise((resolve, reject) => {
@@ -101,5 +101,28 @@ export async function saveCurrentWorkoutToLog() {
 
         transaction.oncomplete = () => resolve(finishedWorkout)
         transaction.onerror = () => reject(transaction.error)
+    })
+}
+
+/**
+ * Retrieves a specific workout by its timestamp ID.
+ * @param {string} timestamp - The ISO string timestamp to search for.
+ * @returns {Promise<Object|null>} The workout object or null if not found.
+ */
+export async function findWorkoutById(timestamp) {
+    await dbReadyPromise
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('workouts', 'readonly')
+        const store = transaction.objectStore('workouts')
+
+        // Use get() with the keyPath value
+        const request = store.index('timestamp').get(timestamp)
+
+        request.onsuccess = () => {
+            resolve(request.result || null)
+        }
+
+        request.onerror = () => reject(request.error)
     })
 }

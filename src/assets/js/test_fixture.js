@@ -33,7 +33,6 @@ $dbTestData.textContent = 'Fill Workout Log'
 $dbTestData.addEventListener('click', async () => {
     const exercises = ['Pullups', 'Pushups', 'Squats', 'Deadlift', 'Bench Press']
     const generatedData = generateWorkoutData(exercises, 50, 5)
-    console.log(JSON.stringify(generatedData, null, 2))
 
         new Promise((resolve, reject) => {
             const transaction = db.transaction(['workouts'], 'readwrite')

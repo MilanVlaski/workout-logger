@@ -102,3 +102,20 @@ export function workoutLogToCsv() {
 
     return [header, ...rows].join('\n')
 }
+
+export function linesPerWorkout(workout, format) {
+    const delimiterLines = (workoutDelimiter.length - 1) // three line breaks means two new lines...
+    if(format == 'single') {
+         return 1 + workout.exercises.length + delimiterLines
+    } else if (format == 'multi') {
+        let count = 1 // date
+        workout.exercises.forEach(exercise => {
+            count+= 2 // new line and exercise name
+            if(exercise.comment) count++
+            exercise.setsWithWeight.forEach(set => {
+                count++ // each one is a new line
+            })
+        })
+        return count + 1
+    }
+}

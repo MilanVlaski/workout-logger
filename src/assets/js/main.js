@@ -1,11 +1,14 @@
-import { exerciseToText, workoutLogToText, workoutToText, workoutDelimiter, workoutLogToCsv } from "./core.js"
-import { addExercise, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog } from "./db.js"
+import { exerciseToText, workoutLogToText, workoutToText, workoutDelimiter, workoutLogToCsv, linesPerWorkout } from "./core.js"
+import { addExercise, findWorkoutById, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog } from "./db.js"
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 
-if(localStorage.getItem('exerciseFormat')) {
+let workoutPositionMap = new Map()
+
+if (!localStorage.getItem('exerciseFormat')) {
     localStorage.setItem('exerciseFormat', 'multi')
 }
+document.querySelector('#exercise-format').value = localStorage.getItem('exerciseFormat')
 
 document.querySelector('#exercise-format').addEventListener('change', (e) => {
     localStorage.setItem('exerciseFormat', e.target.value)
@@ -49,12 +52,54 @@ function writeCurrentWorkoutToScreen() {
         })
 }
 
+
 function writeWorkoutLogToScreen() {
     readWorkoutLog()
         .then(workouts => {
-            document.querySelector('#workout-log').textContent = workoutLogToText.call(workouts, localStorage.getItem('exerciseFormat'))
+            const exerciseFormat = localStorage.getItem('exerciseFormat')
+            const workoutsText = workoutLogToText.call(workouts, exerciseFormat)
+            document.querySelector('#workout-log').textContent = workoutsText
+
+            // Map line numbers to workouts on screen
+            let lineCount = 0
+            workoutPositionMap = workouts.reduce((map, workout) => {
+                lineCount += linesPerWorkout(workout, exerciseFormat)
+                map.set(lineCount, workout.timestamp)
+                return map
+            }, workoutPositionMap)
         })
 }
+
+const $workoutLog = document.getElementById('workout-log')
+
+$workoutLog.addEventListener('click', (event) => {
+    // 1. Get the computed style to find the line height
+    const style = window.getComputedStyle($workoutLog)
+    const lineHeight = parseFloat(style.lineHeight)
+
+    // 2. Get the top position of the pre element
+    const rect = $workoutLog.getBoundingClientRect()
+    const scrollTop = $workoutLog.scrollTop
+
+    // 3. Calculate the clicked y-position relative to the top of the content
+    const clickY = event.clientY - rect.top + scrollTop
+
+    // 4. Calculate the line number (1-based index)
+    const lineNumber = Math.floor(clickY / lineHeight)
+
+    let i = lineNumber
+    // Infinite loop if the number is greater than every
+    while (!workoutPositionMap.get(i)) {
+        i++
+    }
+
+    console.debug(`Line clicked: ${lineNumber}`)
+    findWorkoutById(workoutPositionMap.get(i)).then(workout =>
+        console.debug(workout)
+        // TODO create modal
+    )
+    // Now we gotta 
+})
 
 // TODO feature limited 
 document.querySelector('#csv-export-btn').addEventListener('click', async () => {
