@@ -62,3 +62,36 @@ The application simply needs to *remember* the exercises that the user commonly 
 The app doesn't take a stance on what's meaningful in terms of measurement units, and doesn't translate between them. It may remember that the user uses KG (and writes it kg, Kg kG or KG), and simply use that everywhere. The entire log is, again, text editable. If someone decided to change form lb to kg, they could find/replace the entire text. A weight calculation could perhaps be applied as well, if users need it, but likely not.
 
 The app may also remember the different types of workouts a user does, and provide them as templates.
+
+## Data Flow Example
+
+### Current Workout
+
+The datetime is implicit, and captured on finish. Consider capturing it on the first entered workout name.
+
+```javascript
+let workout = { exercises: [{
+            exerciseName: 'Pullups',
+            setsWithWeight: [
+                { weight: "120kg", reps: [1, 2, 3] },
+                { weight: "150", reps: [1] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "What a great workout!",
+        }, {
+            exerciseName: 'Pushups',
+            setsWithWeight: [
+                { weight: "89g", reps: [15, 16, 30] },
+                { weight: "150", reps: [1, 2, 4] },
+                { weight: "99lb", reps: [1, 2, 3] }
+            ],
+            comment: "Felt weaker",
+        }
+        ]
+}
+```
+
+### Logged workouts
+
+Adds autoincrement id and timestamp to it.
+
