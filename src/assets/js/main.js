@@ -48,7 +48,8 @@ document.addEventListener('db:ready', (e) => {
 function writeCurrentWorkoutToScreen() {
     readCurrentWorkout()
         .then((workout) => {
-            if (workout) $temporaryLog.textContent = workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + '\n'
+            let format = localStorage.getItem('exerciseFormat')
+            if (workout) $temporaryLog.textContent = `${workoutToText.call(workout, format)}${(format == 'single') ? '\n' : '\n\n'}`
         })
 }
 
