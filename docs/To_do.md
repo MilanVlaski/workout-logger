@@ -17,6 +17,7 @@
   - [x] For each date, from now, going back X days each, at random times of the day, given an array of exercise names, for X exercises, each exercise having 0-1 changes of weight, 1-4 sets, 5-30 reps, and an optional comment between 1 and 5 words.
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
 - [ ] Edit exercise - When the user clicks on an exercise (pre), then a dialog opens up. The text is properly replaced, or deleted, and the corresponding datastore is updated.
+- [ ] 1. For each exercise, add exercise name label + name
   - [ ] Create a "map" of lines that the user's exercise belongs to.
   - [ ] Specifically, when the user clicks BELOW a workout's date, or on it, it counts as a click on the workout.
   - [ ] Current workout is edited in full. That way, the component for editing a workout is reused.

@@ -22,7 +22,7 @@ document.querySelector('#exercise-format').addEventListener('change', (e) => {
 // rather than just one. Based on that, we can also remove the elements
 document.addEventListener('exercise:finish', (e) => {
     addExercise(e.detail)
-        .then(() => { $temporaryLog.value += `${exerciseToText.call(e.detail, localStorage.getItem('exerciseFormat'))}\n` })
+        .then(() => { $temporaryLog.textContent += `${exerciseToText.call(e.detail, localStorage.getItem('exerciseFormat'))}\n` })
 })
 
 document.addEventListener('submit', (e) => {
@@ -48,7 +48,7 @@ document.addEventListener('db:ready', (e) => {
 function writeCurrentWorkoutToScreen() {
     readCurrentWorkout()
         .then((workout) => {
-            if (workout) $temporaryLog.value = workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + '\n'
+            if (workout) $temporaryLog.textContent = workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + '\n'
         })
 }
 
@@ -94,11 +94,11 @@ $workoutLog.addEventListener('click', (event) => {
     }
 
     console.debug(`Line clicked: ${lineNumber}`)
-    findWorkoutById(workoutPositionMap.get(i)).then(workout =>
+    findWorkoutById(workoutPositionMap.get(i)).then(workout => {
         console.debug(workout)
-        // TODO create modal
-    )
-    // Now we gotta 
+        const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
+        $editWorkoutDialog.showModal()
+    })
 })
 
 // TODO feature limited 

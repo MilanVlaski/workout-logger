@@ -3,6 +3,7 @@ const $theExerciseTemplate  = theExerciseTemplate.content.cloneNode(true)
 
 class Exercise extends HTMLElement {
 
+
     connectedCallback() {
         this.render()
 

@@ -25,6 +25,7 @@
     <script type="module" src="/assets/js/components/the-exercise.js"></script>
     <script type="module" src="/assets/js/components/close-btn.js"></script>
     <script type="module" src="/assets/js/components/workout-start-time.js"></script>
+    <script type="module" src="/assets/js/components/the-workout.js"></script>
     
     <script type="module" src="/assets/js/main.js"></script>
     <script type="module" src="/assets/js/test_fixture.js"></script>
@@ -83,7 +84,7 @@
                 <form class="temporary-log" action="finish-workout">
                     <label data-field>
                         <h2>Temporary Log</h2>
-                        <textarea class="temporary-log-input" required></textarea>
+                        <pre class="temporary-log-input" required></pre>
                     </label>
                     <button class="primary" style="width: 100%;">
                         <svg><use href="#two-check"></use></svg>
@@ -106,6 +107,14 @@
         </div>
     </ot-tabs>
     
+    <dialog id="edit-workout-dialog" closedby="any">
+        <form method="dialog">
+            <div>
+                <the-workout></the-workout>
+            </div>
+        </form>
+    </dialog>
+
     <!-- TEMPLATES -->
     <template id="the-exercise">
         <form action="finish-exercise" class="current-exercise">
