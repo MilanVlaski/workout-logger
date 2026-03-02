@@ -49,7 +49,8 @@ function writeCurrentWorkoutToScreen() {
     readCurrentWorkout()
         .then((workout) => {
             let format = localStorage.getItem('exerciseFormat')
-            if (workout) $temporaryLog.textContent = `${workoutToText.call(workout, format)}${(format == 'single') ? '\n' : '\n\n'}`
+            if (workout) $temporaryLog.textContent = 
+            `${workoutToText.call(workout, format)}${(format == 'single') ? '\n' : '\n\n'}`
         })
 }
 
