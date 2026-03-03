@@ -3,32 +3,32 @@ import { exerciseToText, workoutToText, workoutLogToText, workoutLogToCsv } from
 
 Deno.test('One exercise with just name produces text with just name', () => {
     const json = { exerciseName: 'Name' }
-    assertEquals(json.exerciseName, exerciseToText.call(json))
+    assertEquals(json.exerciseName, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('One exercise with just name produces text with just name', () => {
     const json = { exerciseName: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }
-    assertEquals(`${json.exerciseName}: 1, 2, 3.`, exerciseToText.call(json))
+    assertEquals(`${json.exerciseName}: 1, 2, 3.`, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('One exercise with just name produces text with just name', () => {
     const json = { exerciseName: 'Pullups', setsWithWeight: [{}], comment: '' }
-    assertEquals(json.exerciseName, exerciseToText.call(json))
+    assertEquals(json.exerciseName, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Name' }] }
-    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json))
+    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }] }
-    assertEquals(`${json.exercises[0].exerciseName}: 1, 2, 3.`, workoutToText.call(json))
+    assertEquals(`${json.exercises[0].exerciseName}: 1, 2, 3.`, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
     const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{}], comment: '' }] }
-    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json))
+    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Single line workout serialization', () => {
@@ -58,7 +58,7 @@ Deno.test('Single line workout serialization', () => {
     assertEquals(
         `Pullups: 120kg: 1, 2, 3. 150: 1. 99lb: 1, 2, 3. What a great workout!
 Pushups: 89g: 15, 16, 30. 150: 1, 2, 4. 99lb: 1, 2, 3. Felt weaker`
-        , workoutToText.call(json))
+        , workoutToText.call(json, 'single'))
 })
 
 Deno.test('Multi line workout serialization', () => {
@@ -95,7 +95,7 @@ Pushups
 150: 1, 2, 4
 99lb: 1, 2, 3
 Felt weaker`
-        , workoutToText.call(json, 'multiline'))
+        , workoutToText.call(json, 'multi'))
 })
 
 Deno.test('Serialize two workouts', () => {
@@ -169,7 +169,7 @@ Pushups
 150: 1, 2, 4
 99lb: 1, 2, 3
 Felt weaker`
-        , workoutLogToText.call(json, 'multiline'))
+        , workoutLogToText.call(json, 'multi'))
 
 })
 

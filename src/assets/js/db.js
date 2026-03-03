@@ -53,7 +53,7 @@ export async function readCurrentWorkout() {
         const store = transaction.objectStore('current-workout')
         const request = store.get(WORKOUT_KEY)
 
-        request.onsuccess = () => resolve(request.result)
+        request.onsuccess = () => {resolve(request.result) ;console.debug(`Current workout`); console.debug(request.result)}
         request.onerror = () => reject(request.error)
     })
 }
@@ -82,7 +82,7 @@ export async function readWorkoutLog() {
 }
 
 export async function saveCurrentWorkoutToLog() {
-    const current = await readCurrentWorkout()
+    const current = await readCurrentWorkout(); console.debug(`Result of reading current:`); console.debug(current)
     if (current.exercises.length === 0) return
     
     await dbReadyPromise

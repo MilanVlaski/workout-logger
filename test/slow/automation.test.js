@@ -1,5 +1,7 @@
 import { chromium } from "npm:playwright"
+import { expect } from "npm:playwright/test"
 import { assertEquals } from "jsr:@std/assert"
+import { assertStringIncludes } from "https://deno.land/std/assert/mod.ts";
 
 const browser = await chromium.launch({ headless: true })
 
@@ -54,10 +56,10 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     // Verify Temp Log
     const tempLog = page.locator('.temporary-log-input')
     await page.waitForFunction((el) => el.value !== "", await tempLog.elementHandle())
-    const logValue = await tempLog.inputValue()
+    const logValue = await tempLog.textContent()
 
-    assertEquals(logValue.includes(exerciseName), true)
-    assertEquals(logValue.includes("10, 12, 8"), true)
+    assertStringIncludes(logValue, exerciseName)
+    assertStringIncludes(logValue, "10, 12, 8")
 
     // Submit to Permanent Log
     const finalBtn = page.locator('button:has-text("Finish"), [type="submit"]').last()
@@ -70,6 +72,6 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     const logContainer = page.locator('#workout-log')
     const logText = await logContainer.innerText()
 
-    assertEquals(logText.includes(exerciseName), true)
-    assertEquals(logText.includes("10, 12, 8"), true)
+    assertStringIncludes(logText. exerciseName)
+    assertStringIncludes(logText, "10, 12, 8")
 }))

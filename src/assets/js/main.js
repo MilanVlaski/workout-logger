@@ -22,7 +22,10 @@ document.querySelector('#exercise-format').addEventListener('change', (e) => {
 // rather than just one. Based on that, we can also remove the elements
 document.addEventListener('exercise:finish', (e) => {
     addExercise(e.detail)
-        .then(() => { $temporaryLog.textContent += `${exerciseToText.call(e.detail, localStorage.getItem('exerciseFormat'))}\n` })
+        .then(() => { 
+            const format = localStorage.getItem('exerciseFormat')
+            $temporaryLog.textContent += `${exerciseToText.call(e.detail, format)}${(format == 'single') ? '\n' : '\n\n'}`
+         })
 })
 
 document.addEventListener('submit', (e) => {
@@ -36,7 +39,7 @@ document.addEventListener('submit', (e) => {
             })
             .catch((err) => console.error("Couldn't write workout.", err))
 
-        e.target.reset()
+        $temporaryLog.textContent = ''
     }
 })
 
@@ -97,7 +100,6 @@ $workoutLog.addEventListener('click', (event) => {
 
     console.debug(`Line clicked: ${lineNumber}`)
     findWorkoutById(workoutPositionMap.get(i)).then(workout => {
-        console.debug(workout)
         const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
         $editWorkoutDialog.showModal()
     })
