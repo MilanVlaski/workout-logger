@@ -8,9 +8,9 @@ let workoutPositionMap = new Map()
 if (!localStorage.getItem('exerciseFormat')) {
     localStorage.setItem('exerciseFormat', 'multi')
 }
-document.querySelector('#exercise-format').value = localStorage.getItem('exerciseFormat')
+document.querySelector('[data-action="change-exercise-format"]').value = localStorage.getItem('exerciseFormat')
 
-document.querySelector('#exercise-format').addEventListener('change', (e) => {
+document.querySelector('[data-action="change-exercise-format"]').addEventListener('change', (e) => {
     localStorage.setItem('exerciseFormat', e.target.value)
     writeCurrentWorkoutToScreen()
     writeWorkoutLogToScreen()
@@ -101,12 +101,12 @@ $workoutLog.addEventListener('click', (event) => {
     console.debug(`Line clicked: ${lineNumber}`)
     findWorkoutById(workoutPositionMap.get(i)).then(workout => {
         const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
-        $editWorkoutDialog.showModal()
+        // $editWorkoutDialog.showModal()
     })
 })
 
 // TODO feature limited 
-document.querySelector('#csv-export-btn').addEventListener('click', async () => {
+document.querySelector('[data-action="export-csv"]').addEventListener('click', async () => {
     try {
         const workoutLog = await readWorkoutLog();
         const csvString = workoutLogToCsv.call(workoutLog);

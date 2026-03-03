@@ -16,6 +16,17 @@
 - [x] Test Data generator function:
   - [x] For each date, from now, going back X days each, at random times of the day, given an array of exercise names, for X exercises, each exercise having 0-1 changes of weight, 1-4 sets, 5-30 reps, and an optional comment between 1 and 5 words.
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
+- [ ] Use data-action="" instead of attaching listeners by id
+- [ ] Use name instead of exerciseName
+- [ ] Make all-reps return a value when submitted e.g.
+---
+```javascript
+  value() {
+    return [...this.querySelectorAll('input[name="reps"]')].map(i => i.value).filter(Boolean)
+  }
+```
+---
+- [ ] Create the-workout component, which maps an entire workout to form inputs
 - [ ] Edit exercise - When the user clicks on an exercise (pre), then a dialog opens up. The text is properly replaced, or deleted, and the corresponding datastore is updated.
 - [ ] 1. For each exercise, add exercise name label + name
   - [ ] Create a "map" of lines that the user's exercise belongs to.

@@ -16,16 +16,9 @@ class Exercise extends HTMLElement {
                 const data = {}
                 const setsWithWeight = []
 
-                this.querySelectorAll('.exercise-input').forEach(item => {
-                    const weightInput = item.querySelector('input[name="weight"]')
-                    const repInputs = item.querySelectorAll('input[name="reps"]')
-
-                    setsWithWeight.push({
-                        weight: weightInput.value,
-                        reps: Array.from(repInputs)
-                            .map(rep => rep.value)
-                            .filter(Boolean)
-                    })
+                
+                this.querySelectorAll('exercise-input').forEach(item => {
+                    setsWithWeight.push(item.value())
                 })
 
                 data.exerciseName = formData.get('exercise-name')

@@ -1,5 +1,5 @@
 const exerciseInputTemplate = document.getElementById('exercise-input')
-const $exerciseInputTemplate  = exerciseInputTemplate.content.cloneNode(true).firstElementChild
+const $exerciseInputTemplate = exerciseInputTemplate.content.cloneNode(true).firstElementChild
 
 class ExerciseInput extends HTMLElement {
 
@@ -11,7 +11,7 @@ class ExerciseInput extends HTMLElement {
 
     render() {
         const $element = $exerciseInputTemplate.cloneNode(true)
-        if(this.hasAttribute('closeable')) {
+        if (this.hasAttribute('closeable')) {
             const $closeBtn = document.createElement('close-btn')
             $closeBtn.addEventListener('click', () => { this.remove() })
             $element.prepend($closeBtn)
@@ -25,6 +25,12 @@ class ExerciseInput extends HTMLElement {
         this.after($exerciseInput);
     }
 
+    value() {
+        return {
+            weight: this.querySelector('[name="weight"]').value,
+            reps: this.querySelector('all-reps').value()
+        }
+    }
 }
 
 customElements.define('exercise-input', ExerciseInput);

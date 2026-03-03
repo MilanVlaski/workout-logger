@@ -12,6 +12,10 @@ class AllReps extends HTMLElement {
         this.render()
     }
 
+    value() {
+        return [...this.querySelectorAll('input[name="reps"]')].map(i => i.value).filter(Boolean)
+    }
+
     render() {
         this.replaceChildren($allRepsTemplate.cloneNode(true))
 

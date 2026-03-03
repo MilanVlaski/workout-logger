@@ -84,7 +84,7 @@
                 <form class="temporary-log" action="finish-workout">
                     <label data-field>
                         <h2>Temporary Log</h2>
-                        <pre class="temporary-log-input" required></pre>
+                        <pre class="temporary-log-input"></pre>
                     </label>
                     <button class="primary" style="width: 100%;">
                         <svg><use href="#two-check"></use></svg>
@@ -95,15 +95,15 @@
     
         <section class="container" role="tabpanel">
             <h1>Workout Log</h1>
-            <button id="csv-export-btn">
+            <button data-action="export-csv">
                 <svg><use href="#export-note"></use></svg>
             Export CSV
             </button>
-            <select style="width: max-content; margin-top: 0;" id="exercise-format">
+            <select style="width: max-content; margin-top: 0;" data-action="change-exercise-format">
                 <option value="multi" selected>Multi line</option>
                 <option value="single">Single line</option>
             </select>
-            <pre id="workout-log"></pre>
+            <pre class="workout-log" id="workout-log"></pre>
         </div>
     </ot-tabs>
     
@@ -120,23 +120,23 @@
         <form action="finish-exercise" class="current-exercise">
             <h2>Exercise</h2>
             <label data-field>Exercise Name
-                <input type="search" name="exercise-name" id="exercise-input" required>
+                <input type="search" name="exercise-name" required>
             </label>
         
             <exercise-input></exercise-input>
         
             <label data-field>Comment
-                <input type="search" id="comment" name="comment">
+                <input type="search" name="comment">
             </label>
         
             <div class="exercise-actions">
-                <button type="button" class="outline" id="new-exercise-btn">
+                <button type="button" class="outline" data-action="add-new-exercise" id="new-exercise-btn">
                     <svg>
                         <use href="#dumbbell"></use>
                     </svg>
                     New Exercise
                 </button>
-                <button type="submit" id="finish-exercise-btn">
+                <button type="submit" data-action="finish-exercise" id="finish-exercise-btn">
                     <svg>
                         <use href="#check"></use>
                     </svg>
@@ -152,8 +152,8 @@
             <all-reps></all-reps>
             <label data-field>Weight
                 <div class="half-screen-buttons">
-                    <input type="search" id="weight" name="weight">
-                    <button type="button" class="outline" id="new-weight-btn">
+                    <input type="search" name="weight">
+                    <button type="button" class="outline" data-action="add-new-weight" id="new-weight-btn">
                         <svg>
                             <use href="#weight"></use>
                         </svg>
