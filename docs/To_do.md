@@ -18,13 +18,12 @@
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
 - [ ] Use data-action="" instead of attaching listeners by id
 - [ ] Use name instead of exerciseName
-- [ ] Make all-reps return a value when submitted e.g.
----
-```javascript
-  value() {
-    return [...this.querySelectorAll('input[name="reps"]')].map(i => i.value).filter(Boolean)
-  }
-```
+- [ ] Make exercise-form-input reusable component
+- [ ] Make exercise-form-input return entire exercise data as value
+- [ ] Render exercise-form-input as a component with an exercise value
+- [ ] Make modify-workout component, that simply contains a list of exercises, and their exercise-form-inputs
+- [ ] Wrap inside form, and add buttons to the end
+- [ ] Place inside nice dialog, passing workout data to it
 ---
 - [ ] Create the-workout component, which maps an entire workout to form inputs
 - [ ] Edit exercise - When the user clicks on an exercise (pre), then a dialog opens up. The text is properly replaced, or deleted, and the corresponding datastore is updated.

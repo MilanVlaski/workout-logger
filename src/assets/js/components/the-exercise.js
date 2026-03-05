@@ -44,7 +44,7 @@ class Exercise extends HTMLElement {
 
         })
 
-        this.querySelector('#new-exercise-btn')
+        this.querySelector('[data-action="add-new-exercise"]')
             .addEventListener('click', () => {
                 this.newExercise()
             })

@@ -103,7 +103,7 @@
                 <option value="multi" selected>Multi line</option>
                 <option value="single">Single line</option>
             </select>
-            <pre class="workout-log" id="workout-log"></pre>
+            <pre class="workout-log"></pre>
         </div>
     </ot-tabs>
     
@@ -130,13 +130,13 @@
             </label>
         
             <div class="exercise-actions">
-                <button type="button" class="outline" data-action="add-new-exercise" id="new-exercise-btn">
+                <button type="button" class="outline" data-action="add-new-exercise">
                     <svg>
                         <use href="#dumbbell"></use>
                     </svg>
                     New Exercise
                 </button>
-                <button type="submit" data-action="finish-exercise" id="finish-exercise-btn">
+                <button type="submit" data-action="finish-exercise">
                     <svg>
                         <use href="#check"></use>
                     </svg>
@@ -153,7 +153,7 @@
             <label data-field>Weight
                 <div class="half-screen-buttons">
                     <input type="search" name="weight">
-                    <button type="button" class="outline" data-action="add-new-weight" id="new-weight-btn">
+                    <button type="button" class="outline" data-action="add-new-weight">
                         <svg>
                             <use href="#weight"></use>
                         </svg>
@@ -177,7 +177,7 @@
                 </svg>
                 Remove Reps
             </button>
-            <button type="button" class="outline" id="add-reps">
+            <button type="button" class="outline" data-action="add-reps">
                 <svg>
                     <use href="#add"></use>
                 </svg>

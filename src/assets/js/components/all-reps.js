@@ -22,7 +22,7 @@ class AllReps extends HTMLElement {
         this.$removeRepsBtn = this.querySelector('button[data-variant="danger"]')
         this.$container = this.querySelector('.all-reps')
 
-        this.querySelector('#add-reps').addEventListener('click', () => this.addReps())
+        this.querySelector('[data-action="add-reps"]').addEventListener('click', () => this.addReps())
         this.$removeRepsBtn.addEventListener('click', () => this.removeReps())
 
         this.$removeRepsBtn.disabled = true

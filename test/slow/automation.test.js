@@ -41,7 +41,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
         await repsInput.dispatchEvent('change')
 
         if (i < repsSequence.length - 1) {
-            const addBtn = page.locator('#add-reps')
+            const addBtn = page.locator('[data-action="add-reps"]')
             await addBtn.click()
 
             // Wait for DOM stability
@@ -50,7 +50,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     }
 
     // Submit to Temp Log
-    const finishBtn = page.locator('#finish-exercise-btn')
+    const finishBtn = page.locator('[data-action="finish-exercise]')
     await finishBtn.click()
 
     // Verify Temp Log
@@ -69,7 +69,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     const logTab = page.getByRole('tab', { name: /Log/i })
     await logTab.click()
 
-    const logContainer = page.locator('#workout-log')
+    const logContainer = page.locator('.workout-log')
     const logText = await logContainer.innerText()
 
     assertStringIncludes(logText. exerciseName)

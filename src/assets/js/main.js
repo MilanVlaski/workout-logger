@@ -34,7 +34,7 @@ document.addEventListener('submit', (e) => {
     if (e.target.getAttribute('action') == 'finish-workout') {
         saveCurrentWorkoutToLog()
             .then((workout) => {
-                document.querySelector('#workout-log').prepend(
+                document.querySelector('.workout-log').prepend(
                     workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + workoutDelimiter)
             })
             .catch((err) => console.error("Couldn't write workout.", err))
@@ -63,11 +63,12 @@ function writeWorkoutLogToScreen() {
         .then(workouts => {
             const exerciseFormat = localStorage.getItem('exerciseFormat')
             const workoutsText = workoutLogToText.call(workouts, exerciseFormat)
-            document.querySelector('#workout-log').textContent = workoutsText
-
+ 
+            document.querySelector('.workout-log').textContent = workoutsText
+ 
             // Map line numbers to workouts on screen
             let lineCount = 0
-            workoutPositionMap = workouts.reduce((map, workout) => {
+            workoutPositionMap = workouts.reduce((map, workout) => {`   11`
                 lineCount += linesPerWorkout(workout, exerciseFormat)
                 map.set(lineCount, workout.timestamp)
                 return map
@@ -75,7 +76,7 @@ function writeWorkoutLogToScreen() {
         })
 }
 
-const $workoutLog = document.getElementById('workout-log')
+const $workoutLog = document.querySelector('.workout-log')
 
 $workoutLog.addEventListener('click', (event) => {
     // 1. Get the computed style to find the line height

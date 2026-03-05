@@ -5,7 +5,7 @@ class ExerciseInput extends HTMLElement {
 
     connectedCallback() {
         this.render();
-        this.querySelector('#new-weight-btn')
+        this.querySelector('[data-action="add-new-weight"]')
             .addEventListener('click', () => this.newWeight());
     }
 
