@@ -16,25 +16,23 @@
 - [x] Test Data generator function:
   - [x] For each date, from now, going back X days each, at random times of the day, given an array of exercise names, for X exercises, each exercise having 0-1 changes of weight, 1-4 sets, 5-30 reps, and an optional comment between 1 and 5 words.
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
-- [ ] Use data-action="" instead of attaching listeners by id
-- [ ] Use name instead of exerciseName
+- [x] Use data-action="" instead of attaching listeners by id
+- [ ] Make tests read nicely, and make them actually pass
+- [ ] refactor: Use name instead of exerciseName
 - [ ] Make exercise-form-input reusable component
 - [ ] Make exercise-form-input return entire exercise data as value
 - [ ] Render exercise-form-input as a component with an exercise value
 - [ ] Make modify-workout component, that simply contains a list of exercises, and their exercise-form-inputs
 - [ ] Wrap inside form, and add buttons to the end
 - [ ] Place inside nice dialog, passing workout data to it
----
-- [ ] Create the-workout component, which maps an entire workout to form inputs
-- [ ] Edit exercise - When the user clicks on an exercise (pre), then a dialog opens up. The text is properly replaced, or deleted, and the corresponding datastore is updated.
-- [ ] 1. For each exercise, add exercise name label + name
-  - [ ] Create a "map" of lines that the user's exercise belongs to.
-  - [ ] Specifically, when the user clicks BELOW a workout's date, or on it, it counts as a click on the workout.
+---- 
+  - [x] Create a "map" of lines that the user's exercise belongs to.
+  - [x] Specifically, when the user clicks BELOW a workout's date, or on it, it counts as a click on the workout.
   - [ ] Current workout is edited in full. That way, the component for editing a workout is reused.
 - [ ] \[Optional](friendly LABEL) - that STICKS to the top as we scroll. An event gets sent once each thingy scrolls into view. That is, when the top element shows X, we do that. 
     - [ ] for singleline it's: 1(date) + number of exercises
     - [ ] for multiline it's: 1(date) + (exercise * 1 + setsWithWeight * 1)
-- [ ] Limit testing on mobile.
+- [ ] Limit testing number of workouts on mobile.
 - [ ] Add build and [profiles](#profiles)
 - [ ] PWA
 - [ ] Settings with light/dark switcher
