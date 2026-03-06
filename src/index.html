@@ -22,6 +22,7 @@
     <script defer src="/assets/js/oat.min.js"></script>
     <script type="module" src="/assets/js/components/all-reps.js"></script>
     <script type="module" src="/assets/js/components/exercise-input.js"></script>
+    <script type="module" src="/assets/js/components/exercise-inputs.js"></script>
     <script type="module" src="/assets/js/components/the-exercise.js"></script>
     <script type="module" src="/assets/js/components/close-btn.js"></script>
     <script type="module" src="/assets/js/components/workout-start-time.js"></script>
@@ -119,15 +120,7 @@
     <template id="the-exercise">
         <form action="finish-exercise" class="current-exercise">
             <h2>Exercise</h2>
-            <label data-field>Exercise Name
-                <input type="search" name="exercise-name" required>
-            </label>
-        
-            <exercise-input></exercise-input>
-        
-            <label data-field>Comment
-                <input type="search" name="comment">
-            </label>
+            <exercise-inputs></exercise-inputs>
         
             <div class="exercise-actions">
                 <button type="button" class="outline" data-action="add-new-exercise">
@@ -145,6 +138,18 @@
             </div>
     
         </form>
+    </template>
+
+    <template id="exercise-inputs">
+        <label data-field>Exercise Name
+            <input type="search" name="exercise-name" required>
+        </label>
+        
+        <exercise-input></exercise-input>
+        
+        <label data-field>Comment
+            <input type="search" name="comment">
+        </label>
     </template>
 
     <template id="exercise-input">
