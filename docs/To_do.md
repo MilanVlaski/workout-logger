@@ -18,9 +18,10 @@
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
 - [x] Use data-action="" instead of attaching listeners by id
 - [x] refactor: Use name instead of exerciseName
-- [ ] Make tests read nicely, and make them actually pass
-- [ ] Make exercise-form-input reusable component
-- [ ] Make exercise-form-input return entire exercise data as value
+- [x] Make tests actually pass
+- [ ] Make tests read nicely
+- [x] Make exercise-inputs reusable component
+- [ ] Make exercise-inputs return entire exercise data as value
 - [ ] Render exercise-form-input as a component with an exercise value
 - [ ] Make modify-workout component, that simply contains a list of exercises, and their exercise-form-inputs
 - [ ] Wrap inside form, and add buttons to the end

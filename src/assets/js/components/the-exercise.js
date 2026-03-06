@@ -13,21 +13,10 @@ class Exercise extends HTMLElement {
             if (e.target.getAttribute('action') === 'finish-exercise') {
                 const formData = new FormData(e.target)
 
-                const data = {}
-                const setsWithWeight = []
-
-                
-                this.querySelectorAll('exercise-input').forEach(item => {
-                    setsWithWeight.push(item.value())
-                })
-
-                data.name = formData.get('exercise-name')
-                data.comment = formData.get('comment')
-                data.setsWithWeight = setsWithWeight
+                let data = this.querySelector('exercise-inputs').value()
 
                 e.target.reset()
-                const $el = document.querySelector('all-reps')
-                $el.render()
+                this.querySelector('all-reps').render()
 
                 this.dispatchEvent(new CustomEvent('exercise:finish', {
                     detail: data, bubbles: true
@@ -45,9 +34,7 @@ class Exercise extends HTMLElement {
         })
 
         this.querySelector('[data-action="add-new-exercise"]')
-            .addEventListener('click', () => {
-                this.newExercise()
-            })
+            .addEventListener('click', () => {this.addNewExercise()})
 
     }
 
@@ -62,7 +49,7 @@ class Exercise extends HTMLElement {
         this.replaceChildren($element)
     }
 
-    newExercise() {
+    addNewExercise() {
         const $theExercise = document.createElement('the-exercise')
         $theExercise.setAttribute('closeable', '')
         this.after($theExercise)
