@@ -1,4 +1,5 @@
 import { db } from "./db.js"
+import { writeWorkoutLogToScreen } from "./main.js"
 
 // Setup
 const demoData = {
@@ -12,6 +13,7 @@ const $resetDbBtn = document.createElement('button')
 $resetDbBtn.textContent = 'Reset IndexedDB'
 $resetDbBtn.addEventListener('click', (e) => {
     indexedDB.deleteDatabase('WorkoutDB')
+    location.reload()
 })
 
 
@@ -42,6 +44,7 @@ $dbTestData.addEventListener('click', async () => {
             transaction.oncomplete = () => resolve()
             transaction.onerror = () => reject(transaction.error)
         })
+        writeWorkoutLogToScreen()
 })
 
 document.querySelector('nav')

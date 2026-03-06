@@ -58,7 +58,7 @@ function writeCurrentWorkoutToScreen() {
 }
 
 
-function writeWorkoutLogToScreen() {
+export function writeWorkoutLogToScreen() {
     readWorkoutLog()
         .then(workouts => {
             const exerciseFormat = localStorage.getItem('exerciseFormat')
