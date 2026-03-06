@@ -17,8 +17,8 @@
   - [x] For each date, from now, going back X days each, at random times of the day, given an array of exercise names, for X exercises, each exercise having 0-1 changes of weight, 1-4 sets, 5-30 reps, and an optional comment between 1 and 5 words.
 - [x] Singleline, multiline switcher. (Preferences has multiline as default, and it gets loaded into app)
 - [x] Use data-action="" instead of attaching listeners by id
-- [ ] Make tests read nicely, and make them actually pass
 - [ ] refactor: Use name instead of exerciseName
+- [ ] Make tests read nicely, and make them actually pass
 - [ ] Make exercise-form-input reusable component
 - [ ] Make exercise-form-input return entire exercise data as value
 - [ ] Render exercise-form-input as a component with an exercise value

@@ -36,7 +36,7 @@ export function exerciseToText(format = 'multi') {
         })
 
     if (format === 'multi') {
-        let result = this.exerciseName
+        let result = this.name
         if (sets.length > 0) {
             result += '\n' + sets.join('\n')
         }
@@ -48,7 +48,7 @@ export function exerciseToText(format = 'multi') {
 
     // single-line format
     const setsStr = sets.join('. ')
-    return `${this.exerciseName}${opt`: ${setsStr}.`}${opt` ${this.comment}`}`
+    return `${this.name}${opt`: ${setsStr}.`}${opt` ${this.comment}`}`
 }
 
 /**
@@ -91,7 +91,7 @@ export function workoutLogToCsv() {
 
                 return [
                     formattedDate,
-                    ex.exerciseName,
+                    ex.name,
                     set.weight,
                     finalReps,
                     ex.comment

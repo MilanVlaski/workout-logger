@@ -2,40 +2,40 @@ import { assertEquals } from 'jsr:@std/assert'
 import { exerciseToText, workoutToText, workoutLogToText, workoutLogToCsv } from '../../src/assets/js/core.js'
 
 Deno.test('One exercise with just name produces text with just name', () => {
-    const json = { exerciseName: 'Name' }
-    assertEquals(json.exerciseName, exerciseToText.call(json, 'single'))
+    const json = { name: 'Name' }
+    assertEquals(json.name, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('One exercise with just name produces text with just name', () => {
-    const json = { exerciseName: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }
-    assertEquals(`${json.exerciseName}: 1, 2, 3.`, exerciseToText.call(json, 'single'))
+    const json = { name: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }
+    assertEquals(`${json.name}: 1, 2, 3.`, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('One exercise with just name produces text with just name', () => {
-    const json = { exerciseName: 'Pullups', setsWithWeight: [{}], comment: '' }
-    assertEquals(json.exerciseName, exerciseToText.call(json, 'single'))
+    const json = { name: 'Pullups', setsWithWeight: [{}], comment: '' }
+    assertEquals(json.name, exerciseToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
-    const json = { exercises: [{ exerciseName: 'Name' }] }
-    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json, 'single'))
+    const json = { exercises: [{ name: 'Name' }] }
+    assertEquals(json.exercises[0].name, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
-    const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }] }
-    assertEquals(`${json.exercises[0].exerciseName}: 1, 2, 3.`, workoutToText.call(json, 'single'))
+    const json = { exercises: [{ name: 'Pullups', setsWithWeight: [{ reps: [1, 2, 3] }] }] }
+    assertEquals(`${json.exercises[0].name}: 1, 2, 3.`, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Workout with just one exercise with just name produces text with just name', () => {
-    const json = { exercises: [{ exerciseName: 'Pullups', setsWithWeight: [{}], comment: '' }] }
-    assertEquals(json.exercises[0].exerciseName, workoutToText.call(json, 'single'))
+    const json = { exercises: [{ name: 'Pullups', setsWithWeight: [{}], comment: '' }] }
+    assertEquals(json.exercises[0].name, workoutToText.call(json, 'single'))
 })
 
 Deno.test('Single line workout serialization', () => {
     const json = {
         exercises: [
             {
-                exerciseName: 'Pullups',
+                name: 'Pullups',
                 setsWithWeight: [
                     { weight: "120kg", reps: [1, 2, 3] },
                     { weight: "150", reps: [1] },
@@ -44,7 +44,7 @@ Deno.test('Single line workout serialization', () => {
                 comment: "What a great workout!",
             },
             {
-                exerciseName: 'Pushups',
+                name: 'Pushups',
                 setsWithWeight: [
                     { weight: "89g", reps: [15, 16, 30] },
                     { weight: "150", reps: [1, 2, 4] },
@@ -64,7 +64,7 @@ Pushups: 89g: 15, 16, 30. 150: 1, 2, 4. 99lb: 1, 2, 3. Felt weaker`
 Deno.test('Multi line workout serialization', () => {
     const json = {
         exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -72,7 +72,7 @@ Deno.test('Multi line workout serialization', () => {
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },
@@ -102,7 +102,7 @@ Deno.test('Serialize two workouts', () => {
     const json = [{
         timestamp: '2026-02-26T14:30:00Z',
         exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -110,7 +110,7 @@ Deno.test('Serialize two workouts', () => {
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },
@@ -123,7 +123,7 @@ Deno.test('Serialize two workouts', () => {
     {
         timestamp: '2026-02-25T14:30:00Z',
         exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -131,7 +131,7 @@ Deno.test('Serialize two workouts', () => {
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },
@@ -177,7 +177,7 @@ Deno.test('CSV export', () => {
     const json = [{
         timestamp: '2026-02-26T14:30:00Z',
         exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -185,7 +185,7 @@ Deno.test('CSV export', () => {
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },
@@ -198,7 +198,7 @@ Deno.test('CSV export', () => {
     {
         timestamp: '2026-02-25T14:30:00Z',
         exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -206,7 +206,7 @@ Deno.test('CSV export', () => {
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },

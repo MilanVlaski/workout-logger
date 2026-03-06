@@ -21,7 +21,7 @@ class Exercise extends HTMLElement {
                     setsWithWeight.push(item.value())
                 })
 
-                data.exerciseName = formData.get('exercise-name')
+                data.name = formData.get('exercise-name')
                 data.comment = formData.get('comment')
                 data.setsWithWeight = setsWithWeight
 

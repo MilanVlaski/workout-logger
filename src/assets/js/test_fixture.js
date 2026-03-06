@@ -128,7 +128,7 @@ function generateWorkoutData(exerciseNames, daysBack, exercisesPerDay) {
             }
 
             dailyExercises.push({
-                exerciseName: name,
+                name: name,
                 setsWithWeight: setsWithWeight,
                 comment: Math.random() > 0.5 ? comments[Math.floor(Math.random() * comments.length)] : ""
             })

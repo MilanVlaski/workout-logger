@@ -71,7 +71,7 @@ The datetime is implicit, and captured on finish. Consider capturing it on the f
 
 ```javascript
 let workout = { exercises: [{
-            exerciseName: 'Pullups',
+            name: 'Pullups',
             setsWithWeight: [
                 { weight: "120kg", reps: [1, 2, 3] },
                 { weight: "150", reps: [1] },
@@ -79,7 +79,7 @@ let workout = { exercises: [{
             ],
             comment: "What a great workout!",
         }, {
-            exerciseName: 'Pushups',
+            name: 'Pushups',
             setsWithWeight: [
                 { weight: "89g", reps: [15, 16, 30] },
                 { weight: "150", reps: [1, 2, 4] },
