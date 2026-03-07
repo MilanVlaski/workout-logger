@@ -21,6 +21,7 @@
 - [x] Make tests actually pass
 - [ ] Make tests read nicely
 - [x] Make exercise-inputs reusable component
+- [ ] Refactor the all-reps into an array
 - [ ] Make exercise-inputs return entire exercise data as value
 - [ ] Render exercise-form-input as a component with an exercise value
 - [ ] Make modify-workout component, that simply contains a list of exercises, and their exercise-form-inputs

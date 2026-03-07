@@ -1,25 +1,36 @@
-const exerciseInput = document.getElementById('exercise-inputs')
-const $exerciseInputs = exerciseInput.content.cloneNode(true)
+import { LitElement, html } from 'lit'
 
-class ExerciseInputs extends HTMLElement {
+class ExerciseInputs extends LitElement {
 
-    exercise = null
+  createRenderRoot() {
+    return this
+  }
 
-    connectedCallback() {
-        this.render()
+  render() {
+    return html`
+      <label data-field>Exercise Name
+        <input type="search" name="exercise-name" required>
+      </label>
+
+      <exercise-input></exercise-input>
+
+      <label data-field>Comment
+        <input type="search" name="comment">
+      </label>
+    `
+  }
+
+  value() {
+    const nameInput = this.querySelector('[name="exercise-name"]')
+    const commentInput = this.querySelector('[name="comment"]')
+    const exerciseInputs = this.querySelectorAll('exercise-input')
+
+    return {
+      name: nameInput.value,
+      setsWithWeight: Array.from(exerciseInputs).map(input => input.value()),
+      comment: commentInput.value
     }
-
-    render() {
-        this.replaceChildren($exerciseInputs.cloneNode(true))
-    }
-
-    value() {
-        return {
-            name: this.querySelector('[name="exercise-name"]').value,
-            setsWithWeight: [...this.querySelectorAll('exercise-input')].map(item => item.value()),
-            comment: this.querySelector('[name="comment"]').value
-        }
-    }
+  }
 }
 
 customElements.define('exercise-inputs', ExerciseInputs)

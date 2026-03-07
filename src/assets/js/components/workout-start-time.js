@@ -1,18 +1,23 @@
-class WorkoutStartTime extends HTMLElement {
+import { LitElement, html } from 'lit'
 
-    connectedCallback() {
-        this.innerHTML = "<time></time>"
-        
-        const $time = this.querySelector('time');
-        const now = new Date();
+class WorkoutStartTime extends LitElement {
 
-        $time.textContent = now.toLocaleDateString(navigator.language, {
-            month: 'long', day: 'numeric', year: 'numeric'
-        });
+  createRenderRoot() {
+    return this
+  }
 
-        // Will have to localize for Serbian
-        $time.setAttribute('datetime', now.toISOString());
-    }
+  render() {
+    const now = new Date()
+    return html`
+      <time datetime=${now.toISOString()}>
+        ${now.toLocaleDateString(navigator.language, {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        })}
+      </time>
+    `
+  }
 }
 
 customElements.define('workout-start-time', WorkoutStartTime)

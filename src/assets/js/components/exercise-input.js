@@ -1,36 +1,47 @@
-const exerciseInputTemplate = document.getElementById('exercise-input')
-const $exerciseInputTemplate = exerciseInputTemplate.content.cloneNode(true).firstElementChild
+import { LitElement, html } from 'lit'
 
-class ExerciseInput extends HTMLElement {
+class ExerciseInput extends LitElement {
 
-    connectedCallback() {
-        this.render();
-        this.querySelector('[data-action="add-new-weight"]')
-            .addEventListener('click', () => this.newWeight());
+  createRenderRoot() {
+    return this
+  }
+
+  render() {
+    return html`
+      <div class="exercise-input">
+        ${this.hasAttribute('closeable') ? html`
+          <close-btn @click=${() => this.remove()}></close-btn>
+        ` : ''}
+        <all-reps></all-reps>
+        <label data-field>Weight
+          <div class="half-screen-buttons">
+            <input type="search" name="weight">
+            <button type="button" class="outline" data-action="add-new-weight" @click=${this._newWeight}>
+              <svg>
+                <use href="#weight"></use>
+              </svg>
+              New Weight
+            </button>
+          </div>
+        </label>
+      </div>
+    `
+  }
+
+  _newWeight() {
+    const newInput = document.createElement('exercise-input')
+    newInput.setAttribute('closeable', '')
+    this.after(newInput)
+  }
+
+  value() {
+    const weightInput = this.querySelector('[name="weight"]')
+    const allReps = this.querySelector('all-reps')
+    return {
+      weight: weightInput.value,
+      reps: allReps.value()
     }
-
-    render() {
-        const $element = $exerciseInputTemplate.cloneNode(true)
-        if (this.hasAttribute('closeable')) {
-            const $closeBtn = document.createElement('close-btn')
-            $closeBtn.addEventListener('click', () => { this.remove() })
-            $element.prepend($closeBtn)
-        }
-        this.replaceChildren($element);
-    }
-
-    newWeight() {
-        const $exerciseInput = document.createElement('exercise-input')
-        $exerciseInput.setAttribute('closeable', '')
-        this.after($exerciseInput);
-    }
-
-    value() {
-        return {
-            weight: this.querySelector('[name="weight"]').value,
-            reps: this.querySelector('all-reps').value()
-        }
-    }
+  }
 }
 
-customElements.define('exercise-input', ExerciseInput);
+customElements.define('exercise-input', ExerciseInput)

@@ -1,59 +1,68 @@
-const theExerciseTemplate = document.getElementById('the-exercise')
-const $theExerciseTemplate  = theExerciseTemplate.content.cloneNode(true)
+import { LitElement, html } from 'lit'
 
-class Exercise extends HTMLElement {
+class Exercise extends LitElement {
 
+  createRenderRoot() {
+    return this
+  }
 
-    connectedCallback() {
-        this.render()
+  render() {
+    return html`
+      <form action="finish-exercise" class="current-exercise" @submit=${this._handleSubmit}>
+        ${this.hasAttribute('closeable') ? html`
+          <close-btn @click=${() => this.remove()}></close-btn>
+        ` : ''}
+        <h2>Exercise</h2>
+        <exercise-inputs></exercise-inputs>
 
-        this.addEventListener('submit', (e) => {
-            e.preventDefault()
+        <div class="exercise-actions">
+          <button type="button" class="outline" data-action="add-new-exercise" @click=${this._addNewExercise}>
+            <svg>
+              <use href="#dumbbell"></use>
+            </svg>
+            New Exercise
+          </button>
+          <button type="submit" data-action="finish-exercise">
+            <svg>
+              <use href="#check"></use>
+            </svg>
+            Finish Exercise
+          </button>
+        </div>
+      </form>
+    `
+  }
 
-            if (e.target.getAttribute('action') === 'finish-exercise') {
-                const formData = new FormData(e.target)
+  _handleSubmit(e) {
+    e.preventDefault()
+    const form = e.target
+    if (form.getAttribute('action') === 'finish-exercise') {
+      const exerciseInputs = this.querySelector('exercise-inputs')
+      const data = exerciseInputs.value()
 
-                let data = this.querySelector('exercise-inputs').value()
+      form.reset() // This will trigger reset event on form, which bubbles to all-reps
 
-                e.target.reset()
-                this.querySelector('all-reps').render()
+      this.dispatchEvent(new CustomEvent('exercise:finish', {
+        detail: data,
+        bubbles: true
+      }))
 
-                this.dispatchEvent(new CustomEvent('exercise:finish', {
-                    detail: data, bubbles: true
-                }))
+      // Remove all closeable exercise-input children
+      this.querySelectorAll('exercise-input[closeable]').forEach((it) => {
+        it.remove()
+      })
 
-                this.querySelectorAll('exercise-input[closeable]').forEach(it => {
-                    it.remove()
-                })
-
-                if(this.hasAttribute('closeable')) {
-                    this.remove()
-                }
-            }
-
-        })
-
-        this.querySelector('[data-action="add-new-exercise"]')
-            .addEventListener('click', () => {this.addNewExercise()})
-
+      if (this.hasAttribute('closeable')) {
+        this.remove()
+      }
     }
+  }
 
-
-    render() {
-        const $element = $theExerciseTemplate.cloneNode(true)
-        if (this.hasAttribute('closeable')) {
-            const $closeBtn = document.createElement('close-btn')
-            $closeBtn.addEventListener('click', () => { this.remove() })
-            $element.prepend($closeBtn)
-        }
-        this.replaceChildren($element)
-    }
-
-    addNewExercise() {
-        const $theExercise = document.createElement('the-exercise')
-        $theExercise.setAttribute('closeable', '')
-        this.after($theExercise)
-    }
+  _addNewExercise() {
+    const newExercise = document.createElement('the-exercise')
+    newExercise.setAttribute('closeable', '')
+    this.after(newExercise)
+  }
 }
 
 customElements.define('the-exercise', Exercise)

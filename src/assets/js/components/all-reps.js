@@ -1,56 +1,75 @@
-const repsTemplate = document.getElementById('reps-input')
-const $repsTemplate = repsTemplate.content.cloneNode(true)
+import { LitElement, html } from 'lit'
 
-const allReps = document.getElementById('all-reps')
-const $allRepsTemplate  = allReps.content.cloneNode(true)
+class AllReps extends LitElement {
 
-class AllReps extends HTMLElement {
-
-    $removeRepsBtn = null
-
-    connectedCallback() {
-        this.render()
+  static get properties() {
+    return {
+      _repsCount: { state: true }
     }
+  }
 
-    value() {
-        return [...this.querySelectorAll('input[name="reps"]')].map(i => i.value).filter(Boolean)
+  createRenderRoot() {
+    return this // Render in light DOM
+  }
+
+  constructor() {
+    super()
+    this._repsCount = 1
+  }
+
+  firstUpdated() {
+    this.addEventListener('reset', () => {
+      this._repsCount = 1
+    })
+  }
+
+  value() {
+    const inputs = this.querySelectorAll('input[name="reps"]')
+    return Array.from(inputs).map(i => i.value).filter(Boolean)
+  }
+
+  render() {
+    return html`
+      <label data-field>Reps
+        <div class="all-reps">
+          ${Array.from({ length: this._repsCount }).map(() => html`
+            <input type="text" inputmode="numeric" name="reps">
+          `)}
+        </div>
+      </label>
+      <div class="half-screen-buttons">
+        <button
+          type="button"
+          data-variant="danger"
+          class="outline"
+          ?disabled=${this._repsCount === 1}
+          @click=${this._removeReps}
+        >
+          <svg>
+            <use href="#remove"></use>
+          </svg>
+          Remove Reps
+        </button>
+        <button type="button" class="outline" data-action="add-reps" @click=${this._addReps}>
+          <svg>
+            <use href="#add"></use>
+          </svg>
+          Add Reps
+        </button>
+      </div>
+    `
+  }
+
+  _addReps() {
+    this._repsCount++
+    this.requestUpdate('_repsCount')
+  }
+
+  _removeReps() {
+    if (this._repsCount > 1) {
+      this._repsCount--
     }
-
-    render() {
-        this.replaceChildren($allRepsTemplate.cloneNode(true))
-
-        this.$removeRepsBtn = this.querySelector('button[data-variant="danger"]')
-        this.$container = this.querySelector('.all-reps')
-
-        this.querySelector('[data-action="add-reps"]').addEventListener('click', () => this.addReps())
-        this.$removeRepsBtn.addEventListener('click', () => this.removeReps())
-
-        this.$removeRepsBtn.disabled = true
-        this.addEventListener('reset', () => { this.render() })
-    }
-
-    addReps() {
-        const $reps = $repsTemplate.cloneNode(true).firstElementChild
-        this.querySelector('.all-reps').append($reps)
-        requestAnimationFrame(() => {
-            $reps.focus()
-        })
-
-        if (this.querySelector('.all-reps').childElementCount > 1) {
-            this.$removeRepsBtn.disabled = false
-        }
-    }
-
-    removeReps() {
-        const $container = this.querySelector('.all-reps')
-        if ($container.childElementCount > 1) {
-            $container.lastElementChild.remove();
-        }
-
-        if($container.childElementCount === 1) {
-            this.$removeRepsBtn.disabled = true
-        }
-    }
+  }
 }
 
 customElements.define('all-reps', AllReps)
