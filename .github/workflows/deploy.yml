@@ -26,6 +26,9 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
       - name: Run all tests
         run: make ci-test
 
