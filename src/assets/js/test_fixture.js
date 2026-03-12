@@ -49,10 +49,10 @@ $dbTestData.addEventListener('click', async () => {
 
 document.querySelector('nav')
     .append(
-        $demoBtn,
+        $dbTestData,
         $resetDbBtn,
+        $demoBtn,
         $useCase,
-        $dbTestData
     )
 // Setup
 

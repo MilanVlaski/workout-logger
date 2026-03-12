@@ -67,3 +67,7 @@ nav[role='tablist'] {
 ot-tabs:not(:defined) { 
     display: none;
 }
+
+.workout {
+    padding-inline: 1rem;
+}
