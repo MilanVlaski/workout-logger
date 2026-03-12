@@ -8,8 +8,12 @@ test:
 
 # We override PAGE_URL to point to the local serve task
 ci-test: 
-	$(MAKE) serve & 
-	PAGE_URL=http://localhost:8000 $(MAKE) slow-test
+	deno run --allow-net --allow-read jsr:@std/http/file-server src/ --port 8000 & \
+	SERVER_PID=$$!; \
+	PAGE_URL=http://localhost:8000 $(MAKE) slow-test; \
+	EXIT_CODE=$$?; \
+	kill $$SERVER_PID; \
+	exit $$EXIT_CODE
 
 everything-test: test slow-test
 
