@@ -7,7 +7,7 @@ test:
 	deno test test/fast/**
 
 # We override PAGE_URL to point to the local serve task
-ci-test: 
+ci-test: test
 	deno run --allow-net --allow-read jsr:@std/http/file-server src/ --port 8000 & \
 	SERVER_PID=$$!; \
 	PAGE_URL=http://localhost:8000 $(MAKE) slow-test; \
