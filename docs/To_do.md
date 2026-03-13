@@ -20,6 +20,12 @@
 - [x] refactor: Use name instead of exerciseName
 - [x] Make tests actually pass
 - [x] Make exercise-inputs reusable component
+- [x] Create test for the edit feature
+  - [x] Append to the first test
+  - [x] User clicks on the pre
+  - [x] They edit the exercise name input
+  - [x] They "finish editing"
+  - [x] We verify that the entire text is correct has changed
 ### Bottom up "modify component" plan
 - [ ] Refactor all-reps to contain an array, and render it. Null values by default. Starts with one null value, by default.
 - [ ] Make exercise-inputs able to render a list of setsWithWeight (exercise-input).

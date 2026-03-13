@@ -151,4 +151,8 @@ Makefile              # Development command wrappers
 - **Slow tests require** `PAGE_URL` environment variable pointing to a running dev server
 - **Permission flags**: E2E tests run with `-A` (all permissions) for Playwright browser automation
 
-</content>
+</content>## Agent Rules & Workflow
+1. **Drafting Phase**: When a task is assigned, use the primary coding model to generate the logic.
+2. **Internal Review (MANDATORY)**: Before showing me the final code or running a 'write' command, you must explicitly invoke the `Reviewer` sub-agent.
+3. **Final Output**: If the sub-agent finds an issue, fix it *internally* first. Only present the polished, reviewed version to me. 
+4. **Transparency**: Briefly mention: "Checked for blind spots with Reviewer agent — \[Status: Clear/Fixed]."
