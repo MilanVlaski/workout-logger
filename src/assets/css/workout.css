@@ -62,6 +62,8 @@ label button {
 nav[role='tablist'] {
     display: flex;
     background-color: var(--background);
+    flex-wrap: wrap;
+    padding-inline: 1rem;
 }
 
 ot-tabs:not(:defined) { 
