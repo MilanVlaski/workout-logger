@@ -1,5 +1,8 @@
 import { LitElement, html } from 'lit'
 
+/*
+  Represents an array of numbers, representing reps.
+*/
 class AllReps extends LitElement {
 
   static get properties() {

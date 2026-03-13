@@ -1,5 +1,8 @@
 import { LitElement, html } from 'lit'
 
+/*
+  Represents a setWithWeight, in terms of data.
+*/
 class ExerciseInput extends LitElement {
 
   createRenderRoot() {

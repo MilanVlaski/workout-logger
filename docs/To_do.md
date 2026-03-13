@@ -19,24 +19,20 @@
 - [x] Use data-action="" instead of attaching listeners by id
 - [x] refactor: Use name instead of exerciseName
 - [x] Make tests actually pass
-- [ ] Make tests read nicely
 - [x] Make exercise-inputs reusable component
-- [ ] Refactor the all-reps into an array
-- [ ] Make exercise-inputs return entire exercise data as value
-- [ ] Render exercise-form-input as a component with an exercise value
-- [ ] Make modify-workout component, that simply contains a list of exercises, and their exercise-form-inputs
+### Bottom up "modify component" plan
+- [ ] Refactor all-reps to contain an array, and render it. Null values by default. Starts with one null value, by default.
+- [ ] Make exercise-inputs able to render a list of setsWithWeight (exercise-input).
+- [ ] Make modify-workout component, that simply contains a workout, and their exercise-form-inputs
 - [ ] Wrap inside form, and add buttons to the end
-- [ ] Place inside nice dialog, passing workout data to it
+- [ ] Place inside nice dialog
+- [ ] Manually test that the right data shows up inside the dialog
+- [ ] Manually test that the appropriate piece of text on the pre, changes
 ---- 
-  - [x] Create a "map" of lines that the user's exercise belongs to.
-  - [x] Specifically, when the user clicks BELOW a workout's date, or on it, it counts as a click on the workout.
-  - [ ] Current workout is edited in full. That way, the component for editing a workout is reused.
-- [ ] \[Optional](friendly LABEL) - that STICKS to the top as we scroll. An event gets sent once each thingy scrolls into view. That is, when the top element shows X, we do that. 
-    - [ ] for singleline it's: 1(date) + number of exercises
-    - [ ] for multiline it's: 1(date) + (exercise * 1 + setsWithWeight * 1)
-- [ ] Limit testing number of workouts on mobile.
 - [ ] Add build and [profiles](#profiles)
 - [ ] PWA
+---
+### Optional
 - [ ] Settings with light/dark switcher
 - [ ] I18N (read from data file)
 ```javascript
@@ -57,12 +53,9 @@ window.I18N = {
   </script>
 </head>
 ```
-
-- [ ] Preferences for singleline, multiline
-
 ---
 
-
+# Notes 
 ## Profiles
 - dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled.
 - demo - Dev, but forbids export.
