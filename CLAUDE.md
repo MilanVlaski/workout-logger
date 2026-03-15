@@ -107,7 +107,15 @@ Makefile              # Development command wrappers
    - `main.js` - Glue layer, listens for events and updates UI
    - `db.js` - IndexedDB operations, listens for `exercise:finish` events
 
-4. **Template-based rendering**: HTML `<template>` elements in `index.html` are cloned for component initialization.
+### State Management Philosophy
+
+**DOM as Source of Truth**:
+
+- **Initial render**: Components render based on initial data, which may be null.
+- **On-demand data collection**: When data is needed (form submission), components query their own DOM via `value()` methods
+- **No reactive synchronization**: Components do NOT maintain internal state that mirrors DOM values
+- **No event bubbling for values**: User input changes stay in the DOM, no events bubble up
+- **Direct DOM manipulation**: Components modify their own DOM structure directly when adding/removing elements
 
 ### Data Flow
 
