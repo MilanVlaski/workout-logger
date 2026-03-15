@@ -60,7 +60,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
     await expect(tempLog).toContainText("10, 12, 8")
 
     // 5. Submit to Permanent Log
-    const finalBtn = page.locator('button:has-text("Finish"), [type="submit"]').last()
+    const finalBtn = page.locator('form.temporary-log button.primary')
     await finalBtn.click()
 
     // 6. Switch Tab and Verify
@@ -104,27 +104,35 @@ Deno.test("Edit an exercise in the workout log", () => withPage(async (page) => 
     const finishBtn = page.locator('[data-action="finish-exercise"]')
     await finishBtn.click()
 
-    const finalBtn = page.locator('button:has-text("Finish"), [type="submit"]').last()
+    const finalBtn = page.locator('form.temporary-log button.primary')
     await finalBtn.click()
 
     // 2. Switch to Log tab
     const logTab = page.getByRole('tab', { name: /Log/i })
     await logTab.click()
 
-    // 3. Click on the preformatted text to edit (this will fail until edit feature is implemented)
+    // 3. Click on the workout log to open edit dialog
     const logPre = page.locator('.workout-log').first()
     await logPre.click()
 
-    // 4. Edit the exercise name input (this will fail until edit feature is implemented)
-    const editNameInput = page.locator('[name="exercise-name"]').first()
+    // 4. Wait for dialog to appear and edit exercise name
+    const dialog = page.locator('#edit-workout-dialog')
+    await dialog.waitFor({ state: 'visible' })
+
+    const editNameInput = dialog.locator('[name="exercise-name"]').first()
     await editNameInput.waitFor({ state: 'visible' })
     await editNameInput.fill(editedExerciseName)
 
-    // 5. Finish editing (this will fail until edit feature is implemented)
-    const finishEditBtn = page.locator('[data-action="finish-editing"]')
-    await finishEditBtn.click()
+    // 5. Save changes
+    const saveBtn = dialog.locator('[data-action="save-workout"]')
+    await saveBtn.click()
 
-    // 6. Verify that the text has changed (this will fail until edit feature is implemented)
+    // 6. Wait for dialog to close and verify text changed
+    await dialog.waitFor({ state: 'hidden' })
+
+    // Wait a bit for the update to propagate
+    await page.waitForTimeout(500)
+
     await expect(logPre).toContainText(editedExerciseName)
     await expect(logPre).not.toContainText(exerciseName)
 }))

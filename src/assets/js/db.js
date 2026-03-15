@@ -126,3 +126,36 @@ export async function findWorkoutById(timestamp) {
         request.onerror = () => reject(request.error)
     })
 }
+
+export async function updateWorkout(workout) {
+    await dbReadyPromise
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('workouts', 'readwrite')
+        const store = transaction.objectStore('workouts')
+
+        // Get the workout by timestamp to find its id
+        const index = store.index('timestamp')
+        const getRequest = index.get(workout.timestamp)
+
+        getRequest.onsuccess = () => {
+            const existingWorkout = getRequest.result
+            if (!existingWorkout) {
+                reject(new Error('Workout not found'))
+                return
+            }
+
+            // Update the workout data but keep the same id and timestamp
+            const updatedWorkout = {
+                ...existingWorkout,
+                exercises: workout.exercises
+            }
+
+            const putRequest = store.put(updatedWorkout)
+            putRequest.onsuccess = () => resolve(updatedWorkout)
+            putRequest.onerror = () => reject(putRequest.error)
+        }
+
+        getRequest.onerror = () => reject(getRequest.error)
+    })
+}

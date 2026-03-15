@@ -7,7 +7,7 @@ class AllReps extends LitElement {
 
   static get properties() {
     return {
-      _repsCount: { state: true }
+      reps: { state: true }
     }
   }
 
@@ -17,26 +17,31 @@ class AllReps extends LitElement {
 
   constructor() {
     super()
-    this._repsCount = 1
+    this.reps = [null] // Start with one null value
   }
 
   firstUpdated() {
     this.addEventListener('reset', () => {
-      this._repsCount = 1
+      this.reps = [null]
     })
   }
 
   value() {
-    const inputs = this.querySelectorAll('input[name="reps"]')
-    return Array.from(inputs).map(i => i.value).filter(Boolean)
+    return this.reps.filter(Boolean)
   }
 
   render() {
     return html`
       <label data-field>Reps
         <div class="all-reps">
-          ${Array.from({ length: this._repsCount }).map(() => html`
-            <input type="text" inputmode="numeric" name="reps">
+          ${this.reps.map((repValue, index) => html`
+            <input
+              type="text"
+              inputmode="numeric"
+              name="reps"
+              .value=${repValue || ''}
+              @input=${(e) => this._updateRep(index, e.target.value)}
+            >
           `)}
         </div>
       </label>
@@ -45,7 +50,7 @@ class AllReps extends LitElement {
           type="button"
           data-variant="danger"
           class="outline"
-          ?disabled=${this._repsCount === 1}
+          ?disabled=${this.reps.length === 1}
           @click=${this._removeReps}
         >
           <svg>
@@ -63,14 +68,17 @@ class AllReps extends LitElement {
     `
   }
 
+  _updateRep(index, value) {
+    this.reps = [...this.reps.slice(0, index), value, ...this.reps.slice(index + 1)]
+  }
+
   _addReps() {
-    this._repsCount++
-    this.requestUpdate('_repsCount')
+    this.reps = [...this.reps, null]
   }
 
   _removeReps() {
-    if (this._repsCount > 1) {
-      this._repsCount--
+    if (this.reps.length > 1) {
+      this.reps = this.reps.slice(0, -1)
     }
   }
 }

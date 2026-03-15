@@ -1,5 +1,5 @@
 import { exerciseToText, workoutLogToText, workoutToText, workoutDelimiter, workoutLogToCsv, linesPerWorkout } from "./core.js"
-import { addExercise, findWorkoutById, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog } from "./db.js"
+import { addExercise, findWorkoutById, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog, updateWorkout } from "./db.js"
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 
@@ -29,6 +29,44 @@ document.addEventListener('exercise:finish', (e) => {
 })
 
 document.addEventListener('submit', (e) => {
+    // Handle edit workout dialog submission
+    if (e.target.closest('#edit-workout-dialog')) {
+        e.preventDefault() // Prevent default to handle async update
+
+        try {
+            const $modifyWorkout = e.target.querySelector('#modify-workout')
+            if ($modifyWorkout) {
+                const updatedWorkout = $modifyWorkout.value()
+                console.log('Updated workout:', updatedWorkout)
+
+                // Close dialog immediately
+                const dialog = e.target.closest('dialog')
+                if (dialog) {
+                    console.log('Closing dialog')
+                    dialog.close()
+                    console.log('Dialog closed')
+                }
+
+                // Save updated workout to database (async)
+                updateWorkout(updatedWorkout)
+                    .then(() => {
+                        console.log('Workout updated successfully')
+                        writeWorkoutLogToScreen()
+                    })
+                    .catch(err => console.error('Failed to update workout:', err))
+            }
+        } catch (error) {
+            console.error('Error in dialog submit handler:', error)
+            // Still try to close dialog
+            const dialog = e.target.closest('dialog')
+            if (dialog) {
+                dialog.close()
+            }
+        }
+        return
+    }
+
+    // For other forms, prevent default
     e.preventDefault()
 
     if (e.target.getAttribute('action') == 'finish-workout') {
@@ -36,6 +74,8 @@ document.addEventListener('submit', (e) => {
             .then((workout) => {
                 document.querySelector('.workout-log').prepend(
                     workoutToText.call(workout, localStorage.getItem('exerciseFormat')) + workoutDelimiter)
+                // Rebuild workout position map
+                writeWorkoutLogToScreen()
             })
             .catch((err) => console.error("Couldn't write workout.", err))
 
@@ -78,7 +118,27 @@ export function writeWorkoutLogToScreen() {
 
 const $workoutLog = document.querySelector('.workout-log')
 
+// Handle "New Exercise" button in edit dialog
+document.getElementById('add-exercise-btn')?.addEventListener('click', () => {
+  const $modifyWorkout = document.querySelector('#modify-workout')
+  if ($modifyWorkout && $modifyWorkout.workout) {
+    $modifyWorkout.workout.exercises = [...$modifyWorkout.workout.exercises, { name: '', setsWithWeight: [{}], comment: '' }]
+    $modifyWorkout.requestUpdate()
+
+    // After update, set values on new exercise-inputs
+    setTimeout(() => {
+      const exerciseInputs = $modifyWorkout.querySelectorAll('exercise-inputs')
+      const lastExercise = exerciseInputs[exerciseInputs.length - 1]
+      if (lastExercise && $modifyWorkout.workout.exercises[exerciseInputs.length - 1]) {
+        lastExercise.setValue($modifyWorkout.workout.exercises[exerciseInputs.length - 1])
+      }
+    })
+  }
+})
+
 $workoutLog.addEventListener('click', (event) => {
+    console.log('Workout log clicked')
+
     // 1. Get the computed style to find the line height
     const style = window.getComputedStyle($workoutLog)
     const lineHeight = parseFloat(style.lineHeight)
@@ -93,16 +153,30 @@ $workoutLog.addEventListener('click', (event) => {
     // 4. Calculate the line number (1-based index)
     const lineNumber = Math.floor(clickY / lineHeight)
 
+    console.log(`Line clicked: ${lineNumber}, lineHeight: ${lineHeight}, clickY: ${clickY}`)
+
     let i = lineNumber
     // Infinite loop if the number is greater than every
     while (!workoutPositionMap.get(i)) {
         i++
     }
 
-    console.debug(`Line clicked: ${lineNumber}`)
-    findWorkoutById(workoutPositionMap.get(i)).then(workout => {
+    const timestamp = workoutPositionMap.get(i)
+    console.log(`Found workout with timestamp: ${timestamp}`)
+
+    findWorkoutById(timestamp).then(workout => {
+        console.log('Workout found:', workout)
         const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
-        // $editWorkoutDialog.showModal()
+        const $modifyWorkout = $editWorkoutDialog.querySelector('#modify-workout')
+
+        if ($modifyWorkout) {
+            $modifyWorkout.setWorkout(workout)
+        }
+
+        $editWorkoutDialog.showModal()
+        console.log('Dialog shown')
+    }).catch(err => {
+        console.error('Error finding workout:', err)
     })
 })
 

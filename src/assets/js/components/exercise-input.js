@@ -13,7 +13,7 @@ class ExerciseInput extends LitElement {
     return html`
       <div class="exercise-input">
         ${this.hasAttribute('closeable') ? html`
-          <close-btn @click=${() => this.remove()}></close-btn>
+          <close-btn @click=${() => this._handleClose()}></close-btn>
         ` : ''}
         <all-reps></all-reps>
         <label data-field>Weight
@@ -35,6 +35,9 @@ class ExerciseInput extends LitElement {
     const newInput = document.createElement('exercise-input')
     newInput.setAttribute('closeable', '')
     this.after(newInput)
+
+    // Dispatch event to parent exercise-inputs
+    this.dispatchEvent(new CustomEvent('add-set', { bubbles: true }))
   }
 
   value() {
@@ -44,6 +47,23 @@ class ExerciseInput extends LitElement {
       weight: weightInput.value,
       reps: allReps.value()
     }
+  }
+
+  setValue({ weight = '', reps = [] }) {
+    const weightInput = this.querySelector('[name="weight"]')
+    const allReps = this.querySelector('all-reps')
+
+    if (weightInput) weightInput.value = weight
+    if (allReps) {
+      // Set reps array on all-reps component
+      allReps.reps = reps.length > 0 ? [...reps] : [null]
+    }
+  }
+
+  _handleClose() {
+    // Dispatch event before removing
+    this.dispatchEvent(new CustomEvent('remove-set', { bubbles: true }))
+    this.remove()
   }
 }
 
