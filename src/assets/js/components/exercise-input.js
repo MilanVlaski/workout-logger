@@ -36,8 +36,11 @@ class ExerciseInput extends LitElement {
     newInput.setAttribute('closeable', '')
     this.after(newInput)
 
-    // Dispatch event to parent exercise-inputs
-    this.dispatchEvent(new CustomEvent('add-set', { bubbles: true }))
+    // Call parent exercise-inputs to add this new set
+    const parent = this.closest('exercise-inputs')
+    if (parent && parent._addSet) {
+      parent._addSet()
+    }
   }
 
   value() {
@@ -55,15 +58,21 @@ class ExerciseInput extends LitElement {
 
     if (weightInput) weightInput.value = weight
     if (allReps) {
-      // Set reps array on all-reps component
-      allReps.reps = reps.length > 0 ? [...reps] : [null]
+      // Set reps array on all-reps component using the new setValue method
+      allReps.setValue(reps)
     }
   }
 
   _handleClose() {
-    // Dispatch event before removing
-    this.dispatchEvent(new CustomEvent('remove-set', { bubbles: true }))
-    this.remove()
+    // Call parent exercise-inputs to remove this set
+    const parent = this.closest('exercise-inputs')
+    if (parent && parent._removeSet) {
+      const exerciseInputs = parent.querySelectorAll('exercise-input')
+      const index = Array.from(exerciseInputs).indexOf(this)
+      if (index !== -1) {
+        parent._removeSet(index)
+      }
+    }
   }
 }
 

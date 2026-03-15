@@ -4,31 +4,12 @@ import { LitElement, html } from 'lit'
 */
 class ModifyWorkout extends LitElement {
 
-  static get properties() {
-    return {
-      workout: { state: true }
-    }
-  }
-
   createRenderRoot() {
     return this
   }
 
-  constructor() {
-    super()
-    this.workout = { exercises: [] }
-  }
-
   render() {
     return html`
-      ${this.workout.exercises.map((exercise, index) => html`
-        <div class="exercise-container">
-          ${index > 0 ? html`
-            <close-btn @click=${() => this._removeExercise(index)}></close-btn>
-          ` : ''}
-          <exercise-inputs></exercise-inputs>
-        </div>
-      `)}
     `
   }
 
@@ -36,30 +17,61 @@ class ModifyWorkout extends LitElement {
     const exerciseInputs = this.querySelectorAll('exercise-inputs')
     return {
       exercises: Array.from(exerciseInputs).map(input => input.value()),
-      timestamp: this.workout.timestamp
+      timestamp: this.timestamp || Date.now()
     }
   }
 
   setWorkout(workout) {
-    this.workout = workout
-    // Need to update child exercise-inputs components with data
-    this.requestUpdate()
+    // Store timestamp for value() method
+    this.timestamp = workout.timestamp
 
-    // After update, set values on exercise-inputs children
-    this.updateComplete.then(() => {
-      const exerciseInputs = this.querySelectorAll('exercise-inputs')
-      exerciseInputs.forEach((input, index) => {
-        if (this.workout.exercises[index]) {
-          input.setValue(this.workout.exercises[index])
-        }
-      })
+    // Clear existing content
+    this.innerHTML = ''
+
+    // Create exercise containers for each exercise
+    const exercisesToRender = workout.exercises.length > 0 ? [...workout.exercises] : [{ name: '', setsWithWeight: [{}], comment: '' }]
+    exercisesToRender.forEach((exercise, index) => {
+      const container = document.createElement('div')
+      container.className = 'exercise-container'
+
+      if (index > 0) {
+        const closeBtn = document.createElement('close-btn')
+        closeBtn.addEventListener('click', () => this._removeExercise(index))
+        container.appendChild(closeBtn)
+      }
+
+      const exerciseInputs = document.createElement('exercise-inputs')
+      exerciseInputs.setValue(exercise)
+      container.appendChild(exerciseInputs)
+
+      this.appendChild(container)
     })
   }
 
+  _addExercise() {
+    const container = document.createElement('div')
+    container.className = 'exercise-container'
+
+    const closeBtn = document.createElement('close-btn')
+    closeBtn.addEventListener('click', () => {
+      const containers = this.querySelectorAll('.exercise-container')
+      const index = Array.from(containers).indexOf(container)
+      if (index !== -1) {
+        this._removeExercise(index)
+      }
+    })
+    container.appendChild(closeBtn)
+
+    const exerciseInputs = document.createElement('exercise-inputs')
+    container.appendChild(exerciseInputs)
+
+    this.appendChild(container)
+  }
+
   _removeExercise(index) {
-    if (this.workout.exercises.length > 1) {
-      this.workout.exercises = this.workout.exercises.filter((_, i) => i !== index)
-      this.requestUpdate()
+    const containers = this.querySelectorAll('.exercise-container')
+    if (containers.length > 1 && index >= 0 && index < containers.length) {
+      containers[index].remove()
     }
   }
 }

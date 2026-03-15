@@ -4,25 +4,16 @@ import { LitElement, html } from 'lit'
 */
 class ExerciseInputs extends LitElement {
 
-  static get properties() {
-    return {
-      setsWithWeight: { state: true }
-    }
-  }
-
   createRenderRoot() {
     return this
   }
 
-  constructor() {
-    super()
-    this.setsWithWeight = [{}] // Start with one empty set
-  }
-
   firstUpdated() {
-    // Listen for add-set events from exercise-input components
-    this.addEventListener('add-set', () => {
-      this.setsWithWeight = [...this.setsWithWeight, {}]
+    // Add initial exercise-input if none exists
+    setTimeout(() => {
+      if (this.querySelectorAll('exercise-input').length === 0) {
+        this._addSet()
+      }
     })
   }
 
@@ -31,13 +22,6 @@ class ExerciseInputs extends LitElement {
       <label data-field>Exercise Name
         <input type="search" name="exercise-name" required>
       </label>
-
-      ${this.setsWithWeight.map((set, index) => html`
-        <exercise-input
-          ?closeable=${index > 0}
-          @remove-set=${() => this._removeSet(index)}
-        ></exercise-input>
-      `)}
 
       <label data-field>Comment
         <input type="search" name="comment">
@@ -51,9 +35,9 @@ class ExerciseInputs extends LitElement {
     const exerciseInputs = this.querySelectorAll('exercise-input')
 
     return {
-      name: nameInput.value,
+      name: nameInput?.value || '',
       setsWithWeight: Array.from(exerciseInputs).map(input => input.value()),
-      comment: commentInput.value
+      comment: commentInput?.value || ''
     }
   }
 
@@ -64,24 +48,43 @@ class ExerciseInputs extends LitElement {
     if (nameInput) nameInput.value = name
     if (commentInput) commentInput.value = comment
 
-    // Set setsWithWeight array
-    this.setsWithWeight = setsWithWeight.length > 0 ? [...setsWithWeight] : [{}]
+    // Clear existing exercise-input children
+    this.querySelectorAll('exercise-input').forEach(input => input.remove())
 
-    // After update, set values on exercise-input children
-    this.requestUpdate()
-    this.updateComplete.then(() => {
-      const exerciseInputs = this.querySelectorAll('exercise-input')
-      exerciseInputs.forEach((input, index) => {
-        if (this.setsWithWeight[index]) {
-          input.setValue(this.setsWithWeight[index])
-        }
-      })
+    // Create and insert exercise-input elements before comment field
+    const commentLabel = this.querySelector('label[data-field] input[name="comment"]')?.parentElement
+    if (!commentLabel) return
+
+    const setsToRender = setsWithWeight.length > 0 ? [...setsWithWeight] : [{}]
+    setsToRender.forEach((setData, index) => {
+      const exerciseInput = document.createElement('exercise-input')
+      if (index > 0) {
+        exerciseInput.setAttribute('closeable', '')
+      }
+
+      // Insert before comment label
+      this.insertBefore(exerciseInput, commentLabel)
+
+      // Set data on the exercise-input
+      exerciseInput.setValue(setData)
     })
   }
 
+  _addSet() {
+    const commentLabel = this.querySelector('label[data-field] input[name="comment"]')?.parentElement
+    if (!commentLabel) return
+
+    const exerciseInput = document.createElement('exercise-input')
+    exerciseInput.setAttribute('closeable', '')
+
+    // Insert before comment label
+    this.insertBefore(exerciseInput, commentLabel)
+  }
+
   _removeSet(index) {
-    if (this.setsWithWeight.length > 1) {
-      this.setsWithWeight = this.setsWithWeight.filter((_, i) => i !== index)
+    const exerciseInputs = this.querySelectorAll('exercise-input')
+    if (exerciseInputs.length > 1 && index >= 0 && index < exerciseInputs.length) {
+      exerciseInputs[index].remove()
     }
   }
 }

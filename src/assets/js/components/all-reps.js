@@ -5,44 +5,34 @@ import { LitElement, html } from 'lit'
 */
 class AllReps extends LitElement {
 
-  static get properties() {
-    return {
-      reps: { state: true }
-    }
-  }
-
   createRenderRoot() {
     return this // Render in light DOM
   }
 
-  constructor() {
-    super()
-    this.reps = [null] // Start with one null value
-  }
-
   firstUpdated() {
     this.addEventListener('reset', () => {
-      this.reps = [null]
+      this.setValue([])
     })
   }
 
   value() {
-    return this.reps.filter(Boolean)
+    const repsInputs = this.querySelectorAll('[name="reps"]')
+    return Array.from(repsInputs)
+      .map(input => input.value)
+      .filter(Boolean)
+      .map(Number)
   }
 
   render() {
     return html`
       <label data-field>Reps
         <div class="all-reps">
-          ${this.reps.map((repValue, index) => html`
-            <input
-              type="text"
-              inputmode="numeric"
-              name="reps"
-              .value=${repValue || ''}
-              @input=${(e) => this._updateRep(index, e.target.value)}
-            >
-          `)}
+          <input
+            type="text"
+            inputmode="numeric"
+            name="reps"
+            value=""
+          >
         </div>
       </label>
       <div class="half-screen-buttons">
@@ -50,7 +40,6 @@ class AllReps extends LitElement {
           type="button"
           data-variant="danger"
           class="outline"
-          ?disabled=${this.reps.length === 1}
           @click=${this._removeReps}
         >
           <svg>
@@ -68,17 +57,44 @@ class AllReps extends LitElement {
     `
   }
 
-  _updateRep(index, value) {
-    this.reps = [...this.reps.slice(0, index), value, ...this.reps.slice(index + 1)]
+  setValue(reps = []) {
+    const container = this.querySelector('.all-reps')
+    if (!container) return
+
+    // Clear existing inputs
+    container.innerHTML = ''
+
+    // Create inputs for each rep (or empty one if no reps)
+    const valuesToRender = reps.length > 0 ? [...reps] : ['']
+    valuesToRender.forEach(repValue => {
+      const input = document.createElement('input')
+      input.type = 'text'
+      input.inputMode = 'numeric'
+      input.name = 'reps'
+      input.value = repValue
+      container.appendChild(input)
+    })
   }
 
   _addReps() {
-    this.reps = [...this.reps, null]
+    const container = this.querySelector('.all-reps')
+    if (!container) return
+
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.inputMode = 'numeric'
+    input.name = 'reps'
+    input.value = ''
+    container.appendChild(input)
   }
 
   _removeReps() {
-    if (this.reps.length > 1) {
-      this.reps = this.reps.slice(0, -1)
+    const container = this.querySelector('.all-reps')
+    if (!container) return
+
+    const inputs = container.querySelectorAll('[name="reps"]')
+    if (inputs.length > 1) {
+      container.removeChild(inputs[inputs.length - 1])
     }
   }
 }

@@ -121,18 +121,8 @@ const $workoutLog = document.querySelector('.workout-log')
 // Handle "New Exercise" button in edit dialog
 document.getElementById('add-exercise-btn')?.addEventListener('click', () => {
   const $modifyWorkout = document.querySelector('#modify-workout')
-  if ($modifyWorkout && $modifyWorkout.workout) {
-    $modifyWorkout.workout.exercises = [...$modifyWorkout.workout.exercises, { name: '', setsWithWeight: [{}], comment: '' }]
-    $modifyWorkout.requestUpdate()
-
-    // After update, set values on new exercise-inputs
-    setTimeout(() => {
-      const exerciseInputs = $modifyWorkout.querySelectorAll('exercise-inputs')
-      const lastExercise = exerciseInputs[exerciseInputs.length - 1]
-      if (lastExercise && $modifyWorkout.workout.exercises[exerciseInputs.length - 1]) {
-        lastExercise.setValue($modifyWorkout.workout.exercises[exerciseInputs.length - 1])
-      }
-    })
+  if ($modifyWorkout && $modifyWorkout._addExercise) {
+    $modifyWorkout._addExercise()
   }
 })
 
