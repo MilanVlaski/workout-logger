@@ -98,8 +98,11 @@ ot-tabs:not(:defined) {
 
 #edit-workout-dialog modify-workout {
   flex: 1;
-  overflow-y: auto;
   padding: var(--space-4);
+}
+
+#edit-workout-dialog {
+    overflow-y: auto;
 }
 
 #edit-workout-dialog .exercise-actions {

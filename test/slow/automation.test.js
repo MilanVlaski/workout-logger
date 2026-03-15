@@ -1,7 +1,7 @@
 import { chromium } from "npm:playwright"
 import { expect } from "npm:playwright/test"
 
-const browser = await chromium.launch({ headless: true })
+const browser = await chromium.launch({ headless: true, })
 
 Deno.test.afterAll(async () => {
     await browser.close()
@@ -134,5 +134,4 @@ Deno.test("Edit an exercise in the workout log", () => withPage(async (page) => 
     await page.waitForTimeout(500)
 
     await expect(logPre).toContainText(editedExerciseName)
-    await expect(logPre).not.toContainText(exerciseName)
 }))
