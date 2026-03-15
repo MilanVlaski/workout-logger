@@ -149,7 +149,10 @@ Makefile              # Development command wrappers
 - **ES6 modules**: Use absolute imports from project root (e.g., `import './core.js'`)
 - **Native DOM APIs**: No jQuery or frameworks
 - **CustomElements**: Use standard Web Components API
-
+  
+Resulting conventions:
+- Components have a `value()` function, in which they query their own state. Composed components simply call `value()` for each child.
+- When programatically adding web components, we create them, then set their initial value, then attach them to the DOM.
 ---
 
 ## Notes

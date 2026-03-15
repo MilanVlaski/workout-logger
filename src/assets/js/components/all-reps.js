@@ -13,6 +13,7 @@ class AllReps extends LitElement {
     this.addEventListener('reset', () => {
       this.setValue([])
     })
+    this.setValue()
   }
 
   value() {
@@ -26,14 +27,7 @@ class AllReps extends LitElement {
   render() {
     return html`
       <label data-field>Reps
-        <div class="all-reps">
-          <input
-            type="text"
-            inputmode="numeric"
-            name="reps"
-            value=""
-          >
-        </div>
+        <div class="all-reps"></div>
       </label>
       <div class="half-screen-buttons">
         <button
@@ -58,39 +52,31 @@ class AllReps extends LitElement {
   }
 
   setValue(reps = []) {
-    const container = this.querySelector('.all-reps')
-    if (!container) return
-
-    // Clear existing inputs
-    container.innerHTML = ''
-
-    // Create inputs for each rep (or empty one if no reps)
     const valuesToRender = reps.length > 0 ? [...reps] : ['']
     valuesToRender.forEach(repValue => {
-      const input = document.createElement('input')
-      input.type = 'text'
-      input.inputMode = 'numeric'
-      input.name = 'reps'
-      input.value = repValue
-      container.appendChild(input)
+      this.querySelector('.all-reps').appendChild(this._createRepInput(repValue))
     })
   }
 
   _addReps() {
-    const container = this.querySelector('.all-reps')
-    if (!container) return
+    this.querySelector('.all-reps').appendChild(this._createRepInput(''))
+    requestAnimationFrame(() => 
+      // focus last element
+      [...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
+    )
+  }
 
+  _createRepInput(value = '') {
     const input = document.createElement('input')
     input.type = 'text'
     input.inputMode = 'numeric'
     input.name = 'reps'
-    input.value = ''
-    container.appendChild(input)
+    input.value = value
+    return input
   }
 
   _removeReps() {
     const container = this.querySelector('.all-reps')
-    if (!container) return
 
     const inputs = container.querySelectorAll('[name="reps"]')
     if (inputs.length > 1) {
