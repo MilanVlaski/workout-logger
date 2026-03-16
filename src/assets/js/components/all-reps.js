@@ -54,23 +54,22 @@ class AllReps extends LitElement {
     `
   }
 
+  _createRepInput() {
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.inputMode = 'numeric'
+    input.name = 'reps'
+    return input
+  }
+
   _resetReps() {
     const container = this.querySelector('.all-reps')
     container.innerHTML = ''
-    const input = document.createElement('input')
-    input.type = 'text'
-    input.inputMode = 'numeric'
-    input.name = 'reps'
-    container.appendChild(input)
+    container.appendChild(this._createRepInput())
   }
 
   _addReps() {
-    const container = this.querySelector('.all-reps')
-    const input = document.createElement('input')
-    input.type = 'text'
-    input.inputMode = 'numeric'
-    input.name = 'reps'
-    container.appendChild(input)
+    this.querySelector('.all-reps').appendChild(this._createRepInput())
     requestAnimationFrame(() =>
       // focus last element
       [...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
