@@ -160,7 +160,7 @@ $workoutLog.addEventListener('click', (event) => {
         const $modifyWorkout = $editWorkoutDialog.querySelector('#modify-workout')
 
         if ($modifyWorkout) {
-            $modifyWorkout.setWorkout(workout)
+            $modifyWorkout.workout = workout
         }
 
         $editWorkoutDialog.showModal()

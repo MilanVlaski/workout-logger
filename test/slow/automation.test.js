@@ -134,4 +134,5 @@ Deno.test("Edit an exercise in the workout log", () => withPage(async (page) => 
     await page.waitForTimeout(500)
 
     await expect(logPre).toContainText(editedExerciseName)
+    await expect(logPre).toContainText("10, 12, 8")
 }))

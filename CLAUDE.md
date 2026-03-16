@@ -117,6 +117,10 @@ Makefile              # Development command wrappers
 - **No event bubbling for values**: User input changes stay in the DOM, no events bubble up
 - **Direct DOM manipulation**: Components modify their own DOM structure directly when adding/removing elements
 
+Resulting conventions:
+- Components have a `value()` function, in which they query their own state. Composed components simply call `value()` for each child.
+- When programmatically adding web components, we create them as dom elements, then set their initial value, class property, then attach them to the DOM.
+
 ### Data Flow
 
 1. User fills exercise form (name, weight, reps, comment)
@@ -150,9 +154,6 @@ Makefile              # Development command wrappers
 - **Native DOM APIs**: No jQuery or frameworks
 - **CustomElements**: Use standard Web Components API
   
-Resulting conventions:
-- Components have a `value()` function, in which they query their own state. Composed components simply call `value()` for each child.
-- When programatically adding web components, we create them, then set their initial value, then attach them to the DOM.
 ---
 
 ## Notes

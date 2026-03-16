@@ -3,28 +3,32 @@ import { LitElement, html } from 'lit'
   Represents multiple setsWithWeight.
 */
 class ExerciseInputs extends LitElement {
+  static properties = { data: { type: Object } }
 
   createRenderRoot() {
     return this
   }
 
-  firstUpdated() {
-    // Add initial exercise-input if none exists
-    setTimeout(() => {
-      if (this.querySelectorAll('exercise-input').length === 0) {
-        this._addSet()
-      }
-    })
-  }
-
   render() {
+    const name = this.data?.name || ''
+    const comment = this.data?.comment || ''
+    const setsWithWeight = this.data?.setsWithWeight?.length > 0
+      ? this.data.setsWithWeight
+      : [{}]
     return html`
       <label data-field>Exercise Name
-        <input type="search" name="exercise-name" required>
+        <input type="search" name="exercise-name" .value=${name} required>
       </label>
 
+      ${setsWithWeight.map((setData, index) => html`
+        <exercise-input
+          ?closeable=${index > 0}
+          .data=${setData}
+        ></exercise-input>
+      `)}
+
       <label data-field>Comment
-        <input type="search" name="comment">
+        <input type="search" name="comment" .value=${comment}>
       </label>
     `
   }
@@ -39,35 +43,6 @@ class ExerciseInputs extends LitElement {
       setsWithWeight: Array.from(exerciseInputs).map(input => input.value()),
       comment: commentInput?.value || ''
     }
-  }
-
-  setValue({ name = '', setsWithWeight = [], comment = '' }) {
-    const nameInput = this.querySelector('[name="exercise-name"]')
-    const commentInput = this.querySelector('[name="comment"]')
-
-    if (nameInput) nameInput.value = name
-    if (commentInput) commentInput.value = comment
-
-    // Clear existing exercise-input children
-    this.querySelectorAll('exercise-input').forEach(input => input.remove())
-
-    // Create and insert exercise-input elements before comment field
-    const commentLabel = this.querySelector('label[data-field] input[name="comment"]')?.parentElement
-    if (!commentLabel) return
-
-    const setsToRender = setsWithWeight.length > 0 ? [...setsWithWeight] : [{}]
-    setsToRender.forEach((setData, index) => {
-      const exerciseInput = document.createElement('exercise-input')
-      if (index > 0) {
-        exerciseInput.setAttribute('closeable', '')
-      }
-
-      // Insert before comment label
-      this.insertBefore(exerciseInput, commentLabel)
-
-      // Set data on the exercise-input
-      exerciseInput.setValue(setData)
-    })
   }
 
   _addSet() {

@@ -4,6 +4,7 @@ import { LitElement, html } from 'lit'
   Represents an array of numbers, representing reps.
 */
 class AllReps extends LitElement {
+  static properties = { data: { type: Array } }
 
   createRenderRoot() {
     return this // Render in light DOM
@@ -11,9 +12,8 @@ class AllReps extends LitElement {
 
   firstUpdated() {
     this.addEventListener('reset', () => {
-      this.setValue([])
+      this._resetReps()
     })
-    this.setValue()
   }
 
   value() {
@@ -25,9 +25,12 @@ class AllReps extends LitElement {
   }
 
   render() {
+    const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
       <label data-field>Reps
-        <div class="all-reps"></div>
+        <div class="all-reps">
+          ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
+        </div>
       </label>
       <div class="half-screen-buttons">
         <button
@@ -51,33 +54,31 @@ class AllReps extends LitElement {
     `
   }
 
-  setValue(reps = []) {
-    const valuesToRender = reps.length > 0 ? [...reps] : ['']
-    valuesToRender.forEach(repValue => {
-      this.querySelector('.all-reps').appendChild(this._createRepInput(repValue))
-    })
+  _resetReps() {
+    const container = this.querySelector('.all-reps')
+    container.innerHTML = ''
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.inputMode = 'numeric'
+    input.name = 'reps'
+    container.appendChild(input)
   }
 
   _addReps() {
-    this.querySelector('.all-reps').appendChild(this._createRepInput(''))
-    requestAnimationFrame(() => 
+    const container = this.querySelector('.all-reps')
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.inputMode = 'numeric'
+    input.name = 'reps'
+    container.appendChild(input)
+    requestAnimationFrame(() =>
       // focus last element
       [...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
     )
   }
 
-  _createRepInput(value = '') {
-    const input = document.createElement('input')
-    input.type = 'text'
-    input.inputMode = 'numeric'
-    input.name = 'reps'
-    input.value = value
-    return input
-  }
-
   _removeReps() {
     const container = this.querySelector('.all-reps')
-
     const inputs = container.querySelectorAll('[name="reps"]')
     if (inputs.length > 1) {
       container.removeChild(inputs[inputs.length - 1])
