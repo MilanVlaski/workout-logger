@@ -30,6 +30,7 @@ class AllReps extends LitElement {
       <label data-field>Reps
         <div class="all-reps">
           ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
+          <button type="button" class="primary" @click=${this._addReps}>+</button>
         </div>
       </label>
       <div class="half-screen-buttons">
@@ -69,7 +70,9 @@ class AllReps extends LitElement {
   }
 
   _addReps() {
-    this.querySelector('.all-reps').appendChild(this._createRepInput())
+    const container = this.querySelector('.all-reps')
+    const plusButton = container.querySelector('button')
+    container.insertBefore(this._createRepInput(), plusButton)
     requestAnimationFrame(() =>
       // focus last element
       [...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
