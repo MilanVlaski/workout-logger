@@ -26,6 +26,9 @@
   - [x] They edit the exercise name input
   - [x] They "finish editing"
   - [x] We verify that the entire text is correct has changed
+  - [ ] Fix the writing on my portfolio, because it's a mess
+  - [ ] Add plus button, which also adds a rep, and moves together with the thingy.
+  - [ ] Make the buttons and inputs twice as big.
 ### Bottom up "modify component" plan
 - [ ] Refactor all-reps to contain an array, and render it. Null values by default. Starts with one null value, by default.
 - [ ] Make exercise-inputs able to render a list of setsWithWeight (exercise-input).
