@@ -14,19 +14,22 @@ h2 {
     font-size: 1.25rem;
 }
 
-.all-reps > input[name="reps"] {
-    padding-inline: 0.5rem;
-    width: 3rem;
-}
-
 .all-reps {
     --inline-gap: 0.8rem;
+    --width: 4rem;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+    grid-template-columns: repeat(auto-fill, var(--width));
     
     gap: var(--inline-gap);
+    justify-content: space-between;
 }
+
+.all-reps > * {
+    padding-inline: 1rem;
+    width: 4rem;
+}
+
 
 .half-screen-buttons {
     display: grid;
@@ -74,6 +77,18 @@ ot-tabs:not(:defined) {
     padding-inline: 1rem;
 }
 
+/* Double input and button height */
+.workout :is(
+  input:not([type="checkbox"], [type="radio"], [type="range"]),
+  textarea,
+  select,
+  button,
+  ::file-selector-button
+) {
+  padding-block: calc(2 * var(--space-2));
+}
+
+
 /* Dialog styles for editing workouts */
 #edit-workout-dialog {
   max-width: 90vw;
@@ -109,18 +124,4 @@ ot-tabs:not(:defined) {
   padding: var(--space-4);
   border-top: 1px solid var(--border-color);
   background: var(--surface-1);
-}
-
-.exercise-container {
-  position: relative;
-  margin-bottom: var(--space-4);
-  padding: var(--space-3);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-2);
-}
-
-.exercise-container close-btn {
-  position: absolute;
-  top: var(--space-1);
-  right: var(--space-1);
 }
