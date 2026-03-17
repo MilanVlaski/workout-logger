@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="stylesheet" href="./assets/css/workout.css">
 
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="theme-color" content="#ffffff">
+
     <!-- Import map for Lit -->
     <script type="importmap">
     {
@@ -30,16 +34,7 @@
     <!-- dev -->
 
     <script defer src="./assets/js/oat.min.js"></script>
-    <script type="module" src="./assets/js/components/all-reps.js"></script>
-    <script type="module" src="./assets/js/components/exercise-input.js"></script>
-    <script type="module" src="./assets/js/components/exercise-inputs.js"></script>
-    <script type="module" src="./assets/js/components/the-exercise.js"></script>
-    <script type="module" src="./assets/js/components/close-btn.js"></script>
-    <script type="module" src="./assets/js/components/workout-start-time.js"></script>
-    <script type="module" src="./assets/js/components/modify-workout.js"></script>
-    
-    <script type="module" src="./assets/js/main.js"></script>
-    <script type="module" src="./assets/js/test_fixture.js"></script>
+    <script type="module" src="./assets/js/index.js"></script>
     <title>Workout Logger</title>
 </head>
 <body>
@@ -138,6 +133,20 @@
         </form>
     </dialog>
 
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered:', registration)
+            })
+            .catch((error) => {
+              console.log('SW registration failed:', error)
+            })
+        })
+      }
+    </script>
 
 </body>
 </html>
