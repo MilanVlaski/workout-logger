@@ -99,16 +99,18 @@
                 </form>
             </article>
     
-        <section class="container" role="tabpanel">
+        <section class="container workout-log-section" role="tabpanel">
             <h1>📔 Workout Log</h1>
-            <button data-action="export-csv">
-                <svg><use href="#export-note"></use></svg>
-            Export CSV
-            </button>
-            <select style="width: max-content; margin-top: 0;" data-action="change-exercise-format">
-                <option value="multi" selected>Multi line</option>
-                <option value="single">Single line</option>
-            </select>
+            <section class="actions">
+                <button data-action="export-csv">
+                    <svg><use href="#export-note"></use></svg>
+                Export CSV
+                </button>
+                <select style="width: max-content; margin-top: 0;" data-action="change-exercise-format">
+                    <option value="multi" selected>Multi line</option>
+                    <option value="single">Single line</option>
+                </select>
+            </section>
             <pre class="workout-log"></pre>
         </section>
     </ot-tabs>

@@ -128,3 +128,12 @@ dialog.workout footer {
     background-color: var(--card);
     border-top: 1px solid var(--input);
 }
+
+.workout-log-section h1 {
+    margin-inline-start: var(--space-4);
+}
+
+.workout-log-section .actions {
+    padding-inline: var(--space-4);
+}
+
