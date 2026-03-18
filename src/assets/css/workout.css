@@ -116,12 +116,15 @@ ot-tabs:not(:defined) {
   padding: var(--space-4);
 }
 
-#edit-workout-dialog {
+modify-workout {
     overflow-y: auto;
 }
 
-#edit-workout-dialog .exercise-actions {
-  padding: var(--space-4);
-  border-top: 1px solid var(--border-color);
-  background: var(--surface-1);
+dialog.workout footer {
+    position: sticky;
+    bottom: 0;
+
+    padding: var(--space-4);
+    background-color: var(--card);
+    border-top: 1px solid var(--input);
 }
