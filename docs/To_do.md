@@ -26,12 +26,11 @@
   - [x] They edit the exercise name input
   - [x] They "finish editing"
   - [x] We verify that the entire text is correct has changed
-  - [ ] Fix the writing on my portfolio, because it's a mess
-  - [ ] Add plus button, which also adds a rep, and moves together with the thingy.
-  - [ ] Make the buttons and inputs twice as big.
----- 
+  - [x] Add plus button, which also adds a rep, and moves together with the thingy.
+  - [x] Make the buttons and inputs twice as big.
+- [ ] Fix the writing on my portfolio, because it's a mess
+- [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)
-- [ ] PWA
 ---
 ### Optional
 - [ ] Settings with light/dark switcher
@@ -58,7 +57,7 @@ window.I18N = {
 
 # Notes 
 ## Profiles
-- dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled.
+- dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled. PWA.
 - demo - Dev, but forbids export.
 - local - Adds PWA install and Export. Remove demo buttons (test_fixture.js). Uses localdb (db.js).
 - cloud - Adds PWA install and Export. Removes demo buttons. Uses cloud db. (Not sure if clouddb is used additionally, or instead of local db)
