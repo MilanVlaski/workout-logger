@@ -14,6 +14,10 @@ class ExerciseInput extends LitElement {
     const weight = this.data?.weight || ''
     const reps = this.data?.reps || []
     return html`
+    <div class="exercise-input">
+    ${this.hasAttribute('closeable') ? html`
+        <close-btn @click=${() => this._handleClose()}></close-btn>
+      ` : ''}
     <label data-field>Weight
       <div class="half-screen-buttons">
         <input type="search" name="weight" .value=${weight}>
@@ -25,13 +29,8 @@ class ExerciseInput extends LitElement {
         </button>
       </div>
     </label>
-    
-      <div class="exercise-input">
-        ${this.hasAttribute('closeable') ? html`
-          <close-btn @click=${() => this._handleClose()}></close-btn>
-        ` : ''}
-        <all-reps .data=${reps}></all-reps>
-      </div>
+      <all-reps .data=${reps}></all-reps>
+    </div>
     `
   }
 
@@ -40,11 +39,6 @@ class ExerciseInput extends LitElement {
     newInput.setAttribute('closeable', '')
     this.after(newInput)
 
-    // Call parent exercise-inputs to add this new set
-    const parent = this.closest('exercise-inputs')
-    if (parent && parent._addSet) {
-      parent._addSet()
-    }
   }
 
   value() {

@@ -45,17 +45,6 @@ class ExerciseInputs extends LitElement {
     }
   }
 
-  _addSet() {
-    const commentLabel = this.querySelector('label[data-field] input[name="comment"]')?.parentElement
-    if (!commentLabel) return
-
-    const exerciseInput = document.createElement('exercise-input')
-    exerciseInput.setAttribute('closeable', '')
-
-    // Insert before comment label
-    this.insertBefore(exerciseInput, commentLabel)
-  }
-
   _removeSet(index) {
     const exerciseInputs = this.querySelectorAll('exercise-input')
     if (exerciseInputs.length > 1 && index >= 0 && index < exerciseInputs.length) {
