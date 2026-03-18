@@ -28,6 +28,7 @@
   - [x] We verify that the entire text is correct has changed
   - [x] Add plus button, which also adds a rep, and moves together with the thingy.
   - [x] Make the buttons and inputs twice as big.
+- [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Fix the writing on my portfolio, because it's a mess
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)

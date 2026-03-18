@@ -8,7 +8,7 @@ class CloseButton extends LitElement {
 
   render() {
     return html`
-      <button style="float: right; padding: var(--space-1);" type="button" class="ghost small" aria-label="Close">
+      <button style="display: block; margin-inline-start: auto; padding: var(--space-1);" type="button" class="ghost small" aria-label="Close">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <use href="#x"></use>
         </svg>

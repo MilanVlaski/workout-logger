@@ -27,31 +27,31 @@ class AllReps extends LitElement {
   render() {
     const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
+    <div class="half-screen-buttons">
+      <button
+        type="button"
+        data-variant="danger"
+        class="outline"
+        @click=${this._removeReps}
+      >
+        <svg>
+          <use href="#remove"></use>
+        </svg>
+        Remove Reps
+      </button>
+      <button type="button" class="outline" data-action="add-reps" @click=${this._addReps}>
+        <svg>
+          <use href="#add"></use>
+        </svg>
+        Add Reps
+      </button>
+    </div>
       <label data-field>Reps
         <div class="all-reps">
           ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
           <button type="button" class="primary" @click=${this._addReps}>+</button>
         </div>
       </label>
-      <div class="half-screen-buttons">
-        <button
-          type="button"
-          data-variant="danger"
-          class="outline"
-          @click=${this._removeReps}
-        >
-          <svg>
-            <use href="#remove"></use>
-          </svg>
-          Remove Reps
-        </button>
-        <button type="button" class="outline" data-action="add-reps" @click=${this._addReps}>
-          <svg>
-            <use href="#add"></use>
-          </svg>
-          Add Reps
-        </button>
-      </div>
     `
   }
 
