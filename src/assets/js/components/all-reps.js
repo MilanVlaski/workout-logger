@@ -73,10 +73,7 @@ class AllReps extends LitElement {
     const container = this.querySelector('.all-reps')
     const plusButton = container.querySelector('button')
     container.insertBefore(this._createRepInput(), plusButton)
-    requestAnimationFrame(() =>
-      // focus last element
-      [...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
-    )
+    ;[...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
   }
 
   _removeReps() {
