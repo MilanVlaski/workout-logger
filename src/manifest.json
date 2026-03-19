@@ -3,6 +3,7 @@
   "short_name": "Workout Logger",
   "description": "A workout logging app with offline support",
   "start_url": "./",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",

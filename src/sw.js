@@ -1,26 +1,26 @@
 const CACHE_NAME = 'workout-logger-v1'
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/assets/css/oat.min.css',
-  '/assets/css/common.css',
-  '/assets/css/workout.css',
-  '/assets/js/oat.min.js',
-  '/assets/js/index.js',
-  '/assets/js/core.js',
-  '/assets/js/db.js',
-  '/assets/js/main.js',
-  '/assets/js/test_fixture.js',
-  '/assets/js/components/close-btn.js',
-  '/assets/js/components/all-reps.js',
-  '/assets/js/components/exercise-input.js',
-  '/assets/js/components/workout-start-time.js',
-  '/assets/js/components/exercise-inputs.js',
-  '/assets/js/components/the-exercise.js',
-  '/assets/js/components/modify-workout.js',
-  '/icon-192.png',
-  '/icon-512.png',
+  './',
+  './index.html',
+  './manifest.json',
+  './assets/css/oat.min.css',
+  './assets/css/common.css',
+  './assets/css/workout.css',
+  './assets/js/oat.min.js',
+  './assets/js/index.js',
+  './assets/js/core.js',
+  './assets/js/db.js',
+  './assets/js/main.js',
+  './assets/js/test_fixture.js',
+  './assets/js/components/close-btn.js',
+  './assets/js/components/all-reps.js',
+  './assets/js/components/exercise-input.js',
+  './assets/js/components/workout-start-time.js',
+  './assets/js/components/exercise-inputs.js',
+  './assets/js/components/the-exercise.js',
+  './assets/js/components/modify-workout.js',
+  './icon-192.png',
+  './icon-512.png',
   // CDN imports for Lit
   'https://esm.sh/lit@3.3.2',
   'https://esm.sh/lit@3.3.2/decorators.js'
@@ -61,11 +61,11 @@ self.addEventListener('fetch', (event) => {
           // Return network response if successful
           if (response.ok) return response
           // If network fails, try cache
-          return caches.match('/index.html')
+          return caches.match('./index.html')
         })
         .catch(() => {
           // Network failed, serve from cache
-          return caches.match('/index.html')
+          return caches.match('./index.html')
         })
     )
     return
