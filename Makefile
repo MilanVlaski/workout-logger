@@ -22,3 +22,6 @@ serve:
 
 slow-test:
 	PAGE_URL=$(PAGE_URL) deno test -A test/slow/automation.test.js
+
+run: 
+	bun x browser-sync start --server "src" --files "src/**/*" --no-cache --middleware "function(req, res, next) { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); }"

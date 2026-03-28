@@ -28,10 +28,11 @@
   - [x] We verify that the entire text is correct has changed
   - [x] Add plus button, which also adds a rep, and moves together with the thingy.
   - [x] Make the buttons and inputs twice as big.
+- [x] Fix the writing on my portfolio, because it's a mess
+- [ ] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
 - [ ] Remove the plus button
 - [ ] Add a reps count in the middle of the two buttons
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
-- [ ] Fix the writing on my portfolio, because it's a mess
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)
 ---
@@ -92,5 +93,5 @@ Squats,120kg,3,Knee felt okay
 2. The entire workout log container has a kind of state. Which is:
    1. In the background, fetch the first two weeks of exercises. Add them to the DOM. Remember the timestamp of the latest workout that was fetched. Put a "sentinel" div at the bottom, which will tell us when to fetch more; based on `rootMargin`.
    2. When the sentinel is reached, we respond by fetching two weeks more of workouts, and remembering the latest date, again.
-3. The first two weeks of exercises get fetched immediatelly, even if we're not on the page.
+3. The first two weeks of exercises get fetched immediately, even if we're not on the page.
 4. When we click on log, we just see the result :P
