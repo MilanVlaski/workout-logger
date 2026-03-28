@@ -137,3 +137,10 @@ dialog.workout footer {
     padding-inline: var(--space-4);
 }
 
+all-reps button {
+    margin-top: var(--space-2);
+}
+
+.all-reps {
+    margin-bottom: var(--space-4);    
+}

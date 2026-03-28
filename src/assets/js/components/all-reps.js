@@ -27,7 +27,7 @@ class AllReps extends LitElement {
   render() {
     const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
-    <label data-field for="all-reps">Reps</label>
+    <label for="all-reps">Reps</label>
     <div class="half-screen-buttons">
       <button
         type="button"
