@@ -27,6 +27,7 @@ class AllReps extends LitElement {
   render() {
     const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
+    <label data-field for="all-reps">Reps</label>
     <div class="half-screen-buttons">
       <button
         type="button"
@@ -46,12 +47,10 @@ class AllReps extends LitElement {
         Add Reps
       </button>
     </div>
-      <label data-field>Reps
-        <div class="all-reps">
-          ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
-          <button type="button" class="primary" @click=${this._addReps}>+</button>
-        </div>
-      </label>
+      <div class="all-reps" id="all-reps">
+        ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
+        <button type="button" class="primary" @click=${this._addReps}>+</button>
+      </div>
     `
   }
 

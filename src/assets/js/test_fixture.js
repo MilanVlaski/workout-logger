@@ -12,8 +12,29 @@ const demoData = {
 const $resetDbBtn = document.createElement('button')
 $resetDbBtn.textContent = 'Reset IndexedDB'
 $resetDbBtn.addEventListener('click', (e) => {
-    indexedDB.deleteDatabase('WorkoutDB')
-    location.reload()
+    // 1. Close the current connection if it exists
+    if (db) {
+        db.close()
+    }
+
+    // 2. Request deletion
+    const deleteRequest = indexedDB.deleteDatabase('WorkoutDB')
+
+    // 3. Only reload AFTER the deletion is successful
+    deleteRequest.onsuccess = () => {
+        console.log("Database deleted successfully")
+        location.reload()
+    }
+
+    deleteRequest.onerror = (err) => {
+        console.error("Couldn't delete database", err)
+    }
+
+    deleteRequest.onblocked = () => {
+        console.warn("Deletion blocked! Please close other tabs.")
+        // You might want to force a reload anyway, or alert the user
+        location.reload()
+    }
 })
 
 

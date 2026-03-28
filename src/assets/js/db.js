@@ -68,15 +68,21 @@ export async function readWorkoutLog() {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction('workouts', 'readonly')
         const store = transaction.objectStore('workouts')
+        const index = store.index('timestamp')
+        const results = []
 
-        // getAll() is the most efficient way to retrieve the entire log
-        const request = store.getAll()
+        // 'prev' tells IndexedDB to walk backwards through the index
+        const request = index.openCursor(null, 'prev')
 
-        request.onsuccess = () => {
-            // Returns an array of workout objects, or an empty array if none exist
-            resolve(request.result || [])
+        request.onsuccess = (e) => {
+            const cursor = e.target.result
+            if (cursor) {
+                results.push(cursor.value)
+                cursor.continue()
+            } else {
+                resolve(results)
+            }
         }
-
         request.onerror = () => reject(request.error)
     })
 }

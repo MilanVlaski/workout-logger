@@ -1,3 +1,27 @@
+/**
+ * @file Service Worker for Workout Logger
+ * @version 1.0.0-alpha
+ * * @description
+ * This Service Worker implements an "Offline-First" strategy with an 
+ * AGGRESSIVE update lifecycle. It acts as a local proxy to ensure the 
+ * app works without an internet connection.
+ * * ## Update Mechanism (The "Trigger")
+ * 1. The browser checks this file for byte-level changes on every page load.
+ * 2. TRIGGER: Changing `CACHE_NAME` (e.g., v1 to v2) is the primary trigger.
+ * 3. Even a single comment change in this file will trigger a re-install.
+ * * ## Client Handling (The "Takeover")
+ * - INSTALL: Downloads all `ASSETS_TO_CACHE` into a new cache bucket.
+ * - ACTIVATION: Uses `self.skipWaiting()` to kill the old service worker 
+ * immediately and `clients.claim()` to take control of all open tabs 
+ * without a refresh.
+ * - RISKS: Because activation is immediate, a user mid-session might 
+ * experience a "version mismatch" if the UI tries to load a resource 
+ * that was deleted during the cache cleanup.
+ * * ## Strategies
+ * - Navigation: "Network-First, Fallback to Cache" (Ensures fresh HTML).
+ * - Assets (JS/CSS/Images): "Cache-First, Fallback to Network" (Speed).
+ */
+
 const CACHE_NAME = 'workout-logger-v1'
 const ASSETS_TO_CACHE = [
   './',

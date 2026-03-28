@@ -28,6 +28,8 @@
   - [x] We verify that the entire text is correct has changed
   - [x] Add plus button, which also adds a rep, and moves together with the thingy.
   - [x] Make the buttons and inputs twice as big.
+- [ ] Remove the plus button
+- [ ] Add a reps count in the middle of the two buttons
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Fix the writing on my portfolio, because it's a mess
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
@@ -60,15 +62,11 @@ window.I18N = {
 ## Profiles
 - dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled. PWA.
 - demo - Dev, but forbids export.
-- local - Adds PWA install and Export. Remove demo buttons (test_fixture.js). Uses localdb (db.js).
+- local - Adds Export. Remove demo buttons (test_fixture.js). Uses localdb (db.js).
 - cloud - Adds PWA install and Export. Removes demo buttons. Uses cloud db. (Not sure if clouddb is used additionally, or instead of local db)
 
 ### Logical steps
-- demo_controls -> import test_fixture.js
-- localdb -> import indexeddb.js
-- clouddb -> import clouddb.js
-- export -> import export.js, and button somewhere
-- pwa -> adds manifest.json and service_worker.js
+- Forbid export in demo version
 - 
 
 ### New Lines
