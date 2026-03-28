@@ -137,7 +137,7 @@ dialog.workout footer {
     padding-inline: var(--space-4);
 }
 
-all-reps button {
+.all-reps-controls {
     margin-block: var(--space-2);
 }
 
