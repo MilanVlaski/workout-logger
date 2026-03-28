@@ -27,8 +27,8 @@ class AllReps extends LitElement {
   render() {
     const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
-    <label for="all-reps">Reps</label>
-    <div>
+    <label for="all-reps">Sets</label>
+    <div class="all-reps-controls">
       <button
         type="button"
         data-variant="danger"
@@ -37,21 +37,18 @@ class AllReps extends LitElement {
       > <svg>
           <use href="#remove"></use>
         </svg>
-        Remove Reps
       </button>
 
-      <output>2</output>
+      <output>${this._currentCount}</output>
 
       <button type="button" class="outline" data-action="add-reps" @click=${this._addReps}>
         <svg>
           <use href="#add"></use>
         </svg>
-        Add Reps
       </button>
     </div>
       <div class="all-reps" id="all-reps">
         ${reps.map(v => html`<input type="text" inputMode="numeric" name="reps" .value=${String(v)}>`)}
-        <button type="button" class="primary" @click=${this._addReps}>+</button>
       </div>
     `
   }
@@ -68,13 +65,14 @@ class AllReps extends LitElement {
     const container = this.querySelector('.all-reps')
     container.innerHTML = ''
     container.appendChild(this._createRepInput())
+    this.requestUpdate()
   }
 
   _addReps() {
     const container = this.querySelector('.all-reps')
-    const plusButton = container.querySelector('button')
-    container.insertBefore(this._createRepInput(), plusButton)
+    container.append(this._createRepInput())
       ;[...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
+    this.requestUpdate()
   }
 
   _removeReps() {
@@ -83,6 +81,11 @@ class AllReps extends LitElement {
     if (inputs.length > 1) {
       container.removeChild(inputs[inputs.length - 1])
     }
+    this.requestUpdate()
+  }
+
+  get _currentCount() {
+    return this.querySelectorAll('[name="reps"]').length || 1
   }
 }
 

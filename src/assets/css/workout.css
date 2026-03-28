@@ -138,9 +138,20 @@ dialog.workout footer {
 }
 
 all-reps button {
-    margin-top: var(--space-2);
+    margin-block: var(--space-2);
 }
 
 .all-reps {
     margin-bottom: var(--space-4);    
+}
+
+.all-reps-controls {
+    display: grid;
+    grid-template-columns: 5fr 2fr 5fr;
+    align-items: center;
+}
+
+.all-reps-controls > output {
+    text-align: center;
+    /* align-self: flex-end; */
 }
