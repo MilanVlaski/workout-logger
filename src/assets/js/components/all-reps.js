@@ -28,18 +28,20 @@ class AllReps extends LitElement {
     const reps = this.data && this.data.length > 0 ? this.data : ['']
     return html`
     <label for="all-reps">Reps</label>
-    <div class="half-screen-buttons">
+    <div>
       <button
         type="button"
         data-variant="danger"
         class="outline"
         @click=${this._removeReps}
-      >
-        <svg>
+      > <svg>
           <use href="#remove"></use>
         </svg>
         Remove Reps
       </button>
+
+      <output>2</output>
+
       <button type="button" class="outline" data-action="add-reps" @click=${this._addReps}>
         <svg>
           <use href="#add"></use>
@@ -72,7 +74,7 @@ class AllReps extends LitElement {
     const container = this.querySelector('.all-reps')
     const plusButton = container.querySelector('button')
     container.insertBefore(this._createRepInput(), plusButton)
-    ;[...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
+      ;[...this.querySelectorAll('[name="reps"]')].at(-1)?.focus()
   }
 
   _removeReps() {
