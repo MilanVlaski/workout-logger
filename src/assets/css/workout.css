@@ -147,11 +147,10 @@ all-reps button {
 
 .all-reps-controls {
     display: grid;
-    grid-template-columns: 5fr 2fr 5fr;
+    grid-template-columns: 1fr 6ch 1fr;
     align-items: center;
 }
 
 .all-reps-controls > output {
     text-align: center;
-    /* align-self: flex-end; */
 }
