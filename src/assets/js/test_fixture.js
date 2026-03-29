@@ -5,8 +5,8 @@ import { writeWorkoutLogToScreen } from "./main.js"
 const demoData = {
     "exercise-name": "Pullups",
     reps: '12',
-    comment: "Was a good workout!",
-    weight: "1200lbs"
+    comment: "",
+    weight: "50kg"
 }
 
 const $resetDbBtn = document.createElement('button')
