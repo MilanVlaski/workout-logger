@@ -40,7 +40,7 @@ class Exercise extends LitElement {
       const exerciseInputs = this.querySelector('exercise-inputs')
       const data = exerciseInputs.value()
 
-      form.reset() // This will trigger reset event on form, which bubbles to all-reps
+      form.reset()
 
       this.dispatchEvent(new CustomEvent('exercise:finish', {
         detail: data,

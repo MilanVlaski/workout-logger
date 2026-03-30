@@ -4,16 +4,11 @@ import { LitElement, html } from 'lit'
   Represents an array of numbers, representing reps.
 */
 class AllReps extends LitElement {
+  static formAssociated = true
   static properties = { data: { type: Array } }
 
   createRenderRoot() {
     return this // Render in light DOM
-  }
-
-  firstUpdated() {
-    this.addEventListener('reset', () => {
-      this._resetReps()
-    })
   }
 
   value() {
@@ -61,7 +56,7 @@ class AllReps extends LitElement {
     return input
   }
 
-  _resetReps() {
+  formResetCallback() {
     const container = this.querySelector('.all-reps')
     container.innerHTML = ''
     container.appendChild(this._createRepInput())
