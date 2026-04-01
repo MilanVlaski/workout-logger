@@ -35,7 +35,7 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/deno.lock') }}
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: deno run -A npm:playwright install --with-deps chromium
 
       - name: Run all tests
         run: make ci-test
