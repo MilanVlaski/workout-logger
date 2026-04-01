@@ -143,7 +143,7 @@ Deno.test('Serialize two workouts', () => {
     }]
 
     assertEquals(
-`Thursday, Feb 26, 14:30
+`Thursday, Feb 26, 2026, 14:30
 Pullups
 120kg: 1, 2, 3
 150: 1
@@ -157,7 +157,7 @@ Pushups
 Felt weaker
 
 
-Wednesday, Feb 25, 14:30
+Wednesday, Feb 25, 2026, 14:30
 Pullups
 120kg: 1, 2, 3
 150: 1

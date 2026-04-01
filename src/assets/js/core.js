@@ -1,5 +1,6 @@
 // TODO hardcoded localization
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
     weekday: 'long',
     month: 'short',
     day: 'numeric',
