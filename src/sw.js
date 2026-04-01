@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workout-logger-v2'
+const CACHE_NAME = 'workout-logger-v3'
 const ASSETS = [
   './', './index.html', './manifest.json',
   './assets/css/oat.min.css', './assets/css/common.css', './assets/css/workout.css',
@@ -11,53 +11,25 @@ const ASSETS = [
   'https://esm.sh/lit@3.3.2', 'https://esm.sh/lit@3.3.2/decorators.js'
 ]
 
-self.addEventListener('install', (e) => {
-  console.log('SW: Installing and caching assets')
-  e.waitUntil(
+self.addEventListener('install', event => {
+  event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(ASSETS))
       .then(() => self.skipWaiting())
   )
 })
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
+self.addEventListener('activate', event => {
+  event.waitUntil(
     caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== CACHE_NAME) {
-          console.log('SW: Deleting old cache:', key)
-          return caches.delete(key)
-        }
-      })
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
     )).then(() => self.clients.claim())
   )
 })
 
-self.addEventListener('fetch', (e) => {
-  const { request } = e
-
-  if (request.mode === 'navigate') {
-    e.respondWith(
-      fetch(request).catch(() => caches.match('./index.html'))
-    )
-    return
-  }
-
-  e.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        console.log(`[SW] 📦 SERVING FROM CACHE ${cachedResponse.url}`)
-        return cachedResponse
-      }
-
-      console.log(`[SW] 🌐 GOING TO NETWORK ${request.url}`)
-      return fetch(request).then((response) => {
-        if (response.ok && request.url.startsWith(self.location.origin) && response.method == 'GET') {
-          const responseClone = response.clone()
-          caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone))
-        }
-        return response
-      })
-    })
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
   )
 })
