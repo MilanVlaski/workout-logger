@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workout-logger-v3'
+const CACHE_NAME = 'workout-logger-v4'
 const ASSETS = [
   './', './index.html', './manifest.json',
   './assets/css/oat.min.css', './assets/css/common.css', './assets/css/workout.css',

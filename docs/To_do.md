@@ -29,9 +29,9 @@
   - [x] Add plus button, which also adds a rep, and moves together with the thingy.
   - [x] Make the buttons and inputs twice as big.
 - [x] Fix the writing on my portfolio, because it's a mess
-- [ ] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
-- [ ] Remove the plus button
-- [ ] Add a reps count in the middle of the two buttons
+- [x] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
+- [x] Remove the plus button
+- [x] Add a reps count in the middle of the two buttons
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)
