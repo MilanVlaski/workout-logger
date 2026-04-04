@@ -24,4 +24,12 @@ slow-test:
 	PAGE_URL=$(PAGE_URL) deno test -A test/slow/automation.test.js
 
 run: 
-	bun x browser-sync start --server "src" --files "src/**/*" --no-cache --middleware "function(req, res, next) { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); }"
+	bun x browser-sync start --server "src" --files "src/**/*" --no-cache
+
+build:
+	# JS files will be minified, so no need to include them
+	rsync -av --exclude='assets/js/' src/ dist/
+	bun build ./src/assets/js/index.js --outdir ./dist/assets/js --minify --sourcemap
+
+clean:
+	rm -rf ./dist

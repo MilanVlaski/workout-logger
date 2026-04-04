@@ -3,7 +3,6 @@
 // Third-party non-module script (oat.min.js) must remain in HTML as separate <script defer> tag
 
 // Component modules (self-registering custom elements)
-import "./lit.js"
 import "./components/close-btn.js"
 import "./components/all-reps.js"
 import "./components/exercise-input.js"

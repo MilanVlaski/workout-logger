@@ -1,0 +1,39 @@
+{
+  "name": "Workout Logger",
+  "short_name": "Workout Logger",
+  "description": "A workout logging app with offline support",
+  "start_url": "./",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "597x592",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view of the dashboard"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "358x740",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of the dashboard"
+    }
+  ]
+}

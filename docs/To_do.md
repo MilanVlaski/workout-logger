@@ -32,6 +32,7 @@
 - [x] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
 - [x] Remove the plus button
 - [x] Add a reps count in the middle of the two buttons
+- [ ] EXPERIMENTING WITH BUN BUILD AND STUFF
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)
@@ -61,10 +62,10 @@ window.I18N = {
 
 # Notes 
 ## Profiles
-- dev - has demo buttons: To Temp Log, Reset IndexedDB, Data, Dummy Data (test_fixture.js). Uses localdb (db.js). Export enabled. PWA.
-- demo - Dev, but forbids export.
-- local - Adds Export. Remove demo buttons (test_fixture.js). Uses localdb (db.js).
-- cloud - Adds PWA install and Export. Removes demo buttons. Uses cloud db. (Not sure if clouddb is used additionally, or instead of local db)
+- dev   - Has test_fixture.js.
+- demo  - Clears the database every 10 minutes.
+- pro   - Remove test_fixture.js.
+- cloud - Removes test_fixture.js. Uses cloud db, in addition to localdb, because it needs to sync. Should we purge when synced? Probably.
 
 ### Logical steps
 - Forbid export in demo version

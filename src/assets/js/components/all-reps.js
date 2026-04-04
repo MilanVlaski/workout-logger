@@ -1,4 +1,4 @@
-import { LitElement, html } from './../lit.js'
+import { LitElement, html } from '../lit.js'
 
 /*
   Represents an array of numbers, representing reps.

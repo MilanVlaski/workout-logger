@@ -1,0 +1,156 @@
+:root {
+    --inline-gap: 6px;
+}
+
+.container {
+    max-width: 50ch;
+}
+
+h1 {
+    font-size: 1.44rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+.all-reps {
+    --inline-gap: 0.8rem;
+    --width: 4rem;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--width));
+    
+    gap: var(--inline-gap);
+    justify-content: space-between;
+}
+
+.all-reps > * {
+    padding-inline: 1rem;
+    width: 4rem;
+}
+
+
+.half-screen-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--inline-gap);
+}
+
+all-reps > .half-screen-buttons{
+    margin-block-end: var(--space-4);
+}
+
+
+.exercise-actions {
+    display: flex; 
+    column-gap: var(--inline-gap);
+}
+
+.current-exercise {
+    margin-block-end: var(--space-4);
+}
+.exercise-actions > :last-child {
+    flex: 1;
+}
+
+h1 {
+    margin-block-start: var(--space-6 );
+}
+
+label button {
+    margin-block-start: var(--space-1);
+}
+
+nav[role='tablist'] {
+    display: flex;
+    background-color: var(--background);
+    flex-wrap: wrap;
+    padding-inline: 1rem;
+}
+
+ot-tabs:not(:defined) { 
+    display: none;
+}
+
+.workout {
+    padding-inline: 1rem;
+}
+
+/* Double input and button height */
+.workout :is(
+  input:not([type="checkbox"], [type="radio"], [type="range"]),
+  textarea,
+  select,
+  button,
+  ::file-selector-button
+) {
+  padding-block: calc(2 * var(--space-2));
+}
+
+
+/* Dialog styles for editing workouts */
+#edit-workout-dialog {
+  max-width: 90vw;
+  max-height: 80vh;
+  width: 600px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-2);
+  box-shadow: var(--shadow-4);
+}
+
+#edit-workout-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#edit-workout-dialog form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 80vh;
+}
+
+#edit-workout-dialog modify-workout {
+  flex: 1;
+  padding: var(--space-4);
+}
+
+modify-workout {
+    overflow-y: auto;
+}
+
+dialog.workout footer {
+    position: sticky;
+    bottom: 0;
+
+    padding: var(--space-4);
+    background-color: var(--card);
+    border-top: 1px solid var(--input);
+}
+
+.workout-log-section h1 {
+    margin-inline-start: var(--space-4);
+}
+
+.workout-log-section .actions {
+    padding-inline: var(--space-4);
+}
+
+.all-reps-controls {
+    margin-block: var(--space-2);
+}
+
+.all-reps {
+    margin-bottom: var(--space-4);    
+}
+
+.all-reps-controls {
+    display: grid;
+    grid-template-columns: 1fr 6ch 1fr;
+    align-items: center;
+}
+
+.all-reps-controls > output {
+    text-align: center;
+}
