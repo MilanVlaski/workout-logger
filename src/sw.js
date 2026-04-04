@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workout-logger-v4'
+const CACHE_NAME = 'workout-logger-v5'
 const ASSETS = [
   './', './index.html', './manifest.json',
   './assets/css/oat.min.css', './assets/css/common.css', './assets/css/workout.css',
@@ -8,7 +8,7 @@ const ASSETS = [
   './assets/js/components/exercise-input.js', './assets/js/components/workout-start-time.js',
   './assets/js/components/exercise-inputs.js', './assets/js/components/the-exercise.js',
   './assets/js/components/modify-workout.js', './icon-192.png', './icon-512.png',
-  'https://esm.sh/lit@3.3.2', 'https://esm.sh/lit@3.3.2/decorators.js'
+  './assets/js/lit.js'
 ]
 
 self.addEventListener('install', event => {

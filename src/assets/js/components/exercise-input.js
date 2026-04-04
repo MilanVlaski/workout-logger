@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit'
+import { LitElement, html } from './../lit.js'
 
 /*
   Represents a setWithWeight, in terms of data.
