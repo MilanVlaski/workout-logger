@@ -32,7 +32,8 @@
 - [x] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
 - [x] Remove the plus button
 - [x] Add a reps count in the middle of the two buttons
-- [ ] EXPERIMENTING WITH BUN BUILD AND STUFF
+- [ ] EXPERIMENTING WITH BUN BUILD AND STUFF. `bun x serve dist` to test. `make build` to build.
+- [ ] Move all to bun.
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
 - [ ] Add build and [profiles](#profiles)
@@ -60,36 +61,105 @@ window.I18N = {
 ```
 ---
 
-# Notes 
-## Profiles
-- dev   - Has test_fixture.js.
-- demo  - Clears the database every 10 minutes.
+## Notes 
+### Profiles
+
+- dev   - Has test_fixture.js. Uses indexeddb.js, like all of them.
+- demo  - Uses transientdb.js instead of indexeddb.js.
 - pro   - Remove test_fixture.js.
-- cloud - Removes test_fixture.js. Uses cloud db, in addition to localdb, because it needs to sync. Should we purge when synced? Probably.
+- cloud - Removes test_fixture.js. Uses clouddb, in addition to indexeddb, because it needs to sync. Also a sync service worker code gets "appended" to the existing one, because we can't have two service worker files in the same directory.
 
-### Logical steps
-- Forbid export in demo version
-- 
-
-### New Lines
+**Note**, the build step for the different profiles should be additive, e.g., for test_fixture.js. It's only included in the demo.
+The of db module, is done by importing it as db always, but specifying which one we want in our build logic. The import happens only in one place:
+```javascript
+import { db } from './db.js';
 ```
-Pullups
+|-- src/db/transientdb.js
+|-- src/db/indexeddb.js
+ `- src/db/clouddb.js
+
+- e.g.: cp src/db/transient.js dist/demo/assets/js/db.js
+
+**manifest.json** file must also be different per build.
+
+Build step needs to:
+1. Add test_fixture.js into index.js.
+2. Build the appropriate db file as db.js.
+3. Add clouddb.js additionally.
+4. Parameterize manifest.json, or just put them 
+
+## Example structure
+.
+├── Makefile                <-- The "Assembler"
+├── src/
+│   ├── index.html          <-- Base template
+│   ├── manifest.json       <-- Base manifest
+│   ├── sw/                 <-- SW fragments
+│   │   ├── base.js         <-- Caching logic
+│   │   └── sync.js         <-- Cloud sync logic (only for Cloud profile)
+│   ├── db/                 <-- The "Engines"
+│   │   ├── transient.js    <-- For Demo
+│   │   ├── indexeddb.js    <-- For Pro/Dev
+│   │   └── cloud.js        <-- For Cloud (wraps indexeddb)
+│   ├── assets/
+│   │   ├── css/            <-- Shared styles
+│   │   └── js/
+│   │       ├── components/ <-- Shared custom elements
+│   │       ├── core.js
+│   │       ├── main.js
+│   │       └── index.js    <-- The "Bootstrap" (contains the SW registration)
+│   └── test_fixture.js     <-- Additive module
+└── dist/                   <-- The "Out" folder (organized by profile)
+    ├── demo/               <-- myapp.com/demo
+    │   ├── index.html
+    │   ├── sw.js           (base.js)
+    │   └── assets/js/db.js (transient.js)
+    ├── pro/                <-- myapp.com/pro
+    │   ├── index.html
+    │   ├── sw.js           (base.js)
+    │   └── assets/js/db.js (indexeddb.js)
+    └── cloud/              <-- myapp.com/cloud
+        ├── index.html
+        ├── sw.js           (base.js + sync.js)
+        └── assets/js/db.js (cloud.js)
+
+### Makefile
+```makefile
+build-demo:
+	mkdir -p dist/demo/assets/js
+	cp -r src/assets dist/demo/
+	cp src/index.html dist/demo/
+	cp src/db/transient.js dist/demo/assets/js/db.js
+	cat src/sw/base.js > dist/demo/sw.js
+	# Additive step
+	cp src/test_fixture.js dist/demo/assets/js/
+	echo 'import "./test_fixture.js"' >> dist/demo/assets/js/index.js
+
+build-cloud:
+	mkdir -p dist/cloud/assets/js
+	# ... base copies ...
+	cp src/db/cloud.js dist/cloud/assets/js/db.js
+	cat src/sw/base.js src/sw/sync.js > dist/cloud/sw.js
+```
+#### New Lines
+```
+Pullupsfg
 1200lbs: 12, 12, 12
 50lb: 12, 12, 12
 (Was a good workout!)
 ```
-## Dot+Space Instead Of Newline
+### Dot+Space Instead Of Newline
 ```
 Pullups. 1200lbs: 12, 12, 12. 50lb: 12, 12, 12. (Was a good workout!)
 ```
-## CSV
+### CSV
 ```csv
 Exercise,Weight,Reps,Comment
 Squats,100kg,"5, 5",Knee felt okay
 Squats,120kg,3,Knee felt okay
 ```
 
-## Old windowing, unnecessary, since we just load ALL of the text, in the background, but a cool idea ~~Show workout log~~
+##  # Old windowing, unnecessary, since we just load ALL of the text, in the background, but a cool idea ~~Show workout log~~
 1. Write to IndexedDB...
 2. The entire workout log container has a kind of state. Which is:
    1. In the background, fetch the first two weeks of exercises. Add them to the DOM. Remember the timestamp of the latest workout that was fetched. Put a "sentinel" div at the bottom, which will tell us when to fetch more; based on `rootMargin`.
