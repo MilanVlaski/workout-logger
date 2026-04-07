@@ -66,8 +66,8 @@ window.I18N = {
 
 - dev   - Has test_fixture.js. Uses indexeddb.js, like all of them.
 - demo  - Uses transientdb.js instead of indexeddb.js.
-- pro   - Remove test_fixture.js.
-- cloud - Removes test_fixture.js. Uses clouddb, in addition to indexeddb, because it needs to sync. Also a sync service worker code gets "appended" to the existing one, because we can't have two service worker files in the same directory.
+- pro   - 
+- cloud -  Uses clouddb, in addition to indexeddb, because it needs to sync. Also a sync service worker code gets "appended" to the existing one, because we can't have two service worker files in the same directory.
 
 **Note**, the build step for the different profiles should be additive, e.g., for test_fixture.js. It's only included in the demo.
 The of db module, is done by importing it as db always, but specifying which one we want in our build logic. The import happens only in one place:
