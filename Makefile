@@ -26,7 +26,7 @@ define run
 	$(call sync,$(1))
 	(bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --watch & \
 	 bun watch.js $(DIST)/$(1) & \
-	 bunx live-server $(DIST)/$(1))
+	 bun x browser-sync start --server "$(DIST)/$(1)" --files "$(DIST)/$(1)/**/*" --no-cache)
 endef
 
 # --- Targets ---
