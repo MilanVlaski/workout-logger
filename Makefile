@@ -1,4 +1,4 @@
-.PHONY: demo-build demo-run pro-build pro-run cloud-build cloud-run
+.PHONY: demo-build demo-run local-build local-run cloud-build cloud-run
 
 # --- Variables ---
 SRC      := src
@@ -38,11 +38,11 @@ demo-build:
 demo-run:
 	$(call run,demo)
 
-pro-build:
-	$(call build,pro)
+local-build:
+	$(call build,local)
 
-pro-run:
-	$(call run,pro)
+local-run:
+	$(call run,local)
 
 cloud-build:
 	$(call build,cloud)
