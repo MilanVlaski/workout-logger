@@ -1,1 +1,1 @@
-export * from './db/indexeddb.js'
+export * from './db/local-db.js'
