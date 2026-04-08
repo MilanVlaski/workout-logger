@@ -4,13 +4,12 @@
 SRC      := src
 DIST     := dist
 JS_DIR   := assets/js
-RSYNC_EX := --exclude='$(JS_DIR)'
 
 # --- Logic Factory ---
 
 define sync
 	mkdir -p $(DIST)/$(1)
-	rsync -av $(RSYNC_EX) $(SRC)/ $(DIST)/$(1)
+	rsync -av --exclude='$(JS_DIR)' $(SRC)/ $(DIST)/$(1)
 endef
 
 # --- The Build Logic ---
@@ -22,8 +21,10 @@ endef
 
 # --- The Run Logic ---
 # $(1) = flavor
+# No service workers while debugging
 define run
 	$(call sync,$(1))
+	rm -f $(DIST)/$(1)/sw.js
 	(bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --watch & \
 	 bun watch.js $(DIST)/$(1) & \
 	 bun x browser-sync start --server "$(DIST)/$(1)" --files "$(DIST)/$(1)/**/*" --no-cache)

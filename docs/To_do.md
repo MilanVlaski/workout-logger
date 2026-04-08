@@ -32,11 +32,122 @@
 - [x] Current service worker code is actually network first, then fallback to cache. It should be flipped. This is expected to massively simplify the code, as the only thing that's checking whether the cache updates, is the cache_name variable.
 - [x] Remove the plus button
 - [x] Add a reps count in the middle of the two buttons
-- [ ] EXPERIMENTING WITH BUN BUILD AND STUFF. `bun x serve dist` to test. `make build` to build.
-- [ ] Move all to bun.
+- [x] EXPERIMENTING WITH BUN BUILD AND STUFF. `bun x serve dist` to test. `make build` to build.
+- [x] Move all to bun.
+- [x] Add build and [profiles](#profiles)
+- [ ] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
+  - 1. aliasing - good for replacing different modules, e.g. `esbuild index.js --bundle --alias:./db.js=./db/sync-stack.js`
+  - 2. 
+- 
+- [ ] Dev build without sw.js
+- [ ] 
+
+## Bun the king
+For these requirements, the best tool is **Bun** using its **JavaScript Build API**. While the CLI is great for simple tasks, your need to "append" code to a Service Worker and swap dependencies based on environment targets requires a small build script (`build.ts`).
+
+### The Strategy
+We will use Bun's `plugins` to handle the dependency swapping (the "Alias" part) and a post-build step to handle the Service Worker "append" logic.
+
+---
+
+### 1. The Project Structure
+Assume your source files look like this:
+* `src/index.html` (Points to `main.js`)
+* `src/sw.js` (Your base Service Worker)
+* `src/db/indexeddb.js`
+* `src/db/transientdb.js`
+* `src/db/clouddb.js`
+* `src/test_fixture.js`
+
+### 2. The Build Script (`build.ts`)
+This script uses a `TARGET` environment variable to decide how to bundle.
+
+```javascript
+const target = process.env.TARGET || "dev" // dev, demo, pro, cloud
+
+const result = await Bun.build({
+  entrypoints: ["./src/index.html", "./src/sw.js"],
+  outdir: "./dist",
+  minify: target !== "dev",
+  plugins: [{
+    name: "db-swapper",
+    setup(build) {
+      // 1. Handle Demo: Swap IndexedDB for TransientDB
+      if (target === "demo") {
+        build.onResolve({ filter: /indexeddb\.js$/ }, () => ({
+          path: import.meta.resolve("./src/db/transientdb.js")
+        }))
+      }
+
+      // 2. Handle Dev: Ensure test_fixture is included 
+      // (Or just import it conditionally in your main.js)
+    }
+  }],
+  // Global constants for conditional code
+  define: {
+    IS_CLOUD: JSON.stringify(target === "cloud"),
+    IS_DEV: JSON.stringify(target === "dev")
+  }
+})
+
+// 3. Handle Cloud Service Worker "Append"
+if (target === "cloud") {
+  const baseSW = await Bun.file("./dist/sw.js").text()
+  const syncCode = await Bun.file("./src/cloud-sync-logic.js").text()
+  
+  // Append and overwrite the built file
+  await Bun.write("./dist/sw.js", baseSW + "\n" + syncCode)
+}
+
+console.log(`Build for ${target} complete!`)
+```
+
+---
+
+### 3. How to Fulfill Your Requirements
+
+#### **Requirement: Dev vs. Demo (DB Swapping)**
+In your code, you just `import db from "./db/indexeddb.js"`. 
+* When you run `TARGET=demo bun build.ts`, the plugin intercepts that specific file path and redirects it to `transientdb.js`.
+* The rest of your app remains "vanilla"—it has no idea the file was swapped.
+
+#### **Requirement: Cloud (Sync Logic & SW Append)**
+Since you can't have two Service Worker files, we build the "standard" one first. If the target is `cloud`, we read the newly bundled file, tack on the `clouddb` sync logic at the bottom, and save it. 
+
+#### **Requirement: Conditional Logic (Cloud DB)**
+Inside your `main.js`, you can use the `define` constants we set up:
+```javascript
+import db from "./db/indexeddb.js"
+
+if (IS_CLOUD) {
+  const { initCloudSync } = await import("./db/clouddb.js")
+  initCloudSync(db)
+}
+```
+Bun’s minifier is smart: if `IS_CLOUD` is false, it will **tree-shake** (delete) the `import("./db/clouddb.js")` block entirely from the production build, keeping it lean.
+
+---
+
+### 4. Running the Builds
+Add these to your `package.json` scripts:
+
+```json
+"scripts": {
+  "build:dev": "TARGET=dev bun build.ts",
+  "build:demo": "TARGET=demo bun build.ts",
+  "build:cloud": "TARGET=cloud bun build.ts"
+}
+```
+
+### Why this works best:
+* **One Tool:** You don't need a separate "append" tool or a complex Webpack setup.
+* **Vanilla Entry:** You still point the builder at your `.html` file.
+* **Fast:** Even with the custom script, Bun will finish this build in roughly 20-50ms.
+---
+
+
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
-- [ ] Add build and [profiles](#profiles)
 ---
 ### Optional
 - [ ] Settings with light/dark switcher
@@ -65,8 +176,8 @@ window.I18N = {
 ### Profiles
 
 - dev   - Has test_fixture.js. Uses indexeddb.js, like all of them.
-- demo  - Uses transientdb.js instead of indexeddb.js.
-- pro   - 
+- demo  - Uses transientdb.js instead of indexeddb.js. Does not use test_fixture.js.
+- pro   - Uses indexeddb.js.
 - cloud -  Uses clouddb, in addition to indexeddb, because it needs to sync. Also a sync service worker code gets "appended" to the existing one, because we can't have two service worker files in the same directory.
 
 **Note**, the build step for the different profiles should be additive, e.g., for test_fixture.js. It's only included in the demo.
