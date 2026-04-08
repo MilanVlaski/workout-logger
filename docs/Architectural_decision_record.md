@@ -95,3 +95,6 @@ let workout = { exercises: [{
 
 Adds autoincrement id and timestamp to it.
 
+## Library versions
+- lit - 
+- oat - 

@@ -35,6 +35,7 @@
 - [x] EXPERIMENTING WITH BUN BUILD AND STUFF. `bun x serve dist` to test. `make build` to build.
 - [x] Move all to bun.
 - [x] Add build and [profiles](#profiles)
+- [ ] Move all vendor libs into vendor (css, js, )
 - [ ] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
   - 1. aliasing - good for replacing different modules, e.g. `esbuild index.js --bundle --alias:./db.js=./db/sync-stack.js`
   - 2. 
