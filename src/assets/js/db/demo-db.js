@@ -36,4 +36,3 @@ export const demoDb = {
     updateWorkout,
     get db() { return db } // Handles your test_fixture.js requirement
 }
-
