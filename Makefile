@@ -50,8 +50,12 @@ cloud-build:
 cloud-run:
 	$(call run,cloud)
 
+dev-build:
+	$(call build,dev)
+	
 dev-run:
 	$(call run,dev)
+	
 
 test:
 	deno test test/fast/**

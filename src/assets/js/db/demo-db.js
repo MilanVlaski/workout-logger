@@ -60,3 +60,14 @@ export async function updateWorkout(workout) {
 
     return workouts[index]
 }
+
+export const demoDb = {
+    addExercise,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    findWorkoutById,
+    updateWorkout,
+    get db() { return db } // Handles your test_fixture.js requirement
+}
+

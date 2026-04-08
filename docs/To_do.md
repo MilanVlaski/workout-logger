@@ -278,3 +278,8 @@ Squats,120kg,3,Knee felt okay
    2. When the sentinel is reached, we respond by fetching two weeks more of workouts, and remembering the latest date, again.
 3. The first two weeks of exercises get fetched immediately, even if we're not on the page.
 4. When we click on log, we just see the result :P
+
+
+I want to achieve db.js as the switchboard for imports of different dbs.
+
+By default, 
