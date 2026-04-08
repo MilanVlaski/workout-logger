@@ -9,5 +9,4 @@ import "./components/modify-workout.js"
 
 // Core application modules
 import "./core.js"
-import "./db.js"
 import "./main.js"
