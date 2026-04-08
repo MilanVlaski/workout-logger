@@ -1,14 +1,17 @@
 import { localDb } from './db/local-db.js'
 import { demoDb } from './db/demo-db.js'
 
-let selected = localDb // Default
+let selected
 
 // We only attempt to switch if process.env exists (Bun/Node builds)
-const flavor = (typeof process !== 'undefined' && process.env.APP_FLAVOR)
-    ? process.env.APP_FLAVOR
-    : 'local'
+let profile = 'local'
+try {
+    profile = APP_PROFILE
+} catch (_) {}
 
-switch (flavor) {
+console.log(`My profile: ${profile}`)
+
+switch (profile) {
     case 'local':
         selected = localDb
         break
