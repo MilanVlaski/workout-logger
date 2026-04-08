@@ -1,5 +1,14 @@
 import { exerciseToText, workoutLogToText, workoutToText, workoutDelimiter, workoutLogToCsv, linesPerWorkout } from "./core.js"
-import { addExercise, findWorkoutById, readCurrentWorkout, readWorkoutLog, saveCurrentWorkoutToLog, updateWorkout } from "./db.js"
+import { database } from "./db.js"
+
+const {
+    addExercise,
+    findWorkoutById,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    updateWorkout
+} = database
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 

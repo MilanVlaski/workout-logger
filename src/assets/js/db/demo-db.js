@@ -1,19 +1,19 @@
-export let db
+ let db
 
-export async function addExercise(exercise) {
+ async function addExercise(exercise) {
 }
 
-export async function readCurrentWorkout() {
+ async function readCurrentWorkout() {
 }
 
 /**
  * Retrieves all saved workouts from the history log.
  * @returns {Promise<Array>} A list of all completed workouts.
  */
-export async function readWorkoutLog() {
+ async function readWorkoutLog() {
 }
 
-export async function saveCurrentWorkoutToLog() {
+ async function saveCurrentWorkoutToLog() {
 }
 
 /**
@@ -21,8 +21,19 @@ export async function saveCurrentWorkoutToLog() {
  * @param {string} timestamp - The ISO string timestamp to search for.
  * @returns {Promise<Object|null>} The workout object or null if not found.
  */
-export async function findWorkoutById(timestamp) {
+ async function findWorkoutById(timestamp) {
 }
 
-export async function updateWorkout(workout) {
+ async function updateWorkout(workout) {
 }
+
+export const demoDb = {
+    addExercise,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    findWorkoutById,
+    updateWorkout,
+    get db() { return db } // Handles your test_fixture.js requirement
+}
+
