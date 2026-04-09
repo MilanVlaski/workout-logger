@@ -16,7 +16,7 @@ endef
 # $(1) = flavor
 define build
 	$(call sync,$(1))
-	bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --minify
+	bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --define "PROFILE='$(1)'" --minify
 endef
 
 # --- The Run Logic ---
@@ -25,7 +25,7 @@ endef
 define run
 	$(call sync,$(1))
 	rm -f $(DIST)/$(1)/sw.js
-	(bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --watch & \
+	(bun build $(SRC)/$(JS_DIR)/index-$(1).js --outfile $(DIST)/$(1)/$(JS_DIR)/index.js --watch --define "PROFILE='$(1)'" & \
 	 bun watch.js $(DIST)/$(1) & \
 	 bun x browser-sync start --server "$(DIST)/$(1)" --files "$(DIST)/$(1)/**/*" --no-cache)
 endef
@@ -50,8 +50,12 @@ cloud-build:
 cloud-run:
 	$(call run,cloud)
 
+dev-build:
+	$(call build,dev)
+
 dev-run:
 	$(call run,dev)
+	
 
 test:
 	deno test test/fast/**

@@ -95,6 +95,41 @@ let workout = { exercises: [{
 
 Adds autoincrement id and timestamp to it.
 
+
+## Build
+See Makefile, but also, the goal is that the app is runnable from src. The main problem to solve was profile specific module imports, specifically, two cases:
+1. different modules that don't overlap, defined by different `index-{x}.js` files. Just point the bundler to them.
+2. "polymorphic" modules, that must be replaced. Creates a dependency on a `PROFILE` environment variable. Handled like so:
+```javascript
+// db.js
+import { localDb } from './db/local-db.js'
+import { demoDb } from './db/demo-db.js'
+
+let selected
+
+// We only attempt to switch if process.env exists (Bun/Node builds)
+let profile = 'local'
+try {
+    profile = APP_PROFILE
+} catch (_) {}
+
+console.log(`My profile: ${profile}`)
+
+switch (profile) {
+    case 'local':
+        selected = localDb
+        break
+    case 'demo':
+        selected = demoDb
+        break
+    default:
+        selected = localDb
+}
+
+export const database = selected
+export const db = selected.db
+```
+
 ## Library versions
 - lit - 
 - oat - 

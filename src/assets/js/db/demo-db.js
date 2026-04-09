@@ -1,4 +1,4 @@
-export let db
+let db
 
 const WORKOUT_KEY = 'single-workout'
 
@@ -7,12 +7,12 @@ let currentWorkout = { exercises: [] }
 let workouts = []
 const dbReadyPromise = Promise.resolve()
 
-export async function addExercise(exercise) {
+async function addExercise(exercise) {
     currentWorkout.exercises.push(exercise)
     return currentWorkout
 }
 
-export async function readCurrentWorkout() {
+async function readCurrentWorkout() {
     return currentWorkout
 }
 
@@ -20,11 +20,11 @@ export async function readCurrentWorkout() {
  * Retrieves all saved workouts from the history log.
  * @returns {Promise<Array>} A list of all completed workouts.
  */
-export async function readWorkoutLog() {
+async function readWorkoutLog() {
     return [...workouts]
 }
 
-export async function saveCurrentWorkoutToLog() {
+async function saveCurrentWorkoutToLog() {
     if (currentWorkout.exercises.length === 0) return
 
     const finishedWorkout = {
@@ -43,11 +43,11 @@ export async function saveCurrentWorkoutToLog() {
  * @param {string} timestamp - The ISO string timestamp to search for.
  * @returns {Promise<Object|null>} The workout object or null if not found.
  */
-export async function findWorkoutById(timestamp) {
+async function findWorkoutById(timestamp) {
     return workouts.find(w => w.timestamp === timestamp) || null
 }
 
-export async function updateWorkout(workout) {
+async function updateWorkout(workout) {
     const index = workouts.findIndex(w => w.timestamp === workout.timestamp)
     if (index === -1) {
         throw new Error('Workout not found')
@@ -59,4 +59,14 @@ export async function updateWorkout(workout) {
     }
 
     return workouts[index]
+}
+
+export const demoDb = {
+    addExercise,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    findWorkoutById,
+    updateWorkout,
+    get db() { return db } // Handles your test_fixture.js requirement
 }

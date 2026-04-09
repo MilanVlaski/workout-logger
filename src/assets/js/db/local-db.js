@@ -1,4 +1,4 @@
-export let db
+let db
 
 const dbReadyPromise = new Promise((resolve, reject) => {
     const request = indexedDB.open('WorkoutDB', 3)
@@ -26,7 +26,7 @@ const dbReadyPromise = new Promise((resolve, reject) => {
 
 const WORKOUT_KEY = 'single-workout'
 
-export async function addExercise(exercise) {
+ async function addExercise(exercise) {
     await dbReadyPromise
 
     return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ export async function addExercise(exercise) {
     })
 }
 
-export async function readCurrentWorkout() {
+ async function readCurrentWorkout() {
     await dbReadyPromise
 
     return new Promise((resolve, reject) => {
@@ -62,7 +62,7 @@ export async function readCurrentWorkout() {
  * Retrieves all saved workouts from the history log.
  * @returns {Promise<Array>} A list of all completed workouts.
  */
-export async function readWorkoutLog() {
+ async function readWorkoutLog() {
     await dbReadyPromise
 
     return new Promise((resolve, reject) => {
@@ -87,8 +87,8 @@ export async function readWorkoutLog() {
     })
 }
 
-export async function saveCurrentWorkoutToLog() {
-    const current = await readCurrentWorkout(); console.debug(`Result of reading current:`); console.debug(current)
+ async function saveCurrentWorkoutToLog() {
+    const current = await readCurrentWorkout()
     if (current.exercises.length === 0) return
 
     await dbReadyPromise
@@ -115,7 +115,7 @@ export async function saveCurrentWorkoutToLog() {
  * @param {string} timestamp - The ISO string timestamp to search for.
  * @returns {Promise<Object|null>} The workout object or null if not found.
  */
-export async function findWorkoutById(timestamp) {
+ async function findWorkoutById(timestamp) {
     await dbReadyPromise
 
     return new Promise((resolve, reject) => {
@@ -133,7 +133,7 @@ export async function findWorkoutById(timestamp) {
     })
 }
 
-export async function updateWorkout(workout) {
+ async function updateWorkout(workout) {
     await dbReadyPromise
 
     return new Promise((resolve, reject) => {
@@ -164,4 +164,14 @@ export async function updateWorkout(workout) {
 
         getRequest.onerror = () => reject(getRequest.error)
     })
+}
+
+export const localDb = {
+    addExercise,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    findWorkoutById,
+    updateWorkout,
+    get db() { return db } // Handles your test_fixture.js requirement
 }
