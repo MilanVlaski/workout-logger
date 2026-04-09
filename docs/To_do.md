@@ -37,6 +37,20 @@
 - [x] Add build and [profiles](#profiles)
 - [x] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
 - [x] Dev build without sw.js
+- [ ] Make an alias to remove a worktree NOW
+- [ ] Make an options, with an options icon in the top right (dropdown)  
+  - [ ] Contains: delete permanent log. Dangerous action
+  - [ ] Will contain light/dark mode switches
+  - [ ] language switch
+  - [ ] future customization features
+- [ ] Clearing the permanent log should be a feature
+  - [ ] Create db.js function called `clearWorkoutLog`
+    - [ ] Implement it in impls
+    - [ ] Add it to the export and to the imports
+    - [ ] TODO come up with where to put
+  - [ ] 
+- [ ] Clearing the temporary log should be a feature, but hidden somewhere so you don't misclick
+- [ ] Consider going into an "editing" state for the workout log, where clicks will open up a editing modal
 - [ ] Building of the manifest.json and different "app assets"
   - [ ] name
   - [ ] short_name
