@@ -55,8 +55,12 @@ cloud-run:
 dev-build:
 	$(call build,dev)
 
+dev-build:
+	$(call build,dev)
+
 dev-run:
 	$(call run,dev)
+	
 	
 
 test:

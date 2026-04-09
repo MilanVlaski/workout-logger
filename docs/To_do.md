@@ -94,8 +94,10 @@ window.I18N = {
 - cloud -  Uses clouddb, in addition to indexeddb, because it needs to sync. Also a sync service worker code gets "appended" to the existing one, because we can't have two service worker files in the same directory.
 
 ## Formats
+## Formats
 #### New Lines
 ```
+Pullups
 Pullups
 1200lbs: 12, 12, 12
 50lb: 12, 12, 12
