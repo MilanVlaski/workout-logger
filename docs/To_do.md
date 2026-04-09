@@ -37,7 +37,11 @@
 - [x] Add build and [profiles](#profiles)
 - [x] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
 - [x] Dev build without sw.js
-- [ ] Make an alias to remove a worktree NOW
+- [ ] Building of the manifest.json and different "app assets"
+  - [ ] name
+  - [ ] short_name
+  - [ ] description
+  - [ ] icon-192 and icon-512
 - [ ] Make an options, with an options icon in the top right (dropdown)  
   - [ ] Contains: delete permanent log. Dangerous action
   - [ ] Will contain light/dark mode switches
@@ -51,11 +55,6 @@
   - [ ] 
 - [ ] Clearing the temporary log should be a feature, but hidden somewhere so you don't misclick
 - [ ] Consider going into an "editing" state for the workout log, where clicks will open up a editing modal
-- [ ] Building of the manifest.json and different "app assets"
-  - [ ] name
-  - [ ] short_name
-  - [ ] description
-  - [ ] icon-192 and icon-512
 - [ ] Deployment for demo build
 - [ ] Test (for each build?)
 - [ ] Switch to Bun

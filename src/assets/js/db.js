@@ -1,5 +1,6 @@
 import { localDb } from './db/local-db.js'
 import { demoDb } from './db/demo-db.js'
+import { cloudDb } from './db/cloud-db.js'
 
 let selected
 
@@ -17,6 +18,9 @@ switch (profile) {
         break
     case 'demo':
         selected = demoDb
+        break
+    case 'cloud':
+        selected = cloudDb
         break
     default:
         selected = localDb

@@ -1,0 +1,78 @@
+let db
+
+const WORKOUT_KEY = 'single-workout'
+
+// In-memory storage for cloud (simulated)
+let currentWorkout = { exercises: [] }
+let workouts = []
+const dbReadyPromise = Promise.resolve()
+
+async function addExercise(exercise) {
+    currentWorkout.exercises.push(exercise)
+    return currentWorkout
+}
+
+async function readCurrentWorkout() {
+    return currentWorkout
+}
+
+/**
+ * Retrieves all saved workouts from the history log.
+ * @returns {Promise<Array>} A list of all completed workouts.
+ */
+async function readWorkoutLog() {
+    return [...workouts]
+}
+
+async function saveCurrentWorkoutToLog() {
+    if (currentWorkout.exercises.length === 0) return
+
+    const finishedWorkout = {
+        ...currentWorkout,
+        timestamp: new Date().toISOString()
+    }
+
+    workouts.unshift(finishedWorkout)
+    currentWorkout = { exercises: [] }
+
+    // In a real cloud implementation, this would sync to a server
+    console.log('Cloud sync: Workout saved locally (simulated cloud sync)')
+
+    return finishedWorkout
+}
+
+/**
+ * Retrieves a specific workout by its timestamp ID.
+ * @param {string} timestamp - The ISO string timestamp to search for.
+ * @returns {Promise<Object|null>} The workout object or null if not found.
+ */
+async function findWorkoutById(timestamp) {
+    return workouts.find(w => w.timestamp === timestamp) || null
+}
+
+async function updateWorkout(workout) {
+    const index = workouts.findIndex(w => w.timestamp === workout.timestamp)
+    if (index === -1) {
+        throw new Error('Workout not found')
+    }
+
+    workouts[index] = {
+        ...workouts[index],
+        exercises: workout.exercises
+    }
+
+    // In a real cloud implementation, this would sync changes to server
+    console.log('Cloud sync: Workout updated locally (simulated cloud sync)')
+
+    return workouts[index]
+}
+
+export const cloudDb = {
+    addExercise,
+    readCurrentWorkout,
+    readWorkoutLog,
+    saveCurrentWorkoutToLog,
+    findWorkoutById,
+    updateWorkout,
+    get db() { return db } // Handles your test_fixture.js requirement
+}
