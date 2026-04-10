@@ -1,25 +1,22 @@
-import { chromium } from "npm:playwright"
-import { expect } from "npm:playwright/test"
-
-const browser = await chromium.launch({ headless: true, })
-
-Deno.test.afterAll(async () => {
-    await browser.close()
-})
+import { chromium } from "playwright"
+import { test } from "bun:test"
+import { expect } from "@playwright/test"
 
 async function withPage(testFn) {
+    const browser = await chromium.launch({ headless: false, slowMo: 0})
     const context = await browser.newContext()
     const page = await context.newPage()
     try {
         await testFn(page)
     } finally {
         await context.close()
+        await browser.close()
     }
 }
 
-const URL = Deno.env.get("PAGE_URL") || "http://127.0.0.1:5500"
+const URL = "https://milanvlaski.github.io/workout-logger/" // process.env.PAGE_URL || "http://127.0.0.1:5500"
 
-Deno.test("Complete an exercise and see it in the workout log", () => withPage(async (page) => {
+test("Complete an exercise and see it in the workout log", async () => await withPage(async (page) => {
     await page.goto(URL)
 
     const exerciseName = "Bench Press"
@@ -75,7 +72,7 @@ Deno.test("Complete an exercise and see it in the workout log", () => withPage(a
 
 // This test will fail until the edit feature is implemented
 // It serves as a specification for the expected behavior
-Deno.test("Edit an exercise in the workout log", () => withPage(async (page) => {
+test("Edit an exercise in the workout log", async () => await withPage(async (page) => {
     await page.goto(URL)
 
     const exerciseName = "Bench Press"

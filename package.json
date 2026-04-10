@@ -1,0 +1,23 @@
+{
+  "name": "workout-logger",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "bun test test/fast/",
+    "slow-test": "bun test test/slow/automation.test.js",
+    "ci-test": "bun run serve & bun test test/slow/automation.test.js",
+    "serve": "bun src/serve.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "playwright": "^1.59.1",
+    "@types/bun": "latest"
+  },
+  "trustedDependencies": [
+    "playwright"
+  ],
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

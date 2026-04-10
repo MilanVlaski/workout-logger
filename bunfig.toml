@@ -1,0 +1,3 @@
+[install]
+# This ensures node_modules contains 'links' rather than real files
+installStrategy = "hardlink"

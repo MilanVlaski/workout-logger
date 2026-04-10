@@ -1,4 +1,4 @@
-.PHONY: demo-build demo-run local-build local-run cloud-build cloud-run
+.PHONY: clean build run ci-test everything-test test fast-test slow-test demo-build demo-run local-build local-run cloud-build cloud-run
 
 # --- Variables ---
 SRC      := src
@@ -61,10 +61,10 @@ dev-run:
 	
 
 test:
-	deno test test/fast/**
+	bun test test/fast/
 
 ci-test: test
-	deno run --allow-net --allow-read jsr:@std/http/file-server src/ --port 8000 & \
+	bun run src/serve.js & \
 	SERVER_PID=$$!; \
 	echo "Waiting for server..."; \
 	until curl -s localhost:8000 > /dev/null; do sleep 1; done; \
@@ -75,10 +75,10 @@ ci-test: test
 everything-test: test slow-test
 
 serve:
-	deno run --allow-net --allow-read jsr:@std/http/file-server src/ --port 8000
+	bun run src/serve.js
 
 slow-test:
-	PAGE_URL=$(PAGE_URL) deno test -A test/slow/automation.test.js
+	PAGE_URL=$(PAGE_URL) bun test test/slow/automation.test.js
 
 run: 
 	bun x browser-sync start --server "src" --files "src/**/*" --no-cache

@@ -4,11 +4,11 @@ A workout logging web application built with vanilla JavaScript, HTML, and CSS. 
 
 ## Technology Stack
 
-- **Runtime**: Deno (no Node.js dependency)
+- **Runtime**: Bun (content-addressable storage, no node_modules)
 - **Frontend**: Vanilla JavaScript (ES6 modules), native Web Components
 - **Storage**: IndexedDB (via `db.js`)
 - **Styling**: Custom CSS with OAT CSS framework
-- **Testing**: Deno test framework + Playwright for E2E
+- **Testing**: Bun test framework + Playwright for E2E
 - **No build step**: Direct execution of ES modules
 
 ---
@@ -19,7 +19,7 @@ A workout logging web application built with vanilla JavaScript, HTML, and CSS. 
 
 **Fast unit tests** (pure JavaScript, no browser):
 ```bash
-deno test test/fast/**
+bun test test/fast/
 ```
 or:
 ```bash
@@ -28,7 +28,7 @@ make test
 
 **Slow E2E tests** (Playwright, requires running server):
 ```bash
-PAGE_URL=http://localhost:8000 deno test -A test/slow/automation.test.js
+PAGE_URL=http://localhost:8000 bun test test/slow/automation.test.js
 ```
 or:
 ```bash
@@ -50,7 +50,7 @@ make everything-test
 
 **Start the local server** (serves `src/` on port 8000):
 ```bash
-deno run --allow-net --allow-read jsr:@std/http/file-server src/ --port 8000
+bun run src/serve.js
 ```
 or:
 ```bash
