@@ -36,12 +36,11 @@
 - [x] Move all to bun.
 - [x] Add build and [profiles](#profiles)
 - [x] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
+- [ ] Deployment for demo build
+- [ ] Test (for each build?)
+  - [ ] Switch from Deno to Bun. Content-addressable storage (no node_modules). Only dependency right now is playwright. Only used for tests, at the moment. Also for the build.
+  - [ ] Add "how to run, build, etc" to the README.md. Precise which dependencies are on Bun and Makefile, and what that assumes. i.e. windows users probably need git bash or so.
 - [x] Dev build without sw.js
-- [ ] Building of the manifest.json and different "app assets"
-  - [ ] name
-  - [ ] short_name
-  - [ ] description
-  - [ ] icon-192 and icon-512
 - [ ] Make an options, with an options icon in the top right (dropdown)  
   - [ ] Contains: delete permanent log. Dangerous action
   - [ ] Will contain light/dark mode switches
@@ -51,13 +50,9 @@
   - [ ] Create db.js function called `clearWorkoutLog`
     - [ ] Implement it in impls
     - [ ] Add it to the export and to the imports
-    - [ ] TODO come up with where to put
+    - [ ] TODO put it in the options
   - [ ] 
-- [ ] Clearing the temporary log should be a feature, but hidden somewhere so you don't misclick
 - [ ] Consider going into an "editing" state for the workout log, where clicks will open up a editing modal
-- [ ] Deployment for demo build
-- [ ] Test (for each build?)
-- [ ] Switch to Bun
 - [ ] *Future*: Smoke test that runs the UI test against the demo page. Just pass in the URL to Make, and run it from CI after deployment completes
 - [ ] Add edit button on the Workout page, which opens up a modify workout dialog, which changes the current workout. Inline with the Temporary Log message.
 - [ ] Research how to activate native, Ctrl + F, text search to search the entire page
