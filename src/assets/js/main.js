@@ -12,7 +12,7 @@ const {
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
-const $editCurrentWorkoutDialog = document.querySelector('#edit-workout-dialog')
+// const $editCurrentWorkoutDialog = document.querySelector('#edit-current-workout-dialog')
 
 let workoutPositionMap = new Map()
 
@@ -39,45 +39,44 @@ document.addEventListener('exercise:finish', (e) => {
         })
 })
 
+$editWorkoutDialog.addEventListener('submit', (e) => {
+    e.preventDefault() // Prevent default to handle async update
+
+    const $modifyWorkout = e.target.querySelector('modify-workout')
+    const updatedWorkout = $modifyWorkout.value()
+
+    // Close dialog immediately
+    $editWorkoutDialog.close()
+
+    // Save updated workout to database (async)
+    updateWorkout(updatedWorkout)
+        .then(() => {
+            writeWorkoutLogToScreen()
+        })
+        .catch(err => console.error('Failed to update workout:', err))
+})
+
 // TODO this is the save data function
 document.addEventListener('submit', (e) => {
     // Handle edit workout dialog submission
-    const $editWorkoutDialog = e.target.closest('#edit-workout-dialog')
-    if ($editWorkoutDialog) {
-        e.preventDefault() // Prevent default to handle async update
-
-        const $modifyWorkout = e.target.querySelector('modify-workout')
-        const updatedWorkout = $modifyWorkout.value()
-
-        // Close dialog immediately
-        $editWorkoutDialog.close()
-
-        // Save updated workout to database (async)
-        updateWorkout(updatedWorkout)
-            .then(() => {
-                writeWorkoutLogToScreen()
-            })
-            .catch(err => console.error('Failed to update workout:', err))
-    } 
 
     // TODO DRY
-    const $editCurrentWorkoutDialog = e.target.closest('#edit-current-workout-dialog')
-    if ($editCurrentWorkoutDialog) {
-        e.preventDefault() // Prevent default to handle async update
+    // if ($editCurrentWorkoutDialog.contains(e.target)) {
+    //     e.preventDefault() // Prevent default to handle async update
 
-        const $modifyWorkout = e.target.querySelector('modify-workout')
-        const updatedWorkout = $modifyWorkout.value()
+    //     const $modifyWorkout = e.target.querySelector('modify-workout')
+    //     const updatedWorkout = $modifyWorkout.value()
 
-        // Close dialog immediately
-        dialog.close()
+    //     // Close dialog immediately
+    //     dialog.close()
 
-        // Save updated workout to database (async)
-        updateWorkout(updatedWorkout)
-            .then(() => {
-                writeWorkoutLogToScreen()
-            })
-            .catch(err => console.error('Failed to update workout:', err))
-    } 
+    //     // Save updated workout to database (async)
+    //     updateWorkout(updatedWorkout)
+    //         .then(() => {
+    //             writeWorkoutLogToScreen()
+    //         })
+    //         .catch(err => console.error('Failed to update workout:', err))
+    // }
 
     e.preventDefault()
 
@@ -92,14 +91,10 @@ document.addEventListener('submit', (e) => {
 })
 
 document.querySelector('[data-action="edit-current-workout"]').addEventListener('click', (e) => {
-    // 1. find the component with the data (same in both impls)
-    // 2. assign the workout
-    // 3. showModal()
-    // function openDialogForEditingWorkout(dialog)
     readCurrentWorkout()
-    .then(workout => {
-        openDialogForEditingWorkout(document.querySelector('#edit-workout-dialog'), workout)
-    })
+        .then(workout => {
+            openDialogForEditingWorkout($editWorkoutDialog, workout)
+        })
 })
 
 document.addEventListener('db:ready', (e) => {
@@ -170,7 +165,7 @@ $workoutLog.addEventListener('click', (event) => {
 
     // TODO use the editWorkoutFunction right here
     findWorkoutById(timestamp).then(workout => {
-        openDialogForEditingWorkout(document.querySelector('#edit-workout-dialog'), workout)
+        openDialogForEditingWorkout($editWorkoutDialog, workout)
     }).catch(err => {
         console.error('Error finding workout:', err)
     })
