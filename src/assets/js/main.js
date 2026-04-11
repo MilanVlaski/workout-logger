@@ -34,9 +34,9 @@ document.querySelector('[data-action="change-exercise-format"]').addEventListene
 // rather than just one. Based on that, we can also remove the elements
 document.addEventListener('exercise:finish', (e) => {
     addExercise(e.detail)
-        .then(() => {
-            const format = localStorage.getItem('exerciseFormat')
-            $temporaryLog.textContent += `${exerciseToText.call(e.detail, format)}${(format == 'single') ? '\n' : '\n\n'}`
+        .then(() => { writeCurrentWorkoutToScreen()
+            // const format = localStorage.getItem('exerciseFormat')
+            // $temporaryLog.textContent += `${exerciseToText.call(e.detail, format)}${(format == 'single') ? '\n' : '\n\n'}`
         })
 })
 
@@ -49,9 +49,7 @@ $editWorkoutDialog.addEventListener('submit', (e) => {
     $editWorkoutDialog.close()
 
     updateWorkout(updatedWorkout)
-        .then(() => {
-            writeWorkoutLogToScreen()
-        })
+        .then(() => {writeWorkoutLogToScreen()})
         .catch(err => console.error('Failed to update workout:', err))
 })
 
@@ -60,7 +58,7 @@ $editCurrentWorkoutDialog.addEventListener('submit', (e) => {
 
     const $modifyWorkout = e.target.querySelector('modify-workout')
     const updatedWorkout = $modifyWorkout.value()
-
+    console.log(`Updated workout: ${updatedWorkout}`)
     $editCurrentWorkoutDialog.close()
 
     updateCurrentWorkout(updatedWorkout)
@@ -82,7 +80,6 @@ document.addEventListener('submit', (e) => {
 })
 
 document.querySelector('[data-action="edit-current-workout"]').addEventListener('click', (e) => {
-    console.log('manipula')
     readCurrentWorkout()
         .then(workout => {
             openDialogForEditingWorkout($editCurrentWorkoutDialog, workout)

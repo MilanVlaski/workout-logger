@@ -167,7 +167,18 @@ const WORKOUT_KEY = 'single-workout'
 }
 
 async function updateCurrentWorkout(workout) {
+    console.log('call current workout')
+    await dbReadyPromise
 
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('current-workout', 'readwrite')
+        const store = transaction.objectStore('current-workout')
+
+        const putRequest = store.put(workout, WORKOUT_KEY)
+
+        putRequest.onsuccess = () => resolve(workout)
+        putRequest.onerror = () => reject(putRequest.error)
+    })
 }
 
 export const localDb = {
