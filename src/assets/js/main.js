@@ -11,6 +11,8 @@ const {
 } = database
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
+const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
+const $editCurrentWorkoutDialog = document.querySelector('#edit-workout-dialog')
 
 let workoutPositionMap = new Map()
 
@@ -37,10 +39,30 @@ document.addEventListener('exercise:finish', (e) => {
         })
 })
 
+// TODO this is the save data function
 document.addEventListener('submit', (e) => {
     // Handle edit workout dialog submission
-    if (e.target.closest('#edit-workout-dialog')) {
-        const dialog = e.target.closest('#edit-workout-dialog')
+    const $editWorkoutDialog = e.target.closest('#edit-workout-dialog')
+    if ($editWorkoutDialog) {
+        e.preventDefault() // Prevent default to handle async update
+
+        const $modifyWorkout = e.target.querySelector('modify-workout')
+        const updatedWorkout = $modifyWorkout.value()
+
+        // Close dialog immediately
+        $editWorkoutDialog.close()
+
+        // Save updated workout to database (async)
+        updateWorkout(updatedWorkout)
+            .then(() => {
+                writeWorkoutLogToScreen()
+            })
+            .catch(err => console.error('Failed to update workout:', err))
+    } 
+
+    // TODO DRY
+    const $editCurrentWorkoutDialog = e.target.closest('#edit-current-workout-dialog')
+    if ($editCurrentWorkoutDialog) {
         e.preventDefault() // Prevent default to handle async update
 
         const $modifyWorkout = e.target.querySelector('modify-workout')
@@ -55,18 +77,29 @@ document.addEventListener('submit', (e) => {
                 writeWorkoutLogToScreen()
             })
             .catch(err => console.error('Failed to update workout:', err))
-    }
+    } 
 
     e.preventDefault()
 
     if (e.target.getAttribute('action') == 'finish-workout') {
         saveCurrentWorkoutToLog()
             // Writing the entire text OFFSCREEN is perfectly fine. It's like pre-rendering.
-            .then((workout) => {writeWorkoutLogToScreen()})
+            .then((workout) => { writeWorkoutLogToScreen() })
             .catch((err) => console.error("Couldn't write workout.", err))
 
         $temporaryLog.textContent = ''
     }
+})
+
+document.querySelector('[data-action="edit-current-workout"]').addEventListener('click', (e) => {
+    // 1. find the component with the data (same in both impls)
+    // 2. assign the workout
+    // 3. showModal()
+    // function openDialogForEditingWorkout(dialog)
+    readCurrentWorkout()
+    .then(workout => {
+        openDialogForEditingWorkout(document.querySelector('#edit-workout-dialog'), workout)
+    })
 })
 
 document.addEventListener('db:ready', (e) => {
@@ -135,17 +168,20 @@ $workoutLog.addEventListener('click', (event) => {
 
     const timestamp = workoutPositionMap.get(i)
 
+    // TODO use the editWorkoutFunction right here
     findWorkoutById(timestamp).then(workout => {
-        const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
-        const $modifyWorkout = $editWorkoutDialog.querySelector('modify-workout')
-
-        $modifyWorkout.workout = workout
-
-        $editWorkoutDialog.showModal()
+        openDialogForEditingWorkout(document.querySelector('#edit-workout-dialog'), workout)
     }).catch(err => {
         console.error('Error finding workout:', err)
     })
 })
+
+function openDialogForEditingWorkout(dialog, workout) {
+    const $modifyWorkout = dialog.querySelector('modify-workout')
+    $modifyWorkout.workout = workout
+
+    dialog.showModal()
+}
 
 // TODO feature limited 
 document.querySelector('[data-action="export-csv"]').addEventListener('click', async () => {
