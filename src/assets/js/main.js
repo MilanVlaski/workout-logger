@@ -56,31 +56,27 @@ $editWorkoutDialog.addEventListener('submit', (e) => {
         .catch(err => console.error('Failed to update workout:', err))
 })
 
+//     e.preventDefault() // Prevent default to handle async update
+
+//     const $modifyWorkout = e.target.querySelector('modify-workout')
+//     const updatedWorkout = $modifyWorkout.value()
+
+//     // Close dialog immediately
+//     dialog.close()
+
+//     // Save updated workout to database (async)
+//     updateWorkout(updatedWorkout)
+//         .then(() => {
+//             writeWorkoutLogToScreen()
+//         })
+//         .catch(err => console.error('Failed to update workout:', err))
+
 // TODO this is the save data function
+
 document.addEventListener('submit', (e) => {
-    // Handle edit workout dialog submission
-
-    // TODO DRY
-    // if ($editCurrentWorkoutDialog.contains(e.target)) {
-    //     e.preventDefault() // Prevent default to handle async update
-
-    //     const $modifyWorkout = e.target.querySelector('modify-workout')
-    //     const updatedWorkout = $modifyWorkout.value()
-
-    //     // Close dialog immediately
-    //     dialog.close()
-
-    //     // Save updated workout to database (async)
-    //     updateWorkout(updatedWorkout)
-    //         .then(() => {
-    //             writeWorkoutLogToScreen()
-    //         })
-    //         .catch(err => console.error('Failed to update workout:', err))
-    // }
-
-    e.preventDefault()
-
+    
     if (e.target.getAttribute('action') == 'finish-workout') {
+        e.preventDefault()
         saveCurrentWorkoutToLog()
             // Writing the entire text OFFSCREEN is perfectly fine. It's like pre-rendering.
             .then((workout) => { writeWorkoutLogToScreen() })
@@ -163,7 +159,6 @@ $workoutLog.addEventListener('click', (event) => {
 
     const timestamp = workoutPositionMap.get(i)
 
-    // TODO use the editWorkoutFunction right here
     findWorkoutById(timestamp).then(workout => {
         openDialogForEditingWorkout($editWorkoutDialog, workout)
     }).catch(err => {
