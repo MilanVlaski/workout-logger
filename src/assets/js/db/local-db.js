@@ -53,7 +53,7 @@ const WORKOUT_KEY = 'single-workout'
         const store = transaction.objectStore('current-workout')
         const request = store.get(WORKOUT_KEY)
 
-        request.onsuccess = () => { resolve(request.result); console.debug(`Current workout`); console.debug(request.result) }
+        request.onsuccess = () => { resolve(request.result)}
         request.onerror = () => reject(request.error)
     })
 }
@@ -166,6 +166,10 @@ const WORKOUT_KEY = 'single-workout'
     })
 }
 
+async function updateCurrentWorkout(workout) {
+
+}
+
 export const localDb = {
     addExercise,
     readCurrentWorkout,
@@ -173,5 +177,6 @@ export const localDb = {
     saveCurrentWorkoutToLog,
     findWorkoutById,
     updateWorkout,
+    updateCurrentWorkout,
     get db() { return db } // Handles your test_fixture.js requirement
 }

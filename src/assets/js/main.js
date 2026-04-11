@@ -7,12 +7,13 @@ const {
     readCurrentWorkout,
     readWorkoutLog,
     saveCurrentWorkoutToLog,
-    updateWorkout
+    updateWorkout,
+    updateCurrentWorkout
 } = database
 
 const $temporaryLog = document.querySelector('.temporary-log-input')
 const $editWorkoutDialog = document.querySelector('#edit-workout-dialog')
-// const $editCurrentWorkoutDialog = document.querySelector('#edit-current-workout-dialog')
+const $editCurrentWorkoutDialog = document.querySelector('#edit-current-workout-dialog')
 
 let workoutPositionMap = new Map()
 
@@ -40,15 +41,13 @@ document.addEventListener('exercise:finish', (e) => {
 })
 
 $editWorkoutDialog.addEventListener('submit', (e) => {
-    e.preventDefault() // Prevent default to handle async update
+    e.preventDefault()
 
     const $modifyWorkout = e.target.querySelector('modify-workout')
     const updatedWorkout = $modifyWorkout.value()
 
-    // Close dialog immediately
     $editWorkoutDialog.close()
 
-    // Save updated workout to database (async)
     updateWorkout(updatedWorkout)
         .then(() => {
             writeWorkoutLogToScreen()
@@ -56,25 +55,21 @@ $editWorkoutDialog.addEventListener('submit', (e) => {
         .catch(err => console.error('Failed to update workout:', err))
 })
 
-//     e.preventDefault() // Prevent default to handle async update
+$editCurrentWorkoutDialog.addEventListener('submit', (e) => {
+    e.preventDefault()
 
-//     const $modifyWorkout = e.target.querySelector('modify-workout')
-//     const updatedWorkout = $modifyWorkout.value()
+    const $modifyWorkout = e.target.querySelector('modify-workout')
+    const updatedWorkout = $modifyWorkout.value()
 
-//     // Close dialog immediately
-//     dialog.close()
+    $editCurrentWorkoutDialog.close()
 
-//     // Save updated workout to database (async)
-//     updateWorkout(updatedWorkout)
-//         .then(() => {
-//             writeWorkoutLogToScreen()
-//         })
-//         .catch(err => console.error('Failed to update workout:', err))
-
-// TODO this is the save data function
+    updateCurrentWorkout(updatedWorkout)
+        .then(() => { writeCurrentWorkoutToScreen() })
+        .catch(err => console.error('Failed to update workout:', err))
+})
 
 document.addEventListener('submit', (e) => {
-    
+
     if (e.target.getAttribute('action') == 'finish-workout') {
         e.preventDefault()
         saveCurrentWorkoutToLog()
@@ -87,9 +82,10 @@ document.addEventListener('submit', (e) => {
 })
 
 document.querySelector('[data-action="edit-current-workout"]').addEventListener('click', (e) => {
+    console.log('manipula')
     readCurrentWorkout()
         .then(workout => {
-            openDialogForEditingWorkout($editWorkoutDialog, workout)
+            openDialogForEditingWorkout($editCurrentWorkoutDialog, workout)
         })
 })
 
@@ -128,6 +124,7 @@ export function writeWorkoutLogToScreen() {
 
 const $workoutLog = document.querySelector('.workout-log')
 
+// TODO INCORRECT!!!
 // Handle "New Exercise" button in edit dialog
 document.getElementById('add-exercise-btn')?.addEventListener('click', () => {
     const $modifyWorkout = document.querySelector('#modify-workout')
