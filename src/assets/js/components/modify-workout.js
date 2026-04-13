@@ -30,7 +30,7 @@ class ModifyWorkout extends LitElement {
     const exerciseInputs = this.querySelectorAll('exercise-inputs')
     return {
       exercises: Array.from(exerciseInputs).map(input => input.value()),
-      timestamp: this.workout?.timestamp || Date.now()
+      timestamp: this.workout?.timestamp
     }
   }
 

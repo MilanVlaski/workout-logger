@@ -67,6 +67,10 @@ async function updateWorkout(workout) {
     return workouts[index]
 }
 
+async function updateCurrentWorkout(workout) {
+
+}
+
 export const cloudDb = {
     addExercise,
     readCurrentWorkout,
@@ -74,5 +78,6 @@ export const cloudDb = {
     saveCurrentWorkoutToLog,
     findWorkoutById,
     updateWorkout,
+    updateCurrentWorkout,
     get db() { return db } // Handles your test_fixture.js requirement
 }

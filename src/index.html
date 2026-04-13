@@ -74,10 +74,9 @@
     
                 <the-exercise></the-exercise>
                 <form class="temporary-log" action="finish-workout">
-                    <label data-field>
-                        <h2>Temporary Log</h2>
-                        <pre class="temporary-log-input"></pre>
-                    </label>
+                    <h2>Temporary Log</h2>
+                    <button type="button" class="default-height" data-action="edit-current-workout">Edit</button>
+                    <pre class="temporary-log-input"></pre>
                     <button class="primary" style="width: 100%;">
                         <svg><use href="#two-check"></use></svg>
                         Finish Workout
@@ -106,6 +105,26 @@
             <modify-workout id="modify-workout"></modify-workout>
             <footer class="exercise-actions">
                 <button type="button" class="outline" commandfor="edit-workout-dialog" command="close">
+                    <svg>
+                        <use href="#x"></use>
+                    </svg>
+                    Cancel
+                </button>
+                <button type="submit" value="confirm" data-action="save-workout">
+                    <svg>
+                        <use href="#check"></use>
+                    </svg>
+                    Save Changes
+                </button>
+            </footer>
+        </form>
+    </dialog>
+
+    <dialog class="workout" id="edit-current-workout-dialog" closedby="any">
+        <form method="dialog">
+            <modify-workout id="modify-current-workout"></modify-workout>
+            <footer class="exercise-actions">
+                <button type="button" class="outline" commandfor="edit-current-workout-dialog" command="close">
                     <svg>
                         <use href="#x"></use>
                     </svg>
