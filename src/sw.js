@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workout-logger-v8'
+const CACHE_NAME = 'workout-logger-v0.0.1'
 const ASSETS = [
   './',
   './index.html',
