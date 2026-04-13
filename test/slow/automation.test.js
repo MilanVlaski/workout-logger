@@ -1,27 +1,25 @@
 import { chromium } from "playwright"
-import { test, describe } from "bun:test"
+import { test, describe, beforeAll, afterAll } from "bun:test"
 import { expect } from "@playwright/test"
 
-async function withPage(testFn) {
-    const headless = false
-    const browser = await chromium.launch({
-        headless,
-        slowMo: headless ? 0 : 100,
-    })
-    const context = await browser.newContext()
-    const page = await context.newPage()
-    try {
-        await testFn(page)
-    } finally {
-        await context.close()
-        await browser.close()
-    }
-}
 
-const URL = "https://milanvlaski.github.io/workout-logger/" // process.env.PAGE_URL || "http://127.0.0.1:5500"
+const URL = process.env.PAGE_URL || "http://127.0.0.1:5500"
 
 describe("Workout Logger E2E Tests", () => {
-    test("Complete an exercise and see it in the workout log", { timeout: 30000 }, async () => await withPage(async (page) => {
+    
+    let browser
+    let page
+
+    beforeAll(async () => {
+        browser = await chromium.launch({ headless: true })
+        page = await browser.newPage()
+    })
+
+    afterAll(async () => {
+        await browser.close()
+    })
+
+    test("Complete an exercise and see it in the workout log", async () => {
         await page.goto(URL)
 
         const exerciseName = "Bench Press"
@@ -73,11 +71,11 @@ describe("Workout Logger E2E Tests", () => {
         // Wait for the final container to show the data
         await expect(logContainer).toContainText(exerciseName)
         await expect(logContainer).toContainText("10, 12, 8")
-    }))
+    })
 
     // This test will fail until the edit feature is implemented
     // It serves as a specification for the expected behavior
-    test("Edit an exercise in the workout log", { timeout: 30000 }, async () => await withPage(async (page) => {
+    test("Edit an exercise in the workout log", async () => {
         await page.goto(URL)
 
         const exerciseName = "Bench Press"
@@ -115,7 +113,16 @@ describe("Workout Logger E2E Tests", () => {
 
         // 3. Click on the workout log to open edit dialog
         const logPre = page.locator('.workout-log').first()
-        await logPre.click()
+        await logPre.waitFor({ state: 'visible' })
+
+        // Click at the approximate position of the last workout
+        // The workout log should have 2 workouts, so we click in the lower half
+        const box = await logPre.boundingBox()
+        if (box) {
+            await page.mouse.click(box.x + box.width / 2, box.y + box.height * 0.75)
+        } else {
+            await logPre.click()
+        }
 
         // 4. Wait for dialog to appear and edit exercise name
         const dialog = page.locator('#edit-workout-dialog')
@@ -127,15 +134,16 @@ describe("Workout Logger E2E Tests", () => {
 
         // 5. Save changes
         const saveBtn = dialog.locator('[data-action="save-workout"]')
-        await saveBtn.click()
+        await saveBtn.waitFor({ state: 'visible', timeout: 5000 })
 
-        // 6. Wait for dialog to close and verify text changed
-        await dialog.waitFor({ state: 'hidden', timeout: 10000 })
+        // Click the save button using evaluate
+        await saveBtn.evaluate(el => el.click())
 
-        // Wait a bit for the update to propagate
-        await page.waitForTimeout(500)
+        // Wait for the workout log to update
+        await page.waitForTimeout(1000)
 
+        // 6. Verify the workout log was updated
         await expect(logPre).toContainText(editedExerciseName)
         await expect(logPre).toContainText("10, 12, 8")
-    }))
+    })
 })

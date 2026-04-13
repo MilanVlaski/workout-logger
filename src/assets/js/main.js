@@ -128,9 +128,16 @@ $workoutLog.addEventListener('click', (event) => {
     const lineNumber = Math.floor(clickY / lineHeight)
 
     let i = lineNumber
+    let maxIterations = 1000
     // TODO Infinite loop if the number is greater than every
     while (!workoutPositionMap.get(i)) {
         i++
+        maxIterations--
+        if (maxIterations <= 0) {
+            console.error('Could not find workout at line:', lineNumber)
+            console.error('Workout position map:', Array.from(workoutPositionMap.entries()))
+            return
+        }
     }
 
     const timestamp = workoutPositionMap.get(i)
