@@ -23,19 +23,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          deno-version: v2.x
+          bun-version: latest
 
-      - name: Cache Playwright browsers
+      - name: Cache Playwright Browsers
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/pw-browsers
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/deno.lock') }}
+          key: playwright-browsers-${{ runner.os }}
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Install Playwright browsers
-        run: deno run -A npm:playwright install --with-deps chromium
+        # This will only run if the cache miss occurs, 
+        # or it will update/verify browsers if cache is present.
+        run: bunx playwright install --with-deps chromium
 
       - name: Run all tests
         run: make ci-test
@@ -43,10 +48,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Build demo
+        run: make demo-build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './src'
+          path: './dist/demo'
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
