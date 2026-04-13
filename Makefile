@@ -83,10 +83,6 @@ slow-test:
 run: 
 	bun x browser-sync start --server "src" --files "src/**/*" --no-cache
 
-build:
-	# JS files will be minified, so no need to include them
-	rsync -av --exclude='assets/js/' src/ dist/
-	bun build ./src/assets/js/index.js --outdir ./dist/assets/js --minify --sourcemap
 
 clean:
 	rm -rf ./dist

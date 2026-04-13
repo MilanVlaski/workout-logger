@@ -38,7 +38,7 @@
 - [x] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
 - [x] Dev build without sw.js
 - [x] Research a reasonable way to handle having two modals that look exactly the same, but do different things
-- [ ] Merge bun into main
+- [x] Merge bun into main
   - [ ] Add "how to run, build, etc" to the README.md. Precise which dependencies are on Bun and Makefile, and what that assumes. i.e. windows users probably need git bash or so.
 - [ ] Deployment for demo build
 - [ ] Test (for each build?)
