@@ -37,11 +37,12 @@
 - [x] Add build and [profiles](#profiles)
 - [x] Dynamically include files (no need to exclude). Solves the problem of sw.js, and test_fixture.js
 - [x] Dev build without sw.js
-- [ ] Research a reasonable way to handle having two modals that look exactly the same, but do different things
+- [x] Research a reasonable way to handle having two modals that look exactly the same, but do different things
+- [ ] Merge bun into main
+  - [ ] Add "how to run, build, etc" to the README.md. Precise which dependencies are on Bun and Makefile, and what that assumes. i.e. windows users probably need git bash or so.
 - [ ] Deployment for demo build
 - [ ] Test (for each build?)
-  - [ ] Switch from Deno to Bun. Content-addressable storage (no node_modules). Only dependency right now is playwright. Only used for tests, at the moment. Also for the build.
-  - [ ] Add "how to run, build, etc" to the README.md. Precise which dependencies are on Bun and Makefile, and what that assumes. i.e. windows users probably need git bash or so.
+  - [x] Switch from Deno to Bun. Content-addressable storage (no node_modules). Only dependency right now is playwright. Only used for tests, at the moment. Also for the build.
 - [ ] Make an options, with an options icon in the top right (dropdown)  
   - [ ] Contains: delete permanent log. Dangerous action
   - [ ] Will contain light/dark mode switches
